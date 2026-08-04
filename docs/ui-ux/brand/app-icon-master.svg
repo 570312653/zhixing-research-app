@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">知行 App 图标</title>
+  <desc id="desc">深蓝圆角方形背景中的白色折页与辅助蓝路径图形</desc>
+  <rect width="1024" height="1024" rx="224" fill="#1E3A8A"/>
+  <path d="M252 300c94 6 181 40 260 112 79-72 166-106 260-112v366c-96 5-182 42-260 112-78-70-164-107-260-112z" fill="none" stroke="#FFFFFF" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M512 412v362" fill="none" stroke="#FFFFFF" stroke-width="42" stroke-linecap="round"/>
+  <path d="M512 516c52-25 96-71 132-138" fill="none" stroke="#7DD3FC" stroke-width="38" stroke-linecap="round"/>
+  <circle cx="650" cy="364" r="24" fill="#7DD3FC"/>
+</svg>
+

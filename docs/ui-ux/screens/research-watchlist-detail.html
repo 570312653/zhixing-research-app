@@ -1,0 +1,52 @@
+<!-- 用户已确认：2026-08-02；正式 UI/UX 页面参考，不代表客户端已经实现。 -->
+<style>
+  *{box-sizing:border-box}.stage{display:flex;justify-content:center;align-items:flex-start;gap:28px;margin-top:22px}.phone{width:410px;border:1px solid #cad5df;border-radius:27px;background:#eff4f7;padding:10px;box-shadow:0 16px 38px rgba(15,39,64,.11)}.screen{height:1040px;background:#f8fafc;border-radius:19px;overflow:auto;display:flex;flex-direction:column;scrollbar-width:none}.screen::-webkit-scrollbar{display:none}.statusbar{font-size:10px;color:#667085;padding:9px 15px 3px;display:flex;justify-content:space-between;background:#fff}.topbar{display:flex;align-items:center;gap:9px;padding:9px 13px 12px;background:#fff;border-bottom:1px solid #e6ecf1;position:sticky;top:0;z-index:3}.back{width:28px;height:28px;border-radius:9px;background:#eff4f8;color:#173f6b;display:grid;place-items:center;font-weight:800}.top-title{flex:1}.top-title small{display:block;font-size:7px;color:#98a2b3}.top-title b{font-size:12px;color:#26384b}.refresh{font-size:8px;color:#2d6998}.body{padding:13px 13px 76px}.identity{background:#fff;border:1px solid #dce5ed;border-radius:15px;padding:13px}.identity-row{display:flex;justify-content:space-between;align-items:start}.name h3{font-size:18px;color:#173f6b;margin:0}.name span{font-size:9px;color:#98a2b3;margin-left:5px}.industry{display:inline-block;font-size:7px;color:#286493;background:#eaf3fa;border-radius:999px;padding:4px 7px;margin-top:7px}.watch-state{font-size:8px;font-weight:700;color:#18794e;background:#e8f6ee;border-radius:999px;padding:5px 8px}.snapshot{font-size:7px;color:#98a2b3;margin-top:10px}.hero{background:linear-gradient(145deg,#173f6b,#286493);color:#fff;border-radius:16px;padding:15px;margin-top:10px}.hero small{font-size:8px;color:#c9dceb}.hero h4{font-size:15px;margin:5px 0 7px}.hero p{font-size:9px;line-height:1.55;color:#e9f3fa;margin:0}.change{display:flex;gap:8px;align-items:flex-start;background:#fff;border:1px solid #dce5ed;border-radius:12px;padding:10px;margin-top:10px}.change-tag{font-size:7px;font-weight:700;color:#286493;background:#eaf3fa;border-radius:999px;padding:4px 6px;white-space:nowrap}.change div{font-size:8px;color:#475467;line-height:1.45}.change small{display:block;color:#98a2b3;margin-top:3px}.section{margin-top:14px}.section-title{display:flex;justify-content:space-between;align-items:center;margin:0 1px 8px}.section-title h4{font-size:13px;color:#26384b;margin:0}.section-title span{font-size:8px;color:#7b8794}.evidence{display:grid;grid-template-columns:1fr 1fr;gap:8px}.e-card{background:#fff;border:1px solid #dce5ed;border-radius:12px;padding:10px;min-height:100px}.e-card .tag{font-size:7px;border-radius:999px;padding:3px 6px;background:#eaf3fa;color:#286493;display:inline-block}.e-card.risk .tag{background:#fff1e5;color:#a65317}.e-card b{display:block;font-size:9px;color:#344054;margin:7px 0 4px}.e-card p{font-size:8px;color:#667085;line-height:1.45;margin:0}.e-card small{display:block;font-size:7px;color:#98a2b3;margin-top:7px}.riskbox{background:#fff8ec;border:1px solid #f0d7aa;border-radius:12px;padding:11px}.riskbox b{font-size:9px;color:#8a4b13}.riskbox p{font-size:8px;color:#745b43;line-height:1.5;margin:5px 0 0}.timeline{background:#fff;border:1px solid #dce5ed;border-radius:13px;padding:11px}.time-row{display:grid;grid-template-columns:54px 13px 1fr;gap:7px;min-height:55px}.date{font-size:8px;color:#667085;padding-top:2px}.rail{position:relative}.dot{display:block;width:8px;height:8px;border:2px solid #2d6d9e;background:#fff;border-radius:50%;position:relative;z-index:2}.line{position:absolute;width:1px;background:#d7e1e9;top:9px;bottom:-2px;left:4px}.time-row:last-child .line{display:none}.time-main b{font-size:9px;color:#344054}.time-main p{font-size:8px;color:#7a8795;line-height:1.42;margin:3px 0 0}.expand{text-align:center;border-top:1px solid #edf1f4;padding-top:8px;font-size:8px;color:#286493}.industry-card{background:#fff;border:1px solid #dce5ed;border-radius:13px;padding:11px;display:flex;justify-content:space-between;align-items:center}.industry-card b{font-size:10px;color:#344054}.industry-card p{font-size:8px;color:#7a8795;margin:4px 0 0}.trend{font-size:8px;color:#18794e;background:#e8f6ee;border-radius:999px;padding:5px 7px}.report{background:#fff;border:1px solid #dce5ed;border-radius:12px;padding:10px;margin-bottom:7px;display:flex;gap:9px;align-items:center}.icon{width:31px;height:37px;border-radius:8px;background:#eaf3fa;color:#286493;display:grid;place-items:center}.report-main{min-width:0;flex:1}.report-main b{display:block;font-size:9px;color:#344054;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.report-main span{font-size:7px;color:#98a2b3}.read{font-size:7px;color:#286493}.disclaimer{font-size:7px;color:#8a94a3;line-height:1.5;text-align:center;padding:10px 13px 0}.nav{position:sticky;bottom:0;margin-top:auto;background:rgba(255,255,255,.96);border-top:1px solid #e7edf2;padding:10px 8px;display:flex;justify-content:space-around;font-size:9px;color:#7b8794}.nav b{color:#173f6b}.notes{width:410px}.panel{background:#fff;border:1px solid #dbe3eb;border-radius:17px;padding:19px 20px;box-shadow:0 9px 24px rgba(15,23,42,.06);margin-bottom:14px}.panel h3{margin:0 0 11px;color:#173f6b;font-size:15px}.panel ol,.panel ul{padding-left:18px;margin:0}.panel li{font-size:10px;color:#52606d;line-height:1.55;margin-bottom:8px}.badge-row{display:flex;gap:6px;flex-wrap:wrap}.badge{font-size:9px;padding:6px 8px;border-radius:999px;background:#eef4f8;color:#345b78}.boundary{font-size:10px;color:#667085;line-height:1.65;margin:0}.boundary b{color:#344054}.warning{border-left:3px solid #d69b38;padding-left:10px}@media(max-width:900px){.stage{flex-direction:column;align-items:center}.notes{max-width:410px;width:100%}}
+</style>
+
+<h2>研究 · 标的详情页推荐预览</h2>
+<p class="subtitle">本页按集中决策表中的全部推荐项生成，供对照讨论；标的、证据和结论均为固定样例。</p>
+
+<div class="stage">
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>20:16</span><span>● ● ▰</span></div>
+    <header class="topbar"><span class="back">‹</span><div class="top-title"><small>标的详情</small><b>示例材料</b></div><span class="refresh">刷新</span></header>
+    <main class="body">
+      <section class="identity"><div class="identity-row"><div class="name"><h3>示例材料 <span>600001</span></h3><span class="industry">基础化工　›</span></div><span class="watch-state">新增关注</span></div><div class="snapshot">快照版本 v1.0 · 更新于 2026-08-02 20:00</div></section>
+
+      <section class="hero"><small>当前关注结论</small><h4>关键材料供需变化进入观察窗口</h4><p>产业端出现新的验证线索，当前纳入研究观察；仍需持续核对价格、订单和下游验证节奏。</p></section>
+      <section class="change"><span class="change-tag">本期变化</span><div>首次进入核心关注标的池<small>2026-08-02 · 新增关注原因与风险说明</small></div></section>
+
+      <section class="section"><div class="section-title"><h4>关联证据</h4><span>3 项</span></div><div class="evidence">
+        <article class="e-card"><span class="tag">产业数据 · 支持</span><b>供需线索边际改善</b><p>样例产业数据较上一观察期出现改善，进入持续跟踪范围。</p><small>数据截至 08-02 17:30</small></article>
+        <article class="e-card"><span class="tag">行业联动 · 支持</span><b>所属行业关注度升温</b><p>行业层面的多项证据同步增强，为观察逻辑提供背景支持。</p><small>数据截至 08-02 20:00</small></article>
+        <article class="e-card risk"><span class="tag">反向证据 · 风险</span><b>兑现节奏仍待确认</b><p>部分细分环节尚未形成连续验证，当前结论仍可能发生变化。</p><small>待下一观察期验证</small></article>
+      </div></section>
+
+      <section class="section"><div class="section-title"><h4>主要风险</h4><span>与关注理由同等重要</span></div><div class="riskbox"><b>价格波动与下游验证不及预期</b><p>如果后续价格、订单或需求数据转弱，当前观察逻辑可能失效；本页不提供买卖或仓位建议。</p></div></section>
+
+      <section class="section"><div class="section-title"><h4>观察历史</h4><span>最近 5 条</span></div><div class="timeline">
+        <div class="time-row"><span class="date">08-02</span><span class="rail"><i class="dot"></i><i class="line"></i></span><div class="time-main"><b>新增关注</b><p>首次进入当前关注池，记录完整关注原因、风险与关联证据。</p></div></div>
+        <div class="time-row"><span class="date">07-30</span><span class="rail"><i class="dot"></i><i class="line"></i></span><div class="time-main"><b>研究线索出现</b><p>在行业报告中出现相关产业线索，但当时尚未进入标的池。</p></div></div>
+        <div class="time-row"><span class="date">07-24</span><span class="rail"><i class="dot"></i></span><div class="time-main"><b>首次关联行业</b><p>作为基础化工行业研究样例建立关联记录。</p></div></div>
+        <div class="expand">展开全部历史</div>
+      </div></section>
+
+      <section class="section"><div class="section-title"><h4>关联行业</h4><span>进入行业详情</span></div><div class="industry-card"><div><b>基础化工</b><p>当前行业趋势：多项证据边际增强</p></div><span class="trend">升温　›</span></div></section>
+
+      <section class="section"><div class="section-title"><h4>关联报告</h4><span>查看全部</span></div>
+        <article class="report"><span class="icon">▤</span><div class="report-main"><b>关键材料供需变化观察</b><span>行业研究 · 08-01 · v1.0</span></div><span class="read">未读</span></article>
+        <article class="report"><span class="icon">▤</span><div class="report-main"><b>高端制造产业链阶段性研究</b><span>行业研究 · 07-24 · v1.1</span></div><span class="read">已读 82%</span></article>
+        <article class="report"><span class="icon">▤</span><div class="report-main"><b>A 股每日复盘</b><span>每日复盘 · 07-30 · v1.0</span></div><span class="read">已读</span></article>
+      </section>
+      <p class="disclaimer">仅供信息参考，不构成投资建议。页面不展示实时行情、收益率或交易指令。</p>
+    </main>
+    <nav class="nav"><span>今日</span><span>报告库</span><b>研究</b><span>我的</span></nav>
+  </div></div>
+
+  <aside class="notes">
+    <section class="panel"><h3>推荐方案映射</h3><div class="badge-row"><span class="badge">当前结论优先</span><span class="badge">正反证据卡</span><span class="badge">独立风险卡</span><span class="badge">可追溯时间线</span><span class="badge">行业双向联动</span><span class="badge">最近 3 份报告</span><span class="badge">无实时行情</span></div></section>
+    <section class="panel"><h3>页面阅读顺序</h3><ol><li>确认标的身份、当前状态和快照时间。</li><li>先读当前关注结论和本期发生的变化。</li><li>逐项核对支持证据、反向证据与主要风险。</li><li>通过历史时间线了解关注逻辑如何演变。</li><li>进入关联行业或报告补充研究上下文。</li></ol></section>
+    <section class="panel"><h3>已移出与过期状态</h3><ul><li>已移出标的仍保留详情页，顶部显示移出时间和原因。</li><li>新快照失败时继续显示上次成功内容，但必须标明“数据可能已过期”和最后成功时间。</li><li>页面不允许手动改状态、分享或进入交易操作。</li></ul></section>
+    <section class="panel"><h3>样例边界</h3><p class="boundary warning"><b>当前没有正式标的池快照。</b>页面中的证券、证据、时间和结论都是固定样例。正式数据不足时必须失败关闭，不得由模型补写市场事实。</p></section>
+  </aside>
+</div>

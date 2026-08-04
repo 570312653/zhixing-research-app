@@ -1,0 +1,12 @@
+{
+  "name": "zhixing-phase1-webhook-test",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Phase 1 security-only receiver for validating Coze report delivery.",
+  "scripts": {
+    "test": "node --test test/coze-agent-poc.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

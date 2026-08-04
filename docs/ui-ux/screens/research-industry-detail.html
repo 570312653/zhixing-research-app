@@ -1,0 +1,56 @@
+<!-- 用户已确认：2026-08-02；正式 UI/UX 页面参考，不代表客户端已经实现。 -->
+<style>
+  *{box-sizing:border-box}.stage{display:flex;justify-content:center;align-items:flex-start;gap:28px;margin-top:22px}.phone{width:410px;border:1px solid #c9d4df;border-radius:28px;background:#f0f4f8;padding:10px;box-shadow:0 18px 42px rgba(16,42,67,.12)}.screen{background:#f8fafc;border-radius:20px;min-height:1040px;overflow:visible;display:flex;flex-direction:column}.status{font-size:10px;color:#64748b;padding:10px 16px 4px;display:flex;justify-content:space-between;background:#fff}.topbar{display:flex;align-items:center;gap:10px;padding:10px 14px 13px;background:#fff;border-bottom:1px solid #e8edf2}.back{width:28px;height:28px;border-radius:9px;background:#eff4f8;display:grid;place-items:center;color:#163f68;font-weight:800}.title-wrap{flex:1}.title-wrap small{display:block;font-size:8px;color:#98a2b3;margin-bottom:2px}.title-wrap h3{font-size:17px;color:#173f6b;margin:0}.more{color:#667085;font-size:16px}.body{padding:13px 13px 22px}.trend{background:linear-gradient(145deg,#173f6b,#255f91);color:white;border-radius:17px;padding:16px;box-shadow:0 9px 22px rgba(23,63,107,.16)}.trend-head{display:flex;justify-content:space-between;align-items:flex-start}.eyebrow{font-size:8px;opacity:.7}.trend h4{font-size:18px;margin:4px 0 6px}.state{font-size:9px;font-weight:700;background:#dff4e8;color:#17714a;border-radius:999px;padding:5px 9px}.conclusion{font-size:10px;line-height:1.55;color:#e9f2f9;margin:10px 0 12px}.meta{display:flex;gap:12px;font-size:8px;color:#c7d9e8}.section{margin-top:14px}.section-title{display:flex;align-items:center;justify-content:space-between;margin:0 1px 8px}.section-title h4{font-size:13px;color:#26384b;margin:0}.section-title span{font-size:8px;color:#7d8a99}.evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.evidence{background:#fff;border:1px solid #dde6ee;border-radius:13px;padding:10px;min-height:99px}.evidence .tag{display:inline-flex;font-size:7px;padding:3px 6px;border-radius:999px;background:#eaf3fb;color:#24618f;margin-bottom:7px}.evidence.risk .tag{background:#fff2e7;color:#a24f12}.evidence b{display:block;font-size:9px;color:#344054;margin-bottom:4px}.evidence p{font-size:8px;line-height:1.45;color:#667085;margin:0}.asof{font-size:7px;color:#98a2b3;margin-top:7px}.timeline{background:#fff;border:1px solid #dde6ee;border-radius:13px;padding:11px}.time-row{display:grid;grid-template-columns:57px 14px 1fr;gap:6px;min-height:53px}.date{font-size:8px;color:#667085;padding-top:2px}.rail{position:relative}.dot{display:block;width:8px;height:8px;border:2px solid #2b6d9f;background:white;border-radius:50%;position:relative;z-index:2}.line{position:absolute;width:1px;background:#d7e1e9;top:9px;bottom:-2px;left:4px}.time-row:last-child .line{display:none}.time-content b{font-size:9px;color:#344054}.time-content p{font-size:8px;color:#7a8796;line-height:1.4;margin:3px 0 0}.expand{border-top:1px solid #edf1f4;margin-top:3px;padding-top:8px;text-align:center;color:#286493;font-size:8px}.stock{background:#fff;border:1px solid #dde6ee;border-radius:13px;padding:11px;margin-bottom:8px}.stock-top{display:flex;justify-content:space-between;align-items:start}.stock-name b{font-size:10px;color:#26384b}.stock-name small{font-size:8px;color:#8491a0;margin-left:5px}.stock-state{font-size:7px;padding:4px 6px;border-radius:999px;background:#ebf5ee;color:#1e744e}.stock p{font-size:8px;line-height:1.45;color:#667085;margin:7px 0}.stock-foot{display:flex;justify-content:space-between;font-size:7px;color:#98a2b3}.changes{background:#fff;border:1px solid #dde6ee;border-radius:13px;padding:10px}.change{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #edf1f4}.change:last-child{border-bottom:0}.change-type{font-size:7px;font-weight:700;border-radius:999px;padding:3px 6px;height:max-content;white-space:nowrap}.add{background:#e9f6ef;color:#18794e}.update{background:#eaf3fb;color:#286493}.remove{background:#fff0f0;color:#b42318}.change-main{font-size:8px;color:#475467;line-height:1.45}.change-main small{display:block;color:#98a2b3;margin-top:2px}.report{background:#fff;border:1px solid #dde6ee;border-radius:13px;padding:11px;margin-bottom:8px;display:flex;gap:9px;align-items:center}.report-icon{width:34px;height:42px;border-radius:8px;background:#eaf2f8;color:#2e6a98;display:grid;place-items:center;font-size:14px}.report-main{min-width:0;flex:1}.report-main b{display:block;font-size:9px;color:#344054;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.report-main span{display:block;font-size:7px;color:#98a2b3;margin-top:4px}.unread{font-size:7px;color:#286493}.nav{margin-top:auto;background:#fff;border-top:1px solid #e7edf2;padding:11px 8px;display:flex;justify-content:space-around;font-size:9px;color:#7b8794}.nav b{color:#173f6b}.notes{width:410px}.panel{background:#fff;border:1px solid #dbe3eb;border-radius:17px;padding:19px 20px;box-shadow:0 9px 24px rgba(15,23,42,.06);margin-bottom:14px}.panel h3{margin:0 0 11px;color:#173f6b;font-size:15px}.panel ul{padding-left:18px;margin:0}.panel li{font-size:10px;color:#52606d;line-height:1.55;margin-bottom:8px}.badge-row{display:flex;gap:6px;flex-wrap:wrap}.badge{font-size:9px;padding:6px 8px;border-radius:999px;background:#eef4f8;color:#345b78}.boundary{font-size:10px;color:#667085;line-height:1.65;margin:0}.boundary b{color:#344054}@media(max-width:900px){.stage{flex-direction:column;align-items:center}.notes{max-width:410px;width:100%}}
+</style>
+
+<h2>研究 · 行业详情页预览</h2>
+<p class="subtitle">固定样例：查看一个重点行业的当前判断、证据、历史变化、关联标的和专项报告。</p>
+
+<div class="stage">
+  <div class="phone"><div class="screen">
+    <div class="status"><span>20:08</span><span>● ● ▰</span></div>
+    <div class="topbar"><span class="back">‹</span><div class="title-wrap"><small>行业详情</small><h3>高端制造</h3></div><span class="more">•••</span></div>
+    <main class="body">
+      <section class="trend"><div class="trend-head"><div><span class="eyebrow">当前趋势</span><h4>关注度升温</h4></div><span class="state">升温</span></div><p class="conclusion">产业端与市场端的多项证据同步增强，但订单兑现节奏仍需继续验证，当前判断以观察趋势为主。</p><div class="meta"><span>数据截至 08-02 20:00</span><span>较上一观察期增强</span></div></section>
+
+      <section class="section"><div class="section-title"><h4>关键证据与对比</h4><span>4 项证据</span></div><div class="evidence-grid">
+        <article class="evidence"><span class="tag">行情表现 · 支持</span><b>行业相对强度改善</b><p>样例数据表明板块表现较上一观察期增强，并出现更广泛的个股响应。</p><div class="asof">截至 08-02 收盘</div></article>
+        <article class="evidence"><span class="tag">产业数据 · 支持</span><b>订单与排产线索增加</b><p>可验证的产业信息较上期增多，为趋势延续提供阶段性支持。</p><div class="asof">截至 08-02 17:30</div></article>
+        <article class="evidence"><span class="tag">事件政策 · 支持</span><b>政策催化持续落地</b><p>近期公开政策与产业事件对重点环节形成连续催化。</p><div class="asof">截至 08-02 20:00</div></article>
+        <article class="evidence risk"><span class="tag">反向证据 · 风险</span><b>兑现节奏仍有分化</b><p>部分细分环节缺少持续验证，若后续数据走弱，当前判断可能被推翻。</p><div class="asof">待下一观察期验证</div></article>
+      </div></section>
+
+      <section class="section"><div class="section-title"><h4>趋势历史</h4><span>最近 30 天</span></div><div class="timeline">
+        <div class="time-row"><span class="date">08-02</span><span class="rail"><i class="dot"></i><i class="line"></i></span><div class="time-content"><b>升温</b><p>市场表现与产业证据同步增强，新增一项风险观察。</p></div></div>
+        <div class="time-row"><span class="date">07-26</span><span class="rail"><i class="dot"></i><i class="line"></i></span><div class="time-content"><b>趋势延续</b><p>关键证据总体稳定，尚未出现方向性变化。</p></div></div>
+        <div class="time-row"><span class="date">07-19</span><span class="rail"><i class="dot"></i></span><div class="time-content"><b>证据不足</b><p>产业数据更新不完整，未沿用旧结论代替本期判断。</p></div></div>
+        <div class="expand">展开全部历史</div>
+      </div></section>
+
+      <section class="section"><div class="section-title"><h4>当前关注标的</h4><span>3 个 · 查看全部</span></div>
+        <article class="stock"><div class="stock-top"><div class="stock-name"><b>示例装备</b><small>000001</small></div><span class="stock-state">持续关注</span></div><p>行业关联：核心制造环节出现可追踪的订单与产能线索。</p><div class="stock-foot"><span>更新于 08-02</span><span>风险：订单兑现不及预期　›</span></div></article>
+        <article class="stock"><div class="stock-top"><div class="stock-name"><b>示例材料</b><small>600001</small></div><span class="stock-state">新增关注</span></div><p>行业关联：关键材料环节的供需变化进入持续观察范围。</p><div class="stock-foot"><span>更新于 08-02</span><span>风险：价格波动　›</span></div></article>
+      </section>
+
+      <section class="section"><div class="section-title"><h4>近期标的变更</h4><span>最近 5 条</span></div><div class="changes">
+        <div class="change"><span class="change-type add">新增</span><div class="change-main">示例材料进入关注池<small>08-02 · 新增产业验证线索</small></div></div>
+        <div class="change"><span class="change-type update">原因更新</span><div class="change-main">示例装备补充订单兑现风险<small>07-29 · 研究理由发生变化</small></div></div>
+        <div class="change"><span class="change-type remove">移出</span><div class="change-main">示例零部件移出当前关注<small>07-24 · 原有观察逻辑失效</small></div></div>
+        <div class="expand">展开全部变更</div>
+      </div></section>
+
+      <section class="section"><div class="section-title"><h4>专项行业报告</h4><span>查看全部</span></div>
+        <article class="report"><span class="report-icon">▤</span><div class="report-main"><b>高端装备产业链阶段性研究</b><span>2026-08-01 · v1.0</span></div><span class="unread">未读</span></article>
+        <article class="report"><span class="report-icon">▤</span><div class="report-main"><b>制造升级线索与风险复核</b><span>2026-07-24 · v1.1</span></div><span class="unread">已读 82%</span></article>
+        <article class="report"><span class="report-icon">▤</span><div class="report-main"><b>关键材料供需变化观察</b><span>2026-07-12 · v1.0</span></div><span class="unread">已读</span></article>
+      </section>
+    </main>
+    <nav class="nav"><span>今日</span><span>报告库</span><b>研究</b><span>我的</span></nav>
+  </div></div>
+
+  <aside class="notes">
+    <section class="panel"><h3>本页采用的确认结果</h3><div class="badge-row"><span class="badge">分组证据卡</span><span class="badge">正反证据并列</span><span class="badge">30 天时间线</span><span class="badge">当前标的 + 变更</span><span class="badge">最近 3 份报告</span><span class="badge">证据不足独立状态</span></div></section>
+    <section class="panel"><h3>阅读逻辑</h3><ul><li>先给出当前趋势和一句话结论，再让用户逐项核对判断依据。</li><li>趋势历史记录真实状态变化；数据不足时不继承旧结论冒充当前判断。</li><li>标的当前状态与历史变更分区，既容易阅读，也能追溯变化。</li><li>专项报告只展示最近 3 份，完整历史仍由报告库统一归档。</li><li>页面以阅读和跳转为主，不提供人工修改趋势、分享或导出行业页。</li></ul></section>
+    <section class="panel"><h3>样例边界</h3><p class="boundary"><b>页面中的行业、标的、数字与结论都是固定样例。</b>正式产品必须由真实数据适配器与报告引擎提供；数据不足时显示“证据不足”，不得由模型猜测补齐。数据供应商信息保存在后台，本页只展示必要的数据截至时间。</p></section>
+  </aside>
+</div>

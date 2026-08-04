@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>知行 · 跨页面状态推荐预览</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#f4f7fa;color:#10283f;font-family:Inter,"PingFang SC","Microsoft YaHei",sans-serif}.page{max-width:1500px;margin:0 auto;padding:32px}.eyebrow{font-size:12px;letter-spacing:.18em;color:#6d8397;font-weight:800}.hero{display:flex;justify-content:space-between;gap:28px;align-items:flex-end;margin-bottom:24px}.hero h1{font-size:30px;margin:8px 0 7px}.hero p{margin:0;color:#667b8f;line-height:1.7}.legend{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pill{padding:7px 11px;border-radius:999px;background:#fff;border:1px solid #dfe8ef;font-size:12px;color:#526b7f}.pill strong{color:#175d91}.rules{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}.rule{background:#fff;border:1px solid #dce7ef;border-radius:16px;padding:14px 16px;box-shadow:0 8px 24px rgba(27,61,88,.05)}.rule b{display:block;font-size:13px;margin-bottom:5px}.rule span{font-size:11px;color:#6e8192;line-height:1.55}.grid{display:grid;grid-template-columns:repeat(3,minmax(280px,1fr));gap:18px}.state{background:#fff;border:1px solid #d8e4ec;border-radius:22px;padding:12px;box-shadow:0 14px 35px rgba(33,65,89,.08)}.state-head{display:flex;align-items:center;justify-content:space-between;padding:3px 4px 11px}.state-head h2{font-size:15px;margin:0}.state-head p{font-size:10px;color:#7e90a0;margin:3px 0 0}.tag{font-size:10px;font-weight:800;border-radius:999px;padding:5px 9px}.ok{background:#e9f7ef;color:#22764b}.load{background:#eaf2fa;color:#2c6898}.empty{background:#f1f3f5;color:#687989}.error{background:#fff0ee;color:#b4473a}.offline{background:#fff6df;color:#8c6716}.stale{background:#fff3dc;color:#8a6111}.phone{height:450px;border:1px solid #dce5eb;border-radius:17px;background:#f9fbfc;overflow:hidden;display:flex;flex-direction:column}.statusbar{height:20px;padding:6px 14px 0;display:flex;justify-content:space-between;color:#6f8293;font-size:8px}.appbar{height:49px;padding:13px 14px 9px;border-bottom:1px solid #e7edf2;background:#fff;display:flex;align-items:center;justify-content:space-between}.appbar b{font-size:17px}.appbar span{font-size:9px;color:#668094}.content{flex:1;padding:12px;overflow:hidden}.nav{height:42px;border-top:1px solid #dde7ed;background:#fff;display:flex;align-items:center;justify-content:space-around;color:#8293a1;font-size:9px}.nav b{color:#175e92}.banner{padding:8px 10px;border-radius:10px;margin-bottom:10px;font-size:9px;line-height:1.5}.banner.off{background:#fff3d5;color:#735512;border:1px solid #f0d894}.banner.warn{background:#fff5e9;color:#8b5a16;border:1px solid #efd5ad}.banner.bad{background:#fff0ee;color:#9f4034;border:1px solid #f0c5bf}.focus{background:linear-gradient(135deg,#164f7c,#2476a8);color:#fff;border-radius:14px;padding:13px;margin-bottom:10px}.focus small{font-size:8px;opacity:.72}.focus h3{font-size:14px;margin:7px 0 4px}.focus p{font-size:9px;line-height:1.55;margin:0;opacity:.92}.meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.meta span{font-size:8px;background:rgba(255,255,255,.14);padding:4px 6px;border-radius:999px}.section-title{display:flex;justify-content:space-between;align-items:center;margin:11px 1px 7px}.section-title b{font-size:11px}.section-title span{font-size:8px;color:#8193a1}.report{background:#fff;border:1px solid #e0e8ee;border-radius:11px;padding:9px 10px;margin-bottom:7px}.report-top{display:flex;justify-content:space-between;gap:8px}.report b{font-size:10px}.report p{font-size:8px;color:#718596;line-height:1.45;margin:5px 0 0}.mini-tag{font-size:7px;border-radius:999px;padding:3px 5px;background:#ebf5fb;color:#23658e}.skeleton{background:linear-gradient(90deg,#e8eef2 25%,#f5f8fa 45%,#e8eef2 65%);background-size:300% 100%;border-radius:8px;animation:pulse 1.6s ease-in-out infinite}.sk-title{height:15px;width:54%;margin-bottom:10px}.sk-card{height:78px;margin-bottom:9px}.sk-line{height:9px;margin:8px 0}.sk-line.wide{width:90%}.sk-line.mid{width:70%}.sk-line.short{width:42%}@keyframes pulse{0%{background-position:100% 0}100%{background-position:0 0}}.slow{margin-top:8px;color:#6f8190;font-size:8px;text-align:center}.center{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:15px}.icon{width:56px;height:56px;border-radius:19px;background:#eaf2f8;color:#27688f;display:flex;align-items:center;justify-content:center;font-size:25px;margin-bottom:13px}.center h3{font-size:14px;margin:0 0 7px}.center p{font-size:9px;line-height:1.6;color:#728596;margin:0 0 13px;max-width:220px}.button{display:inline-flex;align-items:center;justify-content:center;border-radius:9px;padding:8px 13px;background:#176595;color:#fff;font-size:9px;font-weight:800}.button.ghost{background:#fff;color:#225f86;border:1px solid #bfd3e1}.button.disabled{background:#e4e9ed;color:#99a7b1}.error-code{font-size:8px;color:#82929e;margin-top:8px}.cache-label{display:inline-flex;background:#fff2cf;color:#7f601c;border-radius:999px;font-size:7px;padding:3px 6px;margin-left:5px}.stale-card{border-color:#e7c989;background:#fffdf8}.stale-card h3{font-size:12px;margin:0 0 5px}.stale-card p{font-size:8px;color:#745f39;line-height:1.55;margin:0}.inline-actions{display:flex;gap:7px;margin-top:10px}.aside{margin-top:22px;background:#102e46;color:#fff;border-radius:20px;padding:18px 20px;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:22px}.aside h3{font-size:14px;margin:0 0 8px}.aside p,.aside li{font-size:10px;line-height:1.65;color:#c8d6e0}.aside ul{padding-left:16px;margin:0}.boundary{border-left:3px solid #68b893;padding-left:10px}.footer{margin-top:14px;color:#7a8c9b;font-size:10px;text-align:center}@media(max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(280px,1fr))}.rules{grid-template-columns:repeat(2,1fr)}.aside{grid-template-columns:1fr}}@media(max-width:650px){.page{padding:18px}.hero{display:block}.legend{justify-content:flex-start;margin-top:15px}.grid,.rules{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main class="page">
+  <section class="hero">
+    <div><div class="eyebrow">ZHIXING · UI STATE SYSTEM</div><h1>跨页面状态推荐预览</h1><p>同一套状态语言覆盖今日、报告库、报告详情、研究、标的池与“我的”。<br>重点不是制造更多提示，而是让用户始终知道：有没有内容、内容是否最新、下一步能做什么。</p></div>
+    <div class="legend"><span class="pill"><strong>范围</strong> 页面 / 区块 / 操作</span><span class="pill"><strong>原则</strong> 旧内容可读但不伪装</span><span class="pill"><strong>恢复</strong> 在线且可重试才显示按钮</span></div>
+  </section>
+
+  <section class="rules">
+    <article class="rule"><b>① 局部问题局部呈现</b><span>筛选失败、PDF 下载失败等不替换整页；只有没有任何可用内容时才进入页面级失败。</span></article>
+    <article class="rule"><b>② 空内容不等于失败</b><span>区分未到时间、当天没有、筛选无结果和暂无历史，并给出与原因匹配的下一步。</span></article>
+    <article class="rule"><b>③ 离线优先保留阅读</b><span>缓存内容继续可读，明确最后同步时间；刷新、重试和未缓存下载暂时禁用。</span></article>
+    <article class="rule"><b>④ 错误信息必须脱敏</b><span>只显示错误码、发生时间和恢复动作，不展示原始响应、密钥或后台完整日志。</span></article>
+  </section>
+
+  <section class="grid">
+    <article class="state">
+      <div class="state-head"><div><h2>正常状态</h2><p>内容最新且完整</p></div><span class="tag ok">NORMAL</span></div>
+      <div class="phone"><div class="statusbar"><span>09:06</span><span>● ● ▰</span></div><div class="appbar"><b>今日</b><span>8月2日 · 周日</span></div><div class="content"><div class="focus"><small>继续阅读 · 每日复盘</small><h3>A股复盘｜2026-08-01</h3><p>指数缩量整理，结构机会继续围绕产业催化展开。</p><div class="meta"><span>v1.0</span><span>数据截至 17:30</span><span>还剩 6 分钟</span></div></div><div class="section-title"><b>今日报告</b><span>2/4 已生成</span></div><div class="report"><div class="report-top"><b>早盘扫描</b><span class="mini-tag">已读</span></div><p>09:00 发布 · v1.0 · 数据截至 08:45</p></div><div class="report"><div class="report-top"><b>午间复盘</b><span class="mini-tag">未读</span></div><p>12:10 发布 · v1.0 · 数据截至 11:30</p></div></div><div class="nav"><b>今日</b><span>报告库</span><span>研究</span><span>我的</span></div></div>
+    </article>
+
+    <article class="state">
+      <div class="state-head"><div><h2>加载状态</h2><p>框架稳定，内容区骨架</p></div><span class="tag load">LOADING</span></div>
+      <div class="phone"><div class="statusbar"><span>09:06</span><span>● ● ▰</span></div><div class="appbar"><b>报告库</b><span>筛选</span></div><div class="content"><div class="skeleton sk-title"></div><div class="skeleton sk-line wide"></div><div class="skeleton sk-line mid"></div><div style="height:12px"></div><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div><div class="slow">正在读取本地索引…超过 10 秒后才显示慢加载提示</div></div><div class="nav"><span>今日</span><b>报告库</b><span>研究</span><span>我的</span></div></div>
+    </article>
+
+    <article class="state">
+      <div class="state-head"><div><h2>空内容状态</h2><p>原因明确，不伪装成错误</p></div><span class="tag empty">EMPTY</span></div>
+      <div class="phone"><div class="statusbar"><span>14:20</span><span>● ● ▰</span></div><div class="appbar"><b>行业跟踪</b><span>8月2日</span></div><div class="content"><div class="center"><div class="icon">◷</div><h3>尚未到生成时间</h3><p>今日行业跟踪计划在 20:00 生成。你可以先阅读最近一期，或稍后再回来查看。</p><span class="button ghost">查看最近一期</span></div></div><div class="nav"><b>今日</b><span>报告库</span><span>研究</span><span>我的</span></div></div>
+    </article>
+
+    <article class="state">
+      <div class="state-head"><div><h2>失败状态</h2><p>没有任何可用内容</p></div><span class="tag error">FAILED</span></div>
+      <div class="phone"><div class="statusbar"><span>17:36</span><span>● ● ▰</span></div><div class="appbar"><b>每日复盘</b><span>8月2日</span></div><div class="content"><div class="center"><div class="icon" style="background:#fff0ee;color:#b4473a">!</div><h3>报告暂时无法读取</h3><p>本次读取没有得到可用内容。请联网后重试；系统不会用不完整内容替代正式报告。</p><span class="button">重新尝试</span><div class="error-code">错误码 REPORT_UNAVAILABLE · 17:35</div></div></div><div class="nav"><span>今日</span><span>报告库</span><span>研究</span><span>我的</span></div></div>
+    </article>
+
+    <article class="state">
+      <div class="state-head"><div><h2>离线状态</h2><p>有缓存，继续阅读</p></div><span class="tag offline">OFFLINE</span></div>
+      <div class="phone"><div class="statusbar"><span>20:21</span><span>○ × ▰</span></div><div class="appbar"><b>报告详情</b><span>更多</span></div><div class="content"><div class="banner off"><b>当前处于离线状态</b><br>正在显示本机缓存，最后同步于今天 20:18。</div><div class="report"><div class="report-top"><b>产业趋势跟踪｜第 31 期</b><span class="cache-label">缓存</span></div><p>重点行业热度分化，设备更新与算力基础设施仍是主要观察方向。</p></div><div class="section-title"><b>核心摘要</b><span>数据截至 19:40</span></div><div class="report"><p>① 政策催化仍在，但短期拥挤度上升。<br>② 订单与价格数据尚未形成全面共振。<br>③ 关注后续验证节点，不追逐单日异动。</p></div><div class="inline-actions"><span class="button disabled">刷新不可用</span><span class="button ghost">继续阅读</span></div></div><div class="nav"><span>今日</span><span>报告库</span><b>研究</b><span>我的</span></div></div>
+    </article>
+
+    <article class="state">
+      <div class="state-head"><div><h2>局部异常叠加</h2><p>同步失败，但旧内容仍可用</p></div><span class="tag stale">STALE</span></div>
+      <div class="phone"><div class="statusbar"><span>20:21</span><span>● ● ▰</span></div><div class="appbar"><b>标的池</b><span>当前关注</span></div><div class="content"><div class="banner warn"><b>最新同步失败，内容可能已过期</b><br>当前展示 8月1日 20:10 的最后成功快照。</div><div class="report stale-card"><div class="report-top"><b>算力基础设施</b><span class="mini-tag">3 个标的</span></div><p>保留上次完整快照；新增、持续和移出变化暂不更新。</p></div><div class="report"><div class="report-top"><b>中际旭创 · 300308</b><span class="mini-tag">持续关注</span></div><p>关注原因与风险仍来自最后成功快照，不代表本次同步结论。</p></div><div class="inline-actions"><span class="button">重试同步</span><span class="button ghost">查看诊断</span></div><div class="error-code">错误码 SNAPSHOT_SYNC_FAILED · 已脱敏</div></div><div class="nav"><span>今日</span><span>报告库</span><b>研究</b><span>我的</span></div></div>
+    </article>
+  </section>
+
+  <section class="aside">
+    <div><h3>推荐状态判断顺序</h3><p class="boundary">先判断所有者访问和安全阻断，再判断是否有可用内容。有内容就优先保留阅读；没有内容时，才在加载、空、失败和离线不可用之间选择页面级状态。</p></div>
+    <div><h3>按钮语义</h3><ul><li>刷新只同步，不重新生成报告。</li><li>在线且错误可重试时才显示重试。</li><li>进行中按钮防重复点击。</li><li>危险操作仍需二次确认。</li></ul></div>
+    <div><h3>当前切片边界</h3><ul><li>这些是未来状态结构样例。</li><li>不代表云端任务或重试已经上线。</li><li>离线样例只读取固定夹具。</li><li>任何错误信息都不得包含密钥。</li></ul></div>
+  </section>
+  <p class="footer">正式状态规范基于集中决策表第 1～14 项方案 A · 2026-08-02 用户已确认</p>
+</main>
+</body>
+</html>

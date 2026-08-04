@@ -1,0 +1,39 @@
+{
+  "schema": "starwork.workspace.v0.1",
+  "core": "0.1",
+  "workspace_type": "project",
+  "kit": "project",
+  "packs": [
+    {
+      "id": "general",
+      "version": "0.1.0",
+      "paths": {
+        "references": ".superpowers/sdd/",
+        "drafts": ".superpowers/sdd/",
+        "final": "docs/"
+      },
+      "installed_at": "2026-07-29T15:46:19.701Z"
+    }
+  ],
+  "language": "en",
+  "paths": {
+    "formal_source": "docs/",
+    "business_work_area": ".superpowers/sdd/"
+  },
+  "customization": {
+    "type": "init_blueprint",
+    "schema": "starwork.init_blueprint.v0.1",
+    "source": "zhixing-starwork-minimal-init-blueprint.json",
+    "folders": [],
+    "directories": [],
+    "removals": [
+      "references/",
+      "outputs/",
+      "docs/",
+      ".superpowers/"
+    ],
+    "agent_rules": [],
+    "seed": []
+  },
+  "created_by": "starwork init --blueprint"
+}

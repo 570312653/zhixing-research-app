@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "lanes": {
+    "report-engine-development": {
+      "host": "codex",
+      "current_session": "codex:019fae9b-974d-7972-9072-2f9fdc67fe80",
+      "thread_id": "019fae9b-974d-7972-9072-2f9fdc67fe80",
+      "session_id": "019fae9b-974d-7972-9072-2f9fdc67fe80",
+      "session_name": "报告引擎开发 Agent",
+      "pinned": false,
+      "created_by": "starwork multiagent bind",
+      "created_at": "2026-07-29T16:01:30.942Z"
+    },
+    "specification-validation": {
+      "host": "codex",
+      "current_session": "codex:019fae9b-9ba7-71f1-bd11-b3b2c0c23402",
+      "thread_id": "019fae9b-9ba7-71f1-bd11-b3b2c0c23402",
+      "session_id": "019fae9b-9ba7-71f1-bd11-b3b2c0c23402",
+      "session_name": "规格与验收 Agent",
+      "pinned": false,
+      "created_by": "starwork multiagent bind",
+      "created_at": "2026-07-29T16:01:31.018Z"
+    },
+    "safety-quality-review": {
+      "host": "codex",
+      "current_session": "codex:019fae9b-9fe9-7231-97be-d070280f32e2",
+      "thread_id": "019fae9b-9fe9-7231-97be-d070280f32e2",
+      "session_id": "019fae9b-9fe9-7231-97be-d070280f32e2",
+      "session_name": "安全与质量审查 Agent",
+      "pinned": false,
+      "created_by": "starwork multiagent bind",
+      "created_at": "2026-07-29T16:01:31.090Z"
+    },
+    "coordination-handoff": {
+      "host": "codex",
+      "current_session": "codex:019fae9b-a455-7bd0-be2a-57d30bf56086",
+      "thread_id": "019fae9b-a455-7bd0-be2a-57d30bf56086",
+      "session_id": "019fae9b-a455-7bd0-be2a-57d30bf56086",
+      "session_name": "任务协调与交接 Agent",
+      "pinned": false,
+      "created_by": "starwork multiagent bind",
+      "created_at": "2026-07-29T16:01:31.162Z"
+    }
+  },
+  "requests": [
+    {
+      "id": "REQ-20260729-161923Z-specification-validation",
+      "from": "coordination-handoff",
+      "to": "specification-validation",
+      "message_type": "instruction",
+      "recorded_in": "_system\\collaboration\\shared.md",
+      "host_delivery": {
+        "status": "delivered_via_codex_thread_tool",
+        "delivery_tool": "codex_app__send_message_to_thread",
+        "mode": "record_only"
+      }
+    },
+    {
+      "id": "REQ-20260729-161923Z-report-engine-development",
+      "from": "coordination-handoff",
+      "to": "report-engine-development",
+      "message_type": "instruction",
+      "recorded_in": "_system\\collaboration\\shared.md",
+      "host_delivery": {
+        "status": "delivered_via_codex_thread_tool",
+        "delivery_tool": "codex_app__send_message_to_thread",
+        "mode": "record_only"
+      }
+    },
+    {
+      "id": "REQ-20260729-161933Z-safety-quality-review",
+      "from": "coordination-handoff",
+      "to": "safety-quality-review",
+      "message_type": "instruction",
+      "recorded_in": "_system\\collaboration\\shared.md",
+      "host_delivery": {
+        "status": "delivered_via_codex_thread_tool",
+        "delivery_tool": "codex_app__send_message_to_thread",
+        "mode": "record_only"
+      }
+    },
+    {
+      "id": "REQ-20260729-162111Z-report-engine-development",
+      "from": "coordination-handoff",
+      "to": "report-engine-development",
+      "message_type": "instruction",
+      "recorded_in": "_system\\collaboration\\shared.md",
+      "host_delivery": {
+        "status": "delivered_via_codex_thread_tool",
+        "delivery_tool": "codex_app__send_message_to_thread",
+        "mode": "record_only"
+      }
+    },
+    {
+      "id": "REQ-20260729-162404Z-safety-quality-review",
+      "from": "coordination-handoff",
+      "to": "safety-quality-review",
+      "message_type": "instruction",
+      "recorded_in": "_system\\collaboration\\shared.md",
+      "host_delivery": {
+        "status": "delivered_via_codex_thread_tool",
+        "delivery_tool": "codex_app__send_message_to_thread",
+        "mode": "record_only"
+      }
+    },
+    {
+      "id": "REQ-20260729-162558Z-report-engine-development",
+      "from": "coordination-handoff",
+      "to": "report-engine-development",
+      "message_type": "instruction",
+      "recorded_in": "_system\\collaboration\\shared.md",
+      "host_delivery": {
+        "status": "delivered_via_codex_thread_tool",
+        "delivery_tool": "codex_app__send_message_to_thread",
+        "mode": "record_only"
+      }
+    },
+    {
+      "id": "REQ-20260729-162638Z-safety-quality-review",
+      "from": "coordination-handoff",
+      "to": "safety-quality-review",
+      "message_type": "instruction",
+      "recorded_in": "_system\\collaboration\\shared.md",
+      "host_delivery": {
+        "status": "delivered_via_codex_thread_tool",
+        "delivery_tool": "codex_app__send_message_to_thread",
+        "mode": "record_only"
+      }
+    },
+    {
+      "id": "REQ-20260729-162704Z-safety-quality-review",
+      "from": "coordination-handoff",
+      "to": "safety-quality-review",
+      "message_type": "instruction",
+      "recorded_in": "_system\\collaboration\\shared.md",
+      "host_delivery": {
+        "status": "delivered_via_codex_thread_tool",
+        "delivery_tool": "codex_app__send_message_to_thread",
+        "mode": "record_only"
+      }
+    },
+    {
+      "id": "REQ-20260729-162822Z-specification-validation",
+      "from": "coordination-handoff",
+      "to": "specification-validation",
+      "message_type": "instruction",
+      "recorded_in": "_system\\collaboration\\shared.md",
+      "host_delivery": {
+        "status": "delivered_via_codex_thread_tool",
+        "delivery_tool": "codex_app__send_message_to_thread",
+        "mode": "record_only"
+      }
+    }
+  ]
+}

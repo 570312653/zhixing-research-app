@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 2400" role="img" aria-labelledby="title desc">
+  <title id="title">知行 Android 启动页预览</title>
+  <desc id="desc">浅灰白背景中央显示知行图标、品牌名和个人市场研究副标题</desc>
+  <rect width="1080" height="2400" fill="#F4F7FA"/>
+  <g transform="translate(348 760) scale(.375)">
+    <rect width="1024" height="1024" rx="224" fill="#1E3A8A"/>
+    <path d="M252 300c94 6 181 40 260 112 79-72 166-106 260-112v366c-96 5-182 42-260 112-78-70-164-107-260-112z" fill="none" stroke="#FFFFFF" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M512 412v362" fill="none" stroke="#FFFFFF" stroke-width="42" stroke-linecap="round"/>
+    <path d="M512 516c52-25 96-71 132-138" fill="none" stroke="#7DD3FC" stroke-width="38" stroke-linecap="round"/>
+    <circle cx="650" cy="364" r="24" fill="#7DD3FC"/>
+  </g>
+  <text x="540" y="1285" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="92" font-weight="700" fill="#102B44">知行</text>
+  <text x="540" y="1370" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="34" letter-spacing="8" fill="#6B7280">个人市场研究</text>
+</svg>
+

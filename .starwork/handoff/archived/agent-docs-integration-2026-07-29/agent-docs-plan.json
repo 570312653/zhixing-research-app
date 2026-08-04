@@ -1,0 +1,23 @@
+{
+  "schema": "starwork.agent_docs_plan.v0.1",
+  "generated_at": "2026-07-29T15:46:19.702Z",
+  "target": "D:\\Codex\\投顾APP",
+  "context": "init",
+  "status": "draft_required",
+  "entries": [
+    {
+      "kind": "agent_rules",
+      "target_path": "AGENTS.md",
+      "target_exists": true,
+      "draft_path": ".starwork/drafts/AGENTS.proposed.md",
+      "action": "merge_required",
+      "reason": "Existing AGENTS.md must be preserved and semantically integrated.",
+      "required_topics": [
+        "StarWork read-first files",
+        "workspace write boundaries",
+        "project Skill directories",
+        "MultiAgent lane workflow"
+      ]
+    }
+  ]
+}

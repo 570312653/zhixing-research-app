@@ -1,0 +1,47 @@
+<!-- “我的 / 个人操作页”正式 UI/UX 页面稿；2026-08-02 用户确认全部采用推荐方案 A。 -->
+<style>
+  *{box-sizing:border-box}.stage{display:flex;justify-content:center;align-items:flex-start;gap:28px;margin-top:22px}.phone{width:410px;border:1px solid #cad5df;border-radius:27px;background:#eff4f7;padding:10px;box-shadow:0 16px 38px rgba(15,39,64,.11)}.screen{height:940px;background:#f8fafc;border-radius:19px;overflow:auto;display:flex;flex-direction:column;scrollbar-width:none}.screen::-webkit-scrollbar{display:none}.statusbar{font-size:10px;color:#667085;padding:9px 15px 3px;display:flex;justify-content:space-between;background:#fff}.head{background:#fff;padding:11px 14px 13px;border-bottom:1px solid #e6ecf1}.head h3{font-size:21px;color:#173f6b;margin:0}.body{padding:13px 13px 76px}.owner{background:linear-gradient(145deg,#173f6b,#286493);color:#fff;border-radius:16px;padding:15px}.owner-top{display:flex;justify-content:space-between;align-items:start}.avatar{display:flex;gap:10px;align-items:center}.avatar-icon{width:38px;height:38px;border-radius:13px;background:rgba(255,255,255,.15);display:grid;place-items:center;font-size:17px}.avatar b{font-size:13px}.avatar small{display:block;font-size:8px;color:#cfdeea;margin-top:3px}.mode{font-size:7px;padding:5px 7px;border-radius:999px;background:#fff0c9;color:#855c0b}.owner-foot{display:flex;justify-content:space-between;font-size:8px;color:#d4e2ed;margin-top:13px}.sync{background:#fff;border:1px solid #dce5ed;border-radius:13px;padding:11px;margin-top:10px;display:flex;justify-content:space-between;align-items:center}.sync b{font-size:9px;color:#344054}.sync p{font-size:7px;color:#98a2b3;margin:4px 0 0}.button{font-size:8px;color:#fff;background:#286493;border-radius:9px;padding:7px 10px}.section{margin-top:14px}.section-title{display:flex;justify-content:space-between;align-items:center;margin:0 1px 8px}.section-title h4{font-size:13px;color:#26384b;margin:0}.section-title span{font-size:8px;color:#7b8794}.tasks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.task{background:#fff;border:1px solid #dce5ed;border-radius:12px;padding:10px}.task-top{display:flex;justify-content:space-between;align-items:start}.task b{font-size:9px;color:#344054}.task p{font-size:7px;color:#98a2b3;line-height:1.4;margin:6px 0 0}.task-state{font-size:7px;border-radius:999px;padding:4px 6px}.done{background:#e8f6ee;color:#18794e}.failed{background:#fff0f0;color:#b42318}.waiting{background:#eef3f7;color:#596b7a}.failure{background:#fff;border:1px solid #f0c7c4;border-radius:12px;padding:10px;margin-top:8px}.failure-head{display:flex;justify-content:space-between;align-items:center}.failure b{font-size:9px;color:#8e2f28}.failure p{font-size:8px;color:#667085;line-height:1.45;margin:6px 0}.actions{display:flex;gap:6px;justify-content:flex-end}.ghost,.primary{font-size:7px;border-radius:8px;padding:6px 8px}.ghost{background:#f1f4f7;color:#52606d}.primary{background:#173f6b;color:#fff}.group{background:#fff;border:1px solid #dce5ed;border-radius:13px;overflow:hidden}.row{display:flex;justify-content:space-between;align-items:center;padding:11px;border-bottom:1px solid #edf1f4}.row:last-child{border-bottom:0}.row-main{display:flex;gap:9px;align-items:center}.row-icon{width:29px;height:29px;border-radius:9px;background:#eaf3fa;color:#286493;display:grid;place-items:center;font-size:12px}.row b{display:block;font-size:9px;color:#344054}.row small{display:block;font-size:7px;color:#98a2b3;margin-top:3px}.row-right{font-size:8px;color:#667085}.warning{background:#fff8ec;border:1px solid #f0d7aa;border-radius:11px;padding:9px 10px;font-size:8px;color:#745b43;line-height:1.45;margin-top:10px}.nav{position:sticky;bottom:0;margin-top:auto;background:rgba(255,255,255,.96);border-top:1px solid #e7edf2;padding:10px 8px;display:flex;justify-content:space-around;font-size:9px;color:#7b8794}.nav b{color:#173f6b}.notes{width:410px}.panel{background:#fff;border:1px solid #dbe3eb;border-radius:17px;padding:19px 20px;box-shadow:0 9px 24px rgba(15,23,42,.06);margin-bottom:14px}.panel h3{margin:0 0 11px;color:#173f6b;font-size:15px}.panel ol,.panel ul{padding-left:18px;margin:0}.panel li{font-size:10px;color:#52606d;line-height:1.55;margin-bottom:8px}.badge-row{display:flex;gap:6px;flex-wrap:wrap}.badge{font-size:9px;padding:6px 8px;border-radius:999px;background:#eef4f8;color:#345b78}.boundary{font-size:10px;color:#667085;line-height:1.65;margin:0}.boundary b{color:#344054}.safe{border-left:3px solid #2e7d5b;padding-left:10px}@media(max-width:900px){.stage{flex-direction:column;align-items:center}.notes{max-width:410px;width:100%}}
+</style>
+
+<h2>我的 · 个人操作页推荐预览</h2>
+<p class="subtitle">本页按集中决策表中的全部推荐项生成，供对照讨论；任务、账户和版本状态均为固定样例。</p>
+
+<div class="stage">
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>20:20</span><span>● ● ▰</span></div>
+    <header class="head"><h3>我的</h3></header>
+    <main class="body">
+      <section class="owner"><div class="owner-top"><div class="avatar"><span class="avatar-icon">知</span><div><b>个人研究空间</b><small>仅限所有者本人访问</small></div></div><span class="mode">本地样例模式</span></div><div class="owner-foot"><span>访问状态：云端认证待接入</span><span>设备与访问　›</span></div></section>
+      <section class="sync"><div><b>内容同步</b><p>最后同步：今天 20:18 · 当前在线</p></div><span class="button">刷新内容</span></section>
+
+      <section class="section"><div class="section-title"><h4>今日任务</h4><span>2 完成 · 1 失败 · 1 未到时间</span></div><div class="tasks">
+        <article class="task"><div class="task-top"><b>早盘扫描</b><span class="task-state done">已完成</span></div><p>08:31 完成 · v1.0</p></article>
+        <article class="task"><div class="task-top"><b>午间复盘</b><span class="task-state done">已完成</span></div><p>12:07 完成 · v1.0</p></article>
+        <article class="task"><div class="task-top"><b>每日复盘</b><span class="task-state failed">失败</span></div><p>17:32 · 数据校验未通过</p></article>
+        <article class="task"><div class="task-top"><b>行业跟踪</b><span class="task-state waiting">未到时间</span></div><p>计划时间 20:00</p></article>
+      </div><article class="failure"><div class="failure-head"><b>每日复盘生成失败</b><span class="task-state failed">不可自动发布</span></div><p>部分必填数据缺失，报告未归档。错误码 DATA_INCOMPLETE，最后尝试于 17:32。</p><div class="actions"><span class="ghost">查看原因</span><span class="primary">确认后重试</span></div></article></section>
+
+      <section class="section"><div class="section-title"><h4>本机内容</h4><span>仅管理手机副本</span></div><div class="group">
+        <div class="row"><div class="row-main"><span class="row-icon">PDF</span><div><b>已下载 PDF</b><small>8 份报告 · 42 MB</small></div></div><span class="row-right">管理　›</span></div>
+        <div class="row"><div class="row-main"><span class="row-icon">▤</span><div><b>离线报告缓存</b><small>26 份报告 · 84 MB</small></div></div><span class="row-right">清理　›</span></div>
+      </div><div class="warning">清理操作只删除本机副本，不影响未来云端归档；执行前需要再次确认。</div></section>
+
+      <section class="section"><div class="section-title"><h4>应用与诊断</h4><span>不包含敏感信息</span></div><div class="group">
+        <div class="row"><div class="row-main"><span class="row-icon">↑</span><div><b>应用版本</b><small>v0.1.0 · 调试样例</small></div></div><span class="row-right">检查更新　›</span></div>
+        <div class="row"><div class="row-main"><span class="row-icon">◇</span><div><b>运行诊断</b><small>错误码、同步时间与诊断编号</small></div></div><span class="row-right">查看　›</span></div>
+        <div class="row"><div class="row-main"><span class="row-icon">⌁</span><div><b>设备与访问</b><small>所有者模式、锁定与退出入口</small></div></div><span class="row-right">进入　›</span></div>
+        <div class="row"><div class="row-main"><span class="row-icon">i</span><div><b>关于知行</b><small>风险提示、版本说明与开源信息</small></div></div><span class="row-right">查看　›</span></div>
+      </div></section>
+    </main>
+    <nav class="nav"><span>今日</span><span>报告库</span><span>研究</span><b>我的</b></nav>
+  </div></div>
+
+  <aside class="notes">
+    <section class="panel"><h3>推荐方案映射</h3><div class="badge-row"><span class="badge">个人运行面板</span><span class="badge">同步与生成分离</span><span class="badge">四类任务摘要</span><span class="badge">受控失败重试</span><span class="badge">离线缓存管理</span><span class="badge">脱敏诊断</span><span class="badge">私有 APK 更新</span></div></section>
+    <section class="panel"><h3>页面操作逻辑</h3><ol><li>先确认当前运行模式、访问状态和最后同步时间。</li><li>查看今日四类任务是否完整，失败项才展开恢复入口。</li><li>“刷新内容”只同步索引与状态，不重新生成报告。</li><li>本机 PDF 和缓存可管理，但不能删除云端归档。</li><li>版本、诊断和访问入口集中放在页面底部。</li></ol></section>
+    <section class="panel"><h3>离线与安全边界</h3><ul><li>离线时已缓存报告继续可读，刷新与重试暂时禁用。</li><li>诊断信息只包含脱敏错误码、时间、版本和诊断编号。</li><li>首版不展示通知、订阅、成员、数据源或模型配置。</li><li>清缓存、退出和锁定需要二次确认。</li></ul></section>
+    <section class="panel"><h3>样例边界</h3><p class="boundary safe"><b>当前还没有认证、云端任务或正式 APK 更新服务。</b>页面展示的是未来接口结构和固定状态样例，不得据此声称这些能力已经上线。</p></section>
+  </aside>
+</div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "functions": {
+    "api/coze-delivery-test.js": {
+      "maxDuration": 10
+    },
+    "api/coze-agent-poc-run.js": {
+      "maxDuration": 30
+    },
+    "api/coze-agent-poc-async-run.js": {
+      "maxDuration": 15
+    },
+    "api/coze-agent-poc-async-status.js": {
+      "maxDuration": 15
+    }
+  }
+}

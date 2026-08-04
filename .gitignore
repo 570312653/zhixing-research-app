@@ -1,0 +1,69 @@
+# Environment variables and credentials
+**/.env
+**/.env.*
+!**/.env.example
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+**/*.crt
+**/*.cer
+**/*.jks
+**/*.keystore
+**/keystore.properties
+**/signing.properties
+**/local.properties
+**/google-services.json
+
+# Node.js, Vite and test outputs
+**/node_modules/
+**/.npm/
+**/.pnpm-store/
+**/.vite/
+**/.turbo/
+**/.next/
+**/dist/
+**/out/
+**/coverage/
+**/playwright-report/
+**/blob-report/
+**/test-results/
+**/*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Android and Gradle local/build outputs
+**/.gradle/
+**/build/
+**/captures/
+**/.externalNativeBuild/
+**/.cxx/
+*.apk
+*.aab
+
+# Vercel local metadata
+**/.vercel/
+
+# Python local environments and caches
+**/__pycache__/
+**/.pytest_cache/
+**/.venv/
+**/venv/
+**/*.py[cod]
+
+# IDE and operating-system metadata
+**/.idea/
+**/.vscode/
+**/*.iml
+**/.DS_Store
+**/Thumbs.db
+**/desktop.ini
+
+# Project-local application/runtime state
+/.obsidian/
+/.superpowers/
+/.docx-review/
+/tmp/

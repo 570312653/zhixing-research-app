@@ -46,7 +46,9 @@ webDir: 'dist'
 
 - [ ] **Step 1: 创建最小 Vite React TypeScript 工程**
 
-使用 npm 创建项目并安装 React Router、Vitest、Testing Library、Playwright、Capacitor core/cli/android 和 `@capacitor/assets`。Capacitor 包限定主版本 8，实际精确版本由 `package-lock.json` 固定。
+使用 npm 创建项目并安装 React Router、Vitest、Testing Library、Playwright 与 Capacitor core/cli/android。Capacitor 包限定主版本 8，实际精确版本由 `package-lock.json` 固定。
+
+本任务不安装 `@capacitor/assets`。已验证其当前候选版本 `3.0.5` 固定依赖 `sharp@0.32.6`，在项目当前 Node.js 24 环境中无法完成安装。不得使用 `--ignore-scripts`、强制覆盖传递依赖或临时安装 Python 来绕过；品牌资产工具的选择与兼容性验证统一延后到 Task 9。
 
 - [ ] **Step 2: 先写 App 壳失败测试**
 
@@ -316,7 +318,11 @@ npm.cmd run test:e2e
 - Modify generated Android resources under: `client-app/android/app/src/main/res/`
 - Modify: `client-app/package.json`
 
-- [ ] **Step 1: 从已批准 SVG 生成源资产**
+- [ ] **Step 1: 选择并验证 Node.js 24 兼容的资产生成方案**
+
+先在隔离分支中验证候选工具是否支持当前 Node.js 24、Capacitor 8 和 Android 36。`@capacitor/assets@3.0.5` 因固定依赖 `sharp@0.32.6`，不得作为默认方案；也不得通过 `--ignore-scripts`、强制覆盖传递依赖或补装与项目无关的本机编译链来绕过。若没有安全兼容的工具，应改为可审计的 SVG/PNG 到 Android `res/` 的确定性生成脚本，并补充测试与生成说明。
+
+- [ ] **Step 2: 从已批准 SVG 生成源资产**
 
 输入只来自：
 
@@ -327,7 +333,7 @@ docs/ui-ux/brand/splash-screen-preview.svg
 
 图标源至少 1024×1024，启动图源至少 2732×2732；不得自行改变图形、文字和颜色。
 
-- [ ] **Step 2: 添加 Android 平台**
+- [ ] **Step 3: 添加 Android 平台**
 
 ```powershell
 npm.cmd run build
@@ -335,19 +341,17 @@ npx.cmd cap add android
 npx.cmd cap sync android
 ```
 
-- [ ] **Step 3: 验证 Android 参数**
+- [ ] **Step 4: 验证 Android 参数**
 
 确认应用 ID `com.zhixing.research`、显示名“知行”、`minSdk 24 / compileSdk 36 / targetSdk 36`，并确认 `local.properties` 被 Git 忽略。
 
-- [ ] **Step 4: 生成自适应图标与启动页资源**
+- [ ] **Step 5: 生成自适应图标与启动页资源**
 
-```powershell
-npx.cmd capacitor-assets generate --android
-```
+执行 Step 1 已验证并锁定版本的资产生成命令；若采用项目内确定性脚本，则运行对应的 `npm.cmd run assets:android`。不得在此步骤临时切换未经验证的工具。
 
 检查 Android 12+ 启动页使用品牌图标和浅色背景，不显示伪加载进度。
 
-- [ ] **Step 5: 运行 Web 回归**
+- [ ] **Step 6: 运行 Web 回归**
 
 确保添加原生外壳没有改变 Web 页面和测试。
 

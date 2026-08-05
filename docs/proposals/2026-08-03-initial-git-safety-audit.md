@@ -181,3 +181,20 @@ phase1-webhook-test/ 中不含敏感信息的历史源码与文档
 审计只输出命中文件与规则类别，不输出可能的匹配值。`git diff --cached --check` 对历史 Markdown 的双空格换行和文件末尾空行给出格式提示；这些不是密钥、安全或构建风险，本轮不对 186 个历史文件做无关的批量格式改写。
 
 用户已提供 Git 作者信息，并且只写入本仓库的本地配置；全局 Git 作者配置保持未设置。安全基线提交说明为 `chore: establish secure project baseline`。
+
+## 10. Android 工程初始化环境验收（2026-08-05）
+
+| 检查项 | 结果 |
+|---|---|
+| Android Studio | 已安装；产品构建 `AI-261.26222.65.2613.15948027` |
+| Android Studio JDK | 已验证可执行 |
+| Android SDK Platform | API 36 已安装 |
+| Build Tools | 36.0.0 已安装 |
+| Platform Tools / ADB | 已验证可执行 |
+| Command-line Tools | latest 已安装 |
+| 模拟器加速 | WHPX 可用 |
+| 开发 AVD | 单一 API 36 AVD 已创建并完成开机 |
+| ADB 状态 | 模拟器状态为 `device`，系统启动完成 |
+| 真机 | 按用户确认延后至首个调试 APK 的最终验收 |
+
+本记录不包含 SDK 本机路径、模拟器序列号或任何凭证。Android 模拟器门槛通过后允许初始化 `client-app/`；未完成真机冒烟前，不得将离线客户端切片标为最终完成。

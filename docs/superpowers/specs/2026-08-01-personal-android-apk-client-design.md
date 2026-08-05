@@ -18,7 +18,7 @@
 - 不采用原生 Kotlin/Flutter：当前没有摄像头、蓝牙、复杂离线同步等必须原生实现的能力，重写界面没有收益。
 - 客户端目录固定为 `client-app/`，应用显示名为“知行”，应用 ID 为 `com.zhixing.research`。
 - 使用 React Router Hash 路由；首切片只使用 React 内置状态与仓库接口，不引入全局状态库。
-- Android 参数为 `minSdk 24 / compileSdk 36 / targetSdk 36`；首轮真机优先、模拟器补充。
+- Android 参数为 `minSdk 24 / compileSdk 36 / targetSdk 36`；工程初始化和日常开发先使用单一 API 36 模拟器，首个调试 APK 完成前仍须保留真机最终验收。
 - 首个产物只允许调试 APK，不创建正式签名证书。
 - 完整的版本控制、安全和工具链决策见 `2026-08-03-client-engineering-preflight-decisions.md`。
 

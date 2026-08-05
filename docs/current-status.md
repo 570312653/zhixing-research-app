@@ -52,14 +52,16 @@ HTML 是主阅读格式，现有 A4 打印 CSS 不等于正式 PDF 已完成；�
 
 ## 下一步候选
 
-下一步继续客户端地基计划：由用户安装 Android Studio/SDK，并验证 ADB 真机链路。
+Android Studio、SDK Platform 36、Build Tools、Platform Tools、Command-line Tools、ADB 与内置 JDK 已完成本机验证；单一 API 36 AVD 已创建、启动并通过 ADB 开机检查。客户端工程初始化门槛已通过，下一步可创建 `client-app/`。
+
+当前采用“模拟器先行、真机最终验收”：客户端工程初始化和日常开发不要求立即连接手机；首个调试 APK 可先在模拟器安装，但离线客户端切片完成前仍须在自有手机完成一次安装和关键冒烟。
 
 地基与客户端文件级计划均已形成：
 
 - `docs/superpowers/plans/2026-08-03-client-foundation-readiness.md`
 - `docs/superpowers/plans/2026-08-03-personal-android-client-offline-slice.md`
 
-在地基计划验收前，不初始化客户端工程；任何阶段都不提前接入真实数据、网络、密钥、云端调度、用户认证或正式 PDF。
+地基计划的工程初始化门槛已通过；`client-app/` 只允许按离线固定样例计划推进，任何阶段都不提前接入真实数据、网络、密钥、云端调度、用户认证或正式 PDF。
 
 后续独立能力：`holiday_digest`、`month_end_review`、`industry_research`、`watchlist_snapshot`、正式 PDF 导出、`generatedAt` 字段、数据适配器契约和可信云端运行时。
 

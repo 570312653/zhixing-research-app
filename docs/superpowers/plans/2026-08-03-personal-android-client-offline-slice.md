@@ -10,7 +10,8 @@
 
 ## Global Constraints
 
-- 开始前必须通过 `2026-08-03-client-foundation-readiness.md` 的全部验收。
+- 开始前必须通过 `2026-08-03-client-foundation-readiness.md` 中的工程初始化门槛：版本控制边界、Android Studio/SDK/JDK/ADB、单一 API 36 AVD 与报告引擎回归。真机验收只作为本切片 Task 10/Task 11 的完成门槛，不阻塞 Task 1。
+- 工程初始化和日常开发先使用单一 API 36 AVD；首个调试 APK 的模拟器安装通过后仍须保留真机最终验收，未通过真机冒烟前不得将本切片标为完成。
 - 只使用固定、去敏、可提交的样例；不使用真实市场数据、真实报告、Token、API Key、环境变量或服务端地址。
 - 不发起业务网络请求；不接 iFind、Coze、Vercel、Supabase、认证、云端 PDF、日程或通知。
 - 不修改 `report-engine/src/` 的业务行为；只运行其现有回归测试。
@@ -367,21 +368,25 @@ Set-Location D:\Codex\投顾APP\client-app\android
 
 预期：生成调试 APK；不生成 release keystore。
 
-- [ ] **Step 2: 安装到已授权真机**
+- [ ] **Step 2: 安装到 API 36 模拟器**
 
 ```powershell
 adb install -r .\app\build\outputs\apk\debug\app-debug.apk
 ```
 
-- [ ] **Step 3: 真机冒烟测试**
+- [ ] **Step 3: 模拟器冒烟测试**
 
-验证启动页、图标、九个页面、返回路径、390px 等效阅读宽度、离线启动、PDF 不可用提示和所有禁用操作。记录手机型号和 Android 版本，不记录序列号。
+验证启动页、图标、九个页面、返回路径、390px 等效阅读宽度、离线启动、PDF 不可用提示和所有禁用操作。记录 AVD 的 API 级别，不记录模拟器序列号。
 
-- [ ] **Step 4: APK 静态安全检查**
+- [ ] **Step 4: 真机最终验收**
+
+在用户方便时，将同一调试 APK 安装到已授权的自有手机并重复关键冒烟测试。只记录手机型号、Android 版本和结果，不记录设备序列号；未完成时明确标记“模拟器通过、真机待验收”。
+
+- [ ] **Step 5: APK 静态安全检查**
 
 检查源码、构建日志和 APK 解包字符串中不存在真实服务端 URL、Token、API Key、`.env` 值、真实报告或签名口令。命中只报告类别和文件，不输出疑似秘密本身。
 
-- [ ] **Step 5: 写验证记录**
+- [ ] **Step 6: 写验证记录**
 
 记录构建命令、测试结果、APK SHA-256、测试设备信息和已知限制。明确这是调试 APK，不可作为正式分发包。
 

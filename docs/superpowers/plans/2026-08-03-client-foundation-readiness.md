@@ -161,15 +161,15 @@ git commit -m "chore: establish secure project baseline"
 
 **Gate:** 软件安装由用户确认后通过 Google 官方 Windows EXE 进行；不使用第三方镜像或静默安装脚本。
 
-- [ ] **Step 1: 下载并运行官方安装器**
+- [x] **Step 1: 下载并运行官方安装器**
 
 从 <https://developer.android.com/studio/install> 下载当前稳定版 Windows EXE。安装 Android Studio、Android SDK、Platform Tools 和一个 API 36 SDK Platform；接受 Setup Wizard 推荐的 Android Studio JDK。
 
-- [ ] **Step 2: 验证 Android Studio 版本**
+- [x] **Step 2: 验证 Android Studio 版本**
 
 在 Android Studio 的 About 页面确认版本不低于 2025.2.1。
 
-- [ ] **Step 3: 验证 SDK 组件**
+- [x] **Step 3: 验证 SDK 组件**
 
 在 SDK Manager 确认：
 
@@ -180,20 +180,20 @@ Android SDK Platform-Tools
 Android SDK Command-line Tools (latest)
 ```
 
-- [ ] **Step 4: 记录本机路径但不提交**
+- [x] **Step 4: 记录本机路径但不提交**
 
 未来 `client-app/android/local.properties` 由 Android Studio 写入并被 `.gitignore` 排除。不得把 SDK 路径硬编码进项目文档或源码。
 
 ---
 
-### Task 5: 验证 ADB 与真机调试条件
+### Task 5: 验证 ADB 与模拟器开发条件
 
 **Files:**
 - Modify: `docs/proposals/2026-08-03-initial-git-safety-audit.md`
 
-**Produces:** 不含设备序列号的环境验收记录。
+**Produces:** 不含设备序列号或本机 SDK 路径的环境验收记录。
 
-- [ ] **Step 1: 验证命令行工具**
+- [x] **Step 1: 验证命令行工具**
 
 在 Android Studio Terminal 或已配置路径的 PowerShell 中运行：
 
@@ -203,39 +203,39 @@ adb version
 
 预期：返回 Android Debug Bridge 版本，不出现“命令不存在”。
 
-- [ ] **Step 2: 准备真机**
+- [x] **Step 2: 创建单一 API 36 模拟器**
 
-用户提供测试手机型号和 Android 版本，在手机上启用开发者选项与 USB 调试。首次连接时由用户在手机上确认此电脑的调试授权。
+在 Device Manager 中只创建一个 API 36 AVD，作为客户端工程初始化和日常开发门槛；避免同时运行多个 AVD。当前约 15 GB 内存达到官方最低线，但不是推荐的 32 GB。
 
-- [ ] **Step 3: 验证设备连接**
+- [x] **Step 3: 验证模拟器连接**
 
 ```powershell
 adb devices
 ```
 
-预期：至少一个设备状态为 `device`。审计文档只记录“已连接”、手机型号、Android 版本和验证日期，不记录设备序列号。
+预期：启动 AVD 后至少一个模拟器状态为 `device`。审计文档只记录“API 36 模拟器可用”和验证日期，不记录模拟器序列号。
 
-- [ ] **Step 4: 可选模拟器补充**
+- [x] **Step 4: 延后真机最终验收**
 
-如需模拟器，只创建一个 API 36 AVD；避免同时运行多个 AVD。当前约 15 GB 内存达到官方最低线，但不是推荐的 32 GB。
+客户端工程初始化不再以真机连接为前置条件。首个调试 APK 可先在 API 36 模拟器安装和冒烟；但离线客户端切片最终完成前，仍须由用户在自有手机上授权 USB 调试并完成一次真机安装与冒烟。未完成时必须明确标注“模拟器通过、真机待验收”。
 
 ---
 
 ### Task 6: 地基验收与实施放行
 
 **Files:**
-- Modify: `docs/proposals/2026-08-03-foundation-readiness-checklist.md`
+- Modify: `docs/proposals/2026-08-01-foundation-readiness-checklist.md`
 - Modify: `docs/current-status.md`
 
-- [ ] **Step 1: 验收版本控制边界**
+- [x] **Step 1: 验收版本控制边界**
 
 确认 `.gitignore` 测试、提交候选审计和本地基线提交全部通过；没有 GitHub remote 或外部推送。
 
-- [ ] **Step 2: 验收 Android 环境**
+- [x] **Step 2: 验收 Android 环境**
 
-确认 Android Studio 2025.2.1+、SDK 36、Platform Tools、ADB、Android Studio JDK 和一台真机可用。
+确认 Android Studio 2025.2.1+、SDK 36、Platform Tools、ADB、Android Studio JDK 和一个 API 36 AVD 可用。真机只作为离线客户端切片的最终验收门槛，不阻塞工程初始化。
 
-- [ ] **Step 3: 回归现有报告引擎**
+- [x] **Step 3: 回归现有报告引擎**
 
 ```powershell
 Set-Location D:\Codex\投顾APP\report-engine
@@ -245,6 +245,6 @@ npm.cmd run build
 
 预期：现有全部测试与 TypeScript 构建继续通过。
 
-- [ ] **Step 4: 更新状态**
+- [x] **Step 4: 更新状态**
 
 只有上述门槛全部通过，才把“客户端工程初始化”标为可执行，并转入 `2026-08-03-personal-android-client-offline-slice.md`。

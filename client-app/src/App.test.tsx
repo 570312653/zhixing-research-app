@@ -1,18 +1,18 @@
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { render, screen, waitFor } from '@testing-library/react'
+import { beforeEach, describe, expect, it } from 'vitest'
+import App from './App'
 
 describe('App shell', () => {
-  it('shows the Zhixing brand, four bottom entries, and the default Today page', async () => {
-    const module = await import('./App').catch(() => null)
+  beforeEach(() => {
+    window.location.hash = ''
+  })
 
-    expect(module).not.toBeNull()
-
-    if (module === null) {
-      return
-    }
-
-    const App = module.default
+  it('normalizes an empty hash to Today and shows the fixed app shell', async () => {
     render(<App />)
+
+    await waitFor(() => {
+      expect(window.location.hash).toBe('#/today')
+    })
 
     expect(screen.getByRole('heading', { name: '知行' })).toBeInTheDocument()
     expect(screen.getByRole('main', { name: '今日' })).toBeInTheDocument()

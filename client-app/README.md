@@ -1,32 +1,29 @@
-# React + TypeScript + Vite
+# 知行客户端
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+这是“知行”个人市场研究工具的客户端工程。目前只包含可测试、可构建的离线 Web 应用壳，以及供后续 Capacitor 封装使用的基础配置。
 
-Currently, two official plugins are available:
+当前范围：
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React、Vite、TypeScript 和 Hash 路由骨架。
+- “今日 / 报告库 / 研究 / 我的”四个固定导航入口。
+- 固定、去敏的占位内容。
 
-## React Compiler
+当前不包含：
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Android 原生平台目录、应用图标或启动页；这些属于实施计划的 Task 9。
+- 网络请求、真实市场数据、服务端地址、认证信息或任何密钥。
+- 正式报告页面和后续业务功能。
 
-## Expanding the Oxlint configuration
+## 本地验证
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```powershell
+npm.cmd test -- --run
+npm.cmd run build
+npm.cmd run lint
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+生产依赖安全检查：
+
+```powershell
+npm.cmd audit --omit=dev --audit-level=high
+```

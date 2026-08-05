@@ -1,4 +1,4 @@
-import { HashRouter, Navigate, NavLink, Route, Routes } from 'react-router-dom'
+import { HashRouter, Navigate, NavLink, Route, Routes } from 'react-router'
 
 const navigationItems = [
   { label: '今日', path: '/today' },

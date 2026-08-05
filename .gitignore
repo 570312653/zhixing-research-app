@@ -65,5 +65,6 @@ pnpm-debug.log*
 # Project-local application/runtime state
 /.obsidian/
 /.superpowers/
+/.worktrees/
 /.docx-review/
 /tmp/

@@ -44,17 +44,17 @@ appName: '知行'
 webDir: 'dist'
 ```
 
-- [ ] **Step 1: 创建最小 Vite React TypeScript 工程**
+- [x] **Step 1: 创建最小 Vite React TypeScript 工程**
 
 使用 npm 创建项目并安装 React Router、Vitest、Testing Library、Playwright 与 Capacitor core/cli/android。Capacitor 包限定主版本 8，实际精确版本由 `package-lock.json` 固定。
 
 本任务不安装 `@capacitor/assets`。已验证其当前候选版本 `3.0.5` 固定依赖 `sharp@0.32.6`，在项目当前 Node.js 24 环境中无法完成安装。不得使用 `--ignore-scripts`、强制覆盖传递依赖或临时安装 Python 来绕过；品牌资产工具的选择与兼容性验证统一延后到 Task 9。
 
-- [ ] **Step 2: 先写 App 壳失败测试**
+- [x] **Step 2: 先写 App 壳失败测试**
 
 断言应用显示“知行”、四个固定底部导航入口“今日 / 报告库 / 研究 / 我的”，并且默认进入 `/today` 语义页面。
 
-- [ ] **Step 3: 运行测试确认 RED**
+- [x] **Step 3: 运行测试确认 RED**
 
 ```powershell
 Set-Location D:\Codex\投顾APP\client-app
@@ -63,11 +63,11 @@ npm.cmd test -- --run
 
 预期：导航壳尚未实现，测试失败。
 
-- [ ] **Step 4: 实现最小 App 壳与 Hash 路由入口**
+- [x] **Step 4: 实现最小 App 壳与 Hash 路由入口**
 
 创建仅含路由出口和四个导航入口的结构，不提前实现页面内容。
 
-- [ ] **Step 5: 运行测试和类型检查确认 GREEN**
+- [x] **Step 5: 运行测试和类型检查确认 GREEN**
 
 ```powershell
 npm.cmd test -- --run

@@ -1,7 +1,7 @@
 # 知行项目当前状态
 
 > 标签：AI写  
-> 最后更新：2026-08-04  
+> 最后更新：2026-08-06
 > 本文件是快速恢复入口，不替代产品需求、架构决策或 `AGENTS.md`。
 
 ## 项目目标
@@ -21,6 +21,7 @@
 - 已确认项目根 Git 边界、敏感文件策略、`client-app/` 目录、React/Vite/Capacitor 8、Hash 路由、`com.zhixing.research` 和 Android SDK 参数；
 - 历史 `phase1-webhook-test` Vercel 项目已于 2026-08-04 暂停，平台控制面复核为 `paused: true`；本地审计代码保留，不再对外提供服务；
 - 项目根本地 Git 已初始化为 `main`，暂存安全审计通过并已建立本地安全基线提交；未添加远端、未连接 GitHub、未推送；
+- 已在隔离 worktree 的 `feature/android-client-offline` 分支完成 `client-app/` Task 1 工程骨架：Vite、React、Capacitor 8、Hash 路由、四项主导航和默认 `#/today`；测试、构建、lint 与生产依赖审计均通过；
 - 当前没有真实交易日历、真实数据源、模型、网络、环境变量、云端调度、APK、用户认证、归档、发布、通知或正式 PDF 导出。
 
 ## 最近完成的切片
@@ -52,7 +53,7 @@ HTML 是主阅读格式，现有 A4 打印 CSS 不等于正式 PDF 已完成；�
 
 ## 下一步候选
 
-Android Studio、SDK Platform 36、Build Tools、Platform Tools、Command-line Tools、ADB 与内置 JDK 已完成本机验证；单一 API 36 AVD 已创建、启动并通过 ADB 开机检查。客户端工程初始化门槛已通过，下一步可创建 `client-app/`。
+Android Studio、SDK Platform 36、Build Tools、Platform Tools、Command-line Tools、ADB 与内置 JDK 已完成本机验证；单一 API 36 AVD 已创建、启动并通过 ADB 开机检查。客户端工程初始化门槛和 `client-app/` Task 1 骨架均已通过，下一步按正式计划执行 Task 2：建立设计 Token、基础样式、`AppShell` 与底部导航视觉状态。
 
 当前采用“模拟器先行、真机最终验收”：客户端工程初始化和日常开发不要求立即连接手机；首个调试 APK 可先在模拟器安装，但离线客户端切片完成前仍须在自有手机完成一次安装和关键冒烟。
 
@@ -61,7 +62,7 @@ Android Studio、SDK Platform 36、Build Tools、Platform Tools、Command-line T
 - `docs/superpowers/plans/2026-08-03-client-foundation-readiness.md`
 - `docs/superpowers/plans/2026-08-03-personal-android-client-offline-slice.md`
 
-地基计划的工程初始化门槛已通过；`client-app/` 只允许按离线固定样例计划推进，任何阶段都不提前接入真实数据、网络、密钥、云端调度、用户认证或正式 PDF。
+地基计划的工程初始化门槛与客户端 Task 1 已通过；`client-app/` 只允许按离线固定样例计划推进，任何阶段都不提前接入真实数据、网络、密钥、云端调度、用户认证或正式 PDF。品牌资产生成工具已明确延后到 Task 9 单独验证 Node.js 24 兼容性，不使用安装脚本绕过或传递依赖强制覆盖。
 
 后续独立能力：`holiday_digest`、`month_end_review`、`industry_research`、`watchlist_snapshot`、正式 PDF 导出、`generatedAt` 字段、数据适配器契约和可信云端运行时。
 

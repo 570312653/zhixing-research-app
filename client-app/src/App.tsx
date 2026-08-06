@@ -10,7 +10,7 @@ function AppContent() {
   const { pathname } = useLocation()
   const contentLabel = pathname.startsWith('/reports') ? '报告库'
     : pathname.startsWith('/research') ? '研究'
-      : pathname.startsWith('/mine') ? '我的'
+      : pathname.startsWith('/me') ? '我的'
         : '今日'
 
   return (
@@ -19,7 +19,7 @@ function AppContent() {
         <Route path="/today" element={<PlaceholderPage label="今日" />} />
         <Route path="/reports/*" element={<PlaceholderPage label="报告库" />} />
         <Route path="/research/*" element={<PlaceholderPage label="研究" />} />
-        <Route path="/mine/*" element={<PlaceholderPage label="我的" />} />
+        <Route path="/me/*" element={<PlaceholderPage label="我的" />} />
         <Route path="*" element={<Navigate replace to="/today" />} />
       </Routes>
     </AppShell>

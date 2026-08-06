@@ -51,4 +51,13 @@ describe('AppShell', () => {
     expect(window.getComputedStyle(shell!).height).toBe('100dvh')
     expect(window.getComputedStyle(content).overflowY).toBe('auto')
   })
+
+  it.each(['/me', '/me/preferences'])('activates My for the %s route', (path) => {
+    window.location.hash = `#${path}`
+    render(<App />)
+
+    const activeLink = screen.getByRole('link', { name: '我的', current: 'page' })
+    expect(activeLink).toHaveAttribute('href', '#/me')
+    expect(screen.getByRole('main', { name: '我的' })).toBeInTheDocument()
+  })
 })

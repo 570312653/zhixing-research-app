@@ -10,7 +10,7 @@ const navigationItems: readonly NavigationItem[] = [
   { label: '今日', path: '/today', icon: 'today' },
   { label: '报告库', path: '/reports', icon: 'reports' },
   { label: '研究', path: '/research', icon: 'research' },
-  { label: '我的', path: '/mine', icon: 'mine' },
+  { label: '我的', path: '/me', icon: 'mine' },
 ]
 
 type NavigationIconProps = {

@@ -1,0 +1,20 @@
+import './shared.css'
+import type { ReportSummary, ReportType } from '../domain/report'
+import { ReadStateBadge, VersionBadge } from './Badges'
+import { formatTimestamp } from './shared'
+
+const reportTypeLabels: Record<ReportType, string> = {
+  morning_scan: '早盘扫描',
+  midday_review: '午间复盘',
+  daily_review: '收盘复盘',
+  industry_tracking: '行业跟踪',
+  holiday_digest: '休市信息摘要',
+  month_end_review: '月末复盘',
+  industry_research: '产业研究',
+}
+
+export function ReportCard({ report, href, onOpen }: { report: ReportSummary; href?: string; onOpen?: () => void }) {
+  const content = <><p>{reportTypeLabels[report.type]}</p><h2>{report.title}</h2><p>报告日期：{report.reportDate}</p><VersionBadge version={report.version} /><p>数据截至：{formatTimestamp(report.dataAsOf)}</p><ReadStateBadge readState={report.readState} /></>
+  const name = `查看报告：${report.title}`
+  return <article className="report-card">{href ? <a href={href} aria-label={name}>{content}</a> : <button type="button" onClick={onOpen} aria-label={name}>{content}</button>}</article>
+}

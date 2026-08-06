@@ -1,39 +1,28 @@
-import { HashRouter, Navigate, NavLink, Route, Routes } from 'react-router'
-
-const navigationItems = [
-  { label: '今日', path: '/today' },
-  { label: '报告库', path: '/reports' },
-  { label: '研究', path: '/research' },
-  { label: '我的', path: '/mine' },
-]
+import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router'
+import { AppShell } from './layout/AppShell'
+import './styles/global.css'
 
 function PlaceholderPage({ label }: { label: string }) {
-  return <main aria-label={label}>{label}</main>
+  return <p className="app-shell__placeholder">{label}</p>
 }
 
 function AppContent() {
-  return (
-    <>
-      <header>
-        <h1>知行</h1>
-      </header>
+  const { pathname } = useLocation()
+  const contentLabel = pathname.startsWith('/reports') ? '报告库'
+    : pathname.startsWith('/research') ? '研究'
+      : pathname.startsWith('/mine') ? '我的'
+        : '今日'
 
+  return (
+    <AppShell contentLabel={contentLabel}>
       <Routes>
         <Route path="/today" element={<PlaceholderPage label="今日" />} />
-        <Route path="/reports" element={<PlaceholderPage label="报告库" />} />
-        <Route path="/research" element={<PlaceholderPage label="研究" />} />
-        <Route path="/mine" element={<PlaceholderPage label="我的" />} />
+        <Route path="/reports/*" element={<PlaceholderPage label="报告库" />} />
+        <Route path="/research/*" element={<PlaceholderPage label="研究" />} />
+        <Route path="/mine/*" element={<PlaceholderPage label="我的" />} />
         <Route path="*" element={<Navigate replace to="/today" />} />
       </Routes>
-
-      <nav aria-label="主导航">
-        {navigationItems.map(({ label, path }) => (
-          <NavLink key={path} to={path}>
-            {label}
-          </NavLink>
-        ))}
-      </nav>
-    </>
+    </AppShell>
   )
 }
 

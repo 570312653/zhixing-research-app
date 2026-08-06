@@ -158,11 +158,14 @@ export interface ReportRepository {
 
 **Files:**
 - Create: `client-app/src/components/states/PageSkeleton.tsx`
+- Create: `client-app/src/components/states/SectionSkeleton.tsx`
 - Create: `client-app/src/components/states/ContextualEmptyState.tsx`
 - Create: `client-app/src/components/states/BlockingFailureState.tsx`
 - Create: `client-app/src/components/states/InlineFailureNotice.tsx`
 - Create: `client-app/src/components/states/OfflineBanner.tsx`
 - Create: `client-app/src/components/states/StaleContentNotice.tsx`
+- Create: `client-app/src/components/states/ActionFeedback.tsx`
+- Create: `client-app/src/components/states/resolvePageState.ts`
 - Create: `client-app/src/components/states/states.test.tsx`
 - Create: `client-app/src/components/ReportCard.tsx`
 - Create: `client-app/src/components/FilterBar.tsx`
@@ -173,19 +176,29 @@ export interface ReportRepository {
 
 - [ ] **Step 1: 写状态优先级失败测试**
 
-覆盖安全阻断、无内容失败、离线无缓存、加载、空内容、离线有缓存和旧内容叠加；状态必须包含文字和图标语义，不能只靠颜色。
+先为纯 `resolvePageState()` 写失败测试。它接收彼此独立的访问、内容可用性、连接、请求和空内容事实，并输出页面唯一的阻断状态与可叠加提示；不得在页面内分散判断或访问网络。
+
+固定优先级为：所有者访问/安全阻断 > 无可用内容的失败 > 离线无缓存 > 加载 > 空内容 > 可读内容。可读内容上的“离线但有缓存”与“同步失败但有旧内容”是非阻断叠加提示，二者不得清空或伪装旧内容为最新。覆盖安全阻断、无内容失败、离线无缓存、加载、空内容、离线有缓存、旧内容、离线与旧内容同时叠加；状态必须包含文字和图标语义，不能只靠颜色。
 
 - [ ] **Step 2: 运行测试确认 RED**
 
 - [ ] **Step 3: 实现最小状态组件**
 
-骨架约 300ms 后显示的时序由调用方控制；超过 10s 只提示加载较慢。错误组件只接受脱敏错误码与恢复动作。
+实现 `PageSkeleton`、`SectionSkeleton`、`ContextualEmptyState`、`BlockingFailureState`、`InlineFailureNotice`、`OfflineBanner`、`StaleContentNotice` 与 `ActionFeedback`。骨架约 300ms 后显示、超过 10s 只提示加载较慢的时序由调用方传入，不在组件内启动计时器。`SectionSkeleton` 不阻断其他已完成区块；失败组件只接受脱敏错误码、时间和受控恢复动作。
+
+关键状态同时提供文字、图标和颜色；阻断/局部失败可被读屏立即识别，加载、离线和旧内容提示具有可读状态语义。离线、未接入、进行中或不可用的刷新、同步、重试、检查更新与下载动作必须使用真实禁用态并说明原因，不保留会伪成功的点击处理。离线固定样例不得接入或模拟真实重试。
 
 - [ ] **Step 4: 实现共享卡片与徽标**
 
-所有报告卡显示类型、日期、版本、数据截至时间和阅读/任务状态；不提供分享、交易、订阅或编辑入口。
+实现 `ReportCard`、`FilterBar`、`EvidenceCard`、`RiskCard`、`Timeline` 与 `Badges`。`Badges` 导出版本、阅读状态和时效三个有文字语义的徽标；`Timeline` 只渲染已归一化的历史条目，不推导或改写历史。
+
+`ReportCard` 本轮仅展示现有 `ReportSummary` 可验证的类型、标题、日期、版本、数据截至时间和阅读状态；不得展示或伪造任务状态。正式任务模型、任务夹具和任务状态展示留待后续独立设计。所有模块不提供分享、交易、订阅或编辑入口，不调用仓库或网络，不从报告正文推导标的、行业、趋势或证据。
+
+新增样式只能使用既有 Token；390px 宽度不得产生横向滚动，筛选和卡片内容必须可换行/截断。不得新增持续闪烁、弹跳或强加载动效，且须保持系统“减少动态效果”下的静态/最小动效行为。
 
 - [ ] **Step 5: 运行测试确认 GREEN**
+
+运行状态与共享组件测试、全部现有客户端测试和构建，确认固定夹具路径下没有业务网络请求、真实数据、密钥或伪造成功反馈。
 
 ---
 

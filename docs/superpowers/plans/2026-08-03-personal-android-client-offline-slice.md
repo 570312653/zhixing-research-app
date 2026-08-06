@@ -80,6 +80,7 @@ npm.cmd run build
 
 **Files:**
 - Create: `client-app/src/styles/tokens.css`
+- Create: `client-app/src/styles/tokens.ts`
 - Create: `client-app/src/styles/global.css`
 - Create: `client-app/src/layout/AppShell.tsx`
 - Create: `client-app/src/layout/BottomNavigation.tsx`
@@ -91,13 +92,13 @@ npm.cmd run build
 
 - [ ] **Step 1: 写 Token 与导航失败测试**
 
-断言根样式包含 `#1E3A8A`、`#102B44`、`#2F6C9E`、页面 `#F4F7FA`、成功/观察/风险/信息状态色；底部入口顺序固定，详情路由不改变顺序。
+通过渲染后的计算样式断言根元素提供 `#1E3A8A`、`#102B44`、`#2F6C9E`、页面 `#F4F7FA`、成功/观察/风险/信息状态色，不以读取或匹配 CSS 源码代替行为验证；底部入口顺序固定，详情路由不改变顺序。
 
 - [ ] **Step 2: 运行测试确认 RED**
 
 - [ ] **Step 3: 实现 CSS Token、系统字体、安全区和减少动态效果**
 
-`tokens.css` 是视觉值唯一来源；组件不得重新硬编码品牌色和间距。
+`tokens.css` 是所有实际视觉值的唯一来源；`tokens.ts` 只导出 `var(--token-name)` 形式的 CSS Custom Property 引用，不重复颜色、间距、圆角、阴影或动效数值。组件不得重新硬编码品牌色和间距。
 
 - [ ] **Step 4: 实现 `AppShell` 与底部导航**
 

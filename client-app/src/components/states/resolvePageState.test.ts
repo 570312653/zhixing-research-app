@@ -58,7 +58,7 @@ describe('resolvePageState', () => {
     })).toEqual({ kind: 'empty', reason: 'no_history' })
   })
 
-  it('keeps cached content visible while offline', () => {
+  it('marks cached content stale while offline instead of claiming it is current', () => {
     expect(resolvePageState({
       hasContent: true,
       connectivity: 'offline',
@@ -66,9 +66,13 @@ describe('resolvePageState', () => {
       lastSyncedAt: syncedAt,
     })).toEqual({
       kind: 'content',
-      freshness: 'current',
+      freshness: 'stale',
       connectivity: 'offline',
       lastSyncedAt: syncedAt,
+      stale: {
+        errorCode: 'OFFLINE_CACHE',
+        lastSuccessfulSyncAt: syncedAt,
+      },
     })
   })
 

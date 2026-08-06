@@ -60,14 +60,14 @@ export function resolvePageState(input: ResolvePageStateInput): ResolvedPageStat
   }
 
   const lastSyncedAt = input.lastSyncedAt ?? input.lastSuccessfulSyncAt ?? ''
-  if (input.requestStatus === 'failure') {
+  if (input.connectivity === 'offline' || input.requestStatus === 'failure') {
     return {
       kind: 'content',
       freshness: 'stale',
       connectivity: input.connectivity,
       lastSyncedAt,
       stale: {
-        errorCode: input.errorCode ?? 'UNAVAILABLE',
+        errorCode: input.errorCode ?? (input.connectivity === 'offline' ? 'OFFLINE_CACHE' : 'UNAVAILABLE'),
         lastSuccessfulSyncAt: input.lastSuccessfulSyncAt ?? lastSyncedAt,
       },
     }

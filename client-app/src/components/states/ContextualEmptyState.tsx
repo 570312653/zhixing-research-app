@@ -1,5 +1,5 @@
-import './shared.css'
-import type { EmptyReason } from './states/resolvePageState'
+import '../shared.css'
+import type { EmptyReason } from './resolvePageState'
 
 const messages: Record<EmptyReason, string> = {
   not_due: '报告尚未到发布时间',

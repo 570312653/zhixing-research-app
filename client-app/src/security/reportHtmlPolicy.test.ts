@@ -30,6 +30,7 @@ describe('report HTML rejection policy', () => {
     ['id attribute', '<article id="report"><p>内容</p></article>'],
     ['javascript URL', '<article><a href="javascript:alert(1)">内容</a></article>'],
     ['credential URL', '<article><a href="https://user:pass@example.test">内容</a></article>'],
+    ['entity-encoded credential URL', '<article><a href="https://user&#58;pass&#64;evil.com">内容</a></article>'],
     ['HTTP URL', '<article><a href="http://example.test">内容</a></article>'],
     ['duplicate href', '<article><a href="https://example.test" href="https://other.test">内容</a></article>'],
     ['unquoted href', '<article><a href=https://example.test>内容</a></article>'],
@@ -79,5 +80,14 @@ describe('report HTML rejection policy', () => {
     expect(container.querySelector('img')).toBeNull()
     expect(container).not.toHaveTextContent('恶意原文')
     expect(container.innerHTML).not.toContain(malicious)
+  })
+
+  it('blocks an entity-encoded credential URL before innerHTML can decode it into a link', () => {
+    const malicious = '<article><p><a href="https://user&#58;pass&#64;evil.com">实体凭证链接</a></p></article>'
+    const { container } = render(createElement(ReportHtmlRenderer, { html: malicious }))
+
+    expect(screen.getByRole('alert')).toHaveTextContent('报告正文因安全校验未通过，暂时无法显示')
+    expect(container.querySelector('a')).toBeNull()
+    expect(container).not.toHaveTextContent('实体凭证链接')
   })
 })

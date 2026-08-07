@@ -86,7 +86,9 @@ function attributesAreSafe(tagName: string, attributes: string): boolean {
 
   const match = /^\s+href\s*=\s*(?:"([^"]*)"|'([^']*)')\s*$/u.exec(attributes)
   if (!match) return false
-  return isSafeHttpsUrl(match[1] ?? match[2] ?? '')
+  const href = match[1] ?? match[2] ?? ''
+  if (href.includes('&')) return false
+  return isSafeHttpsUrl(href)
 }
 
 export function applyReportHtmlPolicy(html: string): ReportHtmlPolicyResult {

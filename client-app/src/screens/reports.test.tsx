@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter, Route, Routes } from 'react-router'
+import { MemoryRouter, Route, Routes, useNavigate } from 'react-router'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import App from '../App'
 import type { ReportSummary } from '../domain/report'
@@ -20,6 +20,11 @@ function deferred<T>() {
     reject = rejectPromise
   })
   return { promise, reject, resolve }
+}
+
+function DetailRouteSwitcher() {
+  const navigate = useNavigate()
+  return <div><button type="button" onClick={() => navigate('/reports/demo-morning-2099-06-18')}>打开 A</button><button type="button" onClick={() => navigate('/reports/demo-daily-2099-06-18')}>打开 B</button></div>
 }
 
 describe('Today page', () => {
@@ -238,5 +243,49 @@ describe('Report detail page and routes', () => {
 
     expect(await screen.findByText('报告不存在或已不可用')).toBeInTheDocument()
     expect(screen.queryByText(/网络|重试/)).not.toBeInTheDocument()
+  })
+
+  it('clears report A while report B is pending and blocks B failure without leaking A', async () => {
+    const user = userEvent.setup()
+    const pendingB = deferred<Awaited<ReturnType<FixtureReportRepository['getReport']>>>()
+    const repository = new FixtureReportRepository()
+    vi.spyOn(repository, 'getReport').mockImplementation((reportId) => reportId === 'demo-morning-2099-06-18' ? Promise.resolve(reportFixtures[0]) : pendingB.promise)
+    render(
+      <MemoryRouter initialEntries={['/reports/demo-morning-2099-06-18']}>
+        <DetailRouteSwitcher />
+        <Routes><Route path="/reports/:reportId" element={<ReportDetailPage repository={repository} />} /></Routes>
+      </MemoryRouter>,
+    )
+    expect(await screen.findByRole('heading', { name: '知行虚构早盘扫描｜2099-06-18' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '打开 B' }))
+    expect(screen.getByRole('status', { name: '报告详情正在加载' })).toBeInTheDocument()
+    expect(screen.queryByText('知行虚构早盘扫描｜2099-06-18')).not.toBeInTheDocument()
+
+    pendingB.reject(new Error('B failed'))
+    expect(await screen.findByRole('alert')).toHaveTextContent('暂时无法显示此内容')
+    expect(screen.queryByText('知行虚构早盘扫描｜2099-06-18')).not.toBeInTheDocument()
+  })
+
+  it('ignores report A when its older request completes after report B', async () => {
+    const user = userEvent.setup()
+    const pendingA = deferred<Awaited<ReturnType<FixtureReportRepository['getReport']>>>()
+    const pendingB = deferred<Awaited<ReturnType<FixtureReportRepository['getReport']>>>()
+    const repository = new FixtureReportRepository()
+    vi.spyOn(repository, 'getReport').mockImplementation((reportId) => reportId === 'demo-morning-2099-06-18' ? pendingA.promise : pendingB.promise)
+    render(
+      <MemoryRouter initialEntries={['/reports/demo-morning-2099-06-18']}>
+        <DetailRouteSwitcher />
+        <Routes><Route path="/reports/:reportId" element={<ReportDetailPage repository={repository} />} /></Routes>
+      </MemoryRouter>,
+    )
+
+    await user.click(screen.getByRole('button', { name: '打开 B' }))
+    pendingB.resolve(reportFixtures[2])
+    expect(await screen.findByRole('heading', { name: '知行虚构收盘复盘｜2099-06-18' })).toBeInTheDocument()
+
+    pendingA.resolve(reportFixtures[0])
+    await waitFor(() => expect(screen.queryByText('知行虚构早盘扫描｜2099-06-18')).not.toBeInTheDocument())
+    expect(screen.getByRole('heading', { name: '知行虚构收盘复盘｜2099-06-18' })).toBeInTheDocument()
   })
 })

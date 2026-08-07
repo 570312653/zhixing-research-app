@@ -61,8 +61,8 @@ describe('AppShell', () => {
     expect(screen.getByRole('main', { name: '我的' })).toBeInTheDocument()
   })
 
-  it('uses the immersive detail shell without the global header or primary navigation', async () => {
-    window.location.hash = '#/reports/demo-morning-2099-06-18'
+  it.each(['/reports/demo-morning-2099-06-18', '/reports/demo/', '/RePoRtS/demo'])('uses the immersive detail shell for the valid detail route %s', async (path) => {
+    window.location.hash = `#${path}`
     render(<App />)
 
     expect(await screen.findByRole('main', { name: '报告详情' })).toBeInTheDocument()

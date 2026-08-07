@@ -3,7 +3,6 @@ import { useLocation, useNavigate, useParams } from 'react-router'
 import { ReportHtmlRenderer } from '../components/ReportHtmlRenderer'
 import { BlockingFailureState } from '../components/states/BlockingFailureState'
 import { PageSkeleton } from '../components/states/PageSkeleton'
-import { StaleContentNotice } from '../components/states/StaleContentNotice'
 import { formatTimestamp } from '../components/shared'
 import type { ReportDetail, ReportType } from '../domain/report'
 import { FixtureReportRepository } from '../repositories/FixtureReportRepository'
@@ -25,35 +24,41 @@ export function ReportDetailPage({ repository = defaultRepository }: { repositor
   const { reportId = '' } = useParams()
   const location = useLocation()
   const navigate = useNavigate()
-  const [report, setReport] = useState<ReportDetail | null>(null)
-  const [loaded, setLoaded] = useState(false)
-  const [failed, setFailed] = useState(false)
+  const [loadState, setLoadState] = useState<
+    | { kind: 'loading'; reportId: string }
+    | { kind: 'success'; reportId: string; report: ReportDetail }
+    | { kind: 'missing'; reportId: string }
+    | { kind: 'failure'; reportId: string }
+  >(() => ({ kind: 'loading', reportId }))
 
   useEffect(() => {
     let active = true
-    setLoaded(false)
+    setLoadState({ kind: 'loading', reportId })
     repository.getReport(reportId).then((value) => {
       if (!active) return
-      setReport(value)
-      setFailed(false)
-      setLoaded(true)
+      setLoadState(value
+        ? { kind: 'success', reportId, report: value }
+        : { kind: 'missing', reportId })
     }).catch(() => {
       if (!active) return
-      setFailed(true)
-      setLoaded(true)
+      setLoadState({ kind: 'failure', reportId })
     })
     return () => { active = false }
   }, [reportId, repository])
 
   const returnTo = controlledReturnTo(location.state)
-  if (!report && !loaded) return <PageSkeleton label="报告详情" />
-  if (!report && failed) return <><DetailToolbar onBack={() => navigate(returnTo)} /><BlockingFailureState errorCode="LOCAL_FIXTURE_UNAVAILABLE" /></>
-  if (!report) return <><DetailToolbar onBack={() => navigate(returnTo)} /><section className="state-card" role="status"><p>报告不存在或已不可用</p></section></>
+  const currentState = loadState.reportId === reportId
+    ? loadState
+    : { kind: 'loading' as const, reportId }
+  if (currentState.kind === 'loading') return <PageSkeleton label="报告详情" />
+  if (currentState.kind === 'failure') return <><DetailToolbar onBack={() => navigate(returnTo)} /><BlockingFailureState errorCode="LOCAL_FIXTURE_UNAVAILABLE" /></>
+  if (currentState.kind === 'missing') return <><DetailToolbar onBack={() => navigate(returnTo)} /><section className="state-card" role="status"><p>报告不存在或已不可用</p></section></>
+
+  const report = currentState.report
 
   return (
     <div className="report-detail">
       <DetailToolbar title={labels[report.type]} subtitle={report.title} onBack={() => navigate(returnTo)} />
-      {failed && <StaleContentNotice errorCode="LOCAL_FIXTURE_UNAVAILABLE" lastSuccessfulSyncAt={report.generatedAt} />}
       <article className="report-detail__article">
         <p className="report-detail__eyebrow">{labels[report.type]}</p>
         <h1>{report.title}</h1>

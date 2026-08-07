@@ -1,4 +1,4 @@
-import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router'
+import { HashRouter, Navigate, Route, Routes, useLocation, useMatch } from 'react-router'
 import { AppShell } from './layout/AppShell'
 import { ReportDetailPage } from './screens/ReportDetailPage'
 import { ReportLibraryPage } from './screens/ReportLibraryPage'
@@ -11,7 +11,7 @@ function PlaceholderPage({ label }: { label: string }) {
 
 function AppContent() {
   const { pathname } = useLocation()
-  const reportDetail = /^\/reports\/[^/]+$/u.test(pathname)
+  const reportDetail = useMatch('/reports/:reportId') !== null
   const contentLabel = reportDetail ? '报告详情'
     : pathname.startsWith('/reports') ? '报告库'
     : pathname.startsWith('/research') ? '研究'

@@ -1,6 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useState } from 'react'
+import { MemoryRouter } from 'react-router'
 import { afterEach, describe, expect, it } from 'vitest'
 import { FreshnessBadge, ReadStateBadge, VersionBadge } from './Badges'
 import { EvidenceCard } from './EvidenceCard'
@@ -16,7 +17,7 @@ describe('shared state components', () => {
   const syncedAt = '2099-06-18T20:30:00+08:00'
 
   it('renders report summary fields and each readable state with a named semantic link', () => {
-    render(<><ReportCard report={reportFixtures[0]} href="#/reports/demo-morning-2099-06-18" /><ReportCard report={reportFixtures[1]} href="#/reports/demo-midday-2099-06-18" /><ReportCard report={reportFixtures[2]} href="#/reports/demo-daily-2099-06-18" /></>)
+    render(<MemoryRouter><ReportCard report={reportFixtures[0]} to="/reports/demo-morning-2099-06-18" returnTo="/reports" /><ReportCard report={reportFixtures[1]} to="/reports/demo-midday-2099-06-18" returnTo="/reports" /><ReportCard report={reportFixtures[2]} to="/reports/demo-daily-2099-06-18" returnTo="/reports" /></MemoryRouter>)
 
     expect(screen.getByRole('link', { name: /查看报告：知行虚构早盘扫描/ })).toBeInTheDocument()
     expect(screen.getByText('早盘扫描')).toBeInTheDocument()
@@ -30,19 +31,32 @@ describe('shared state components', () => {
   it('keeps FilterBar controlled through parent state for search, type, and clearing', async () => {
     const user = userEvent.setup()
     function ControlledFilterBar() {
-      const [filter, setFilter] = useState<ReportFilter>({ query: '', reportTypes: [] })
-      return <FilterBar filter={filter} options={{ reportTypes: ['morning_scan', 'daily_review'] }} onChange={setFilter} onClear={() => setFilter({ query: '', reportTypes: [] })} />
+      const [filter, setFilter] = useState<ReportFilter>({})
+      return <><FilterBar filter={filter} options={{ reportTypes: ['morning_scan', 'daily_review'], industries: [{ value: 'industry-a', label: '行业甲' }], themes: [{ value: 'theme-a', label: '主题甲' }] }} onChange={setFilter} onClear={() => setFilter({})} /><output data-testid="filter-value">{JSON.stringify(filter)}</output></>
     }
     render(<ControlledFilterBar />)
 
     await user.type(screen.getByLabelText('搜索报告'), '虚构')
     expect(screen.getByLabelText('搜索报告')).toHaveValue('虚构')
-    await user.selectOptions(screen.getByLabelText('报告类型'), 'daily_review')
-    expect(screen.getByLabelText('报告类型')).toHaveValue('daily_review')
+    await user.click(screen.getByRole('checkbox', { name: '早盘扫描' }))
+    await user.click(screen.getByRole('checkbox', { name: '每日复盘' }))
+    expect(screen.getByRole('checkbox', { name: '早盘扫描' })).toBeChecked()
+    expect(screen.getByRole('checkbox', { name: '每日复盘' })).toBeChecked()
+    await user.click(screen.getByRole('checkbox', { name: '早盘扫描' }))
+    expect(screen.getByTestId('filter-value')).toHaveTextContent('"reportTypes":["daily_review"]')
+    await user.type(screen.getByLabelText('开始日期'), '2099-06-10')
+    await user.type(screen.getByLabelText('结束日期'), '2099-06-18')
+    await user.selectOptions(screen.getByLabelText('行业'), ['industry-a'])
+    await user.selectOptions(screen.getByLabelText('主题'), ['theme-a'])
     await user.click(screen.getByRole('button', { name: '清除筛选' }))
 
     expect(screen.getByLabelText('搜索报告')).toHaveValue('')
-    expect(screen.getByLabelText('报告类型')).toHaveValue('')
+    expect(screen.getByRole('checkbox', { name: '每日复盘' })).not.toBeChecked()
+    expect(screen.getByLabelText('开始日期')).toHaveValue('')
+    expect(screen.getByLabelText('结束日期')).toHaveValue('')
+    expect(screen.getByLabelText('行业')).toHaveValue([])
+    expect(screen.getByLabelText('主题')).toHaveValue([])
+    expect(screen.getByTestId('filter-value')).toHaveTextContent('{}')
   })
 
   it('renders evidence, risk, and timeline inputs without deriving new conclusions or ordering', () => {

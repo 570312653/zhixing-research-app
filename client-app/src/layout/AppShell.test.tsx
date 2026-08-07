@@ -10,7 +10,7 @@ describe('AppShell', () => {
   })
 
   beforeEach(() => {
-    window.location.hash = '#/reports/example'
+    window.location.hash = '#/reports'
   })
 
   it('injects the approved deep-sea-blue tokens into the rendered root', async () => {
@@ -30,7 +30,7 @@ describe('AppShell', () => {
     })
   })
 
-  it('keeps the fixed navigation order and activates the reports entry for report details', async () => {
+  it('keeps the fixed navigation order and activates the reports entry for the library', async () => {
     render(<App />)
 
     const links = await screen.findAllByRole('link')
@@ -59,5 +59,14 @@ describe('AppShell', () => {
     const activeLink = screen.getByRole('link', { name: '我的', current: 'page' })
     expect(activeLink).toHaveAttribute('href', '#/me')
     expect(screen.getByRole('main', { name: '我的' })).toBeInTheDocument()
+  })
+
+  it('uses the immersive detail shell without the global header or primary navigation', async () => {
+    window.location.hash = '#/reports/demo-morning-2099-06-18'
+    render(<App />)
+
+    expect(await screen.findByRole('main', { name: '报告详情' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: '知行' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('navigation', { name: '主导航' })).not.toBeInTheDocument()
   })
 })

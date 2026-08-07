@@ -220,17 +220,17 @@ export interface ReportRepository {
 - Modify: `client-app/src/layout/AppShell.tsx`
 - Modify: `client-app/src/layout/AppShell.test.tsx`
 
-- [ ] **Step 1: 写三页失败测试**
+- [x] **Step 1: 写三页失败测试**
 
 覆盖固定样例日期 `2099-06-18` 的 B2 今日阅读优先、四类日常卡固定位置、周期报告动态区、组合筛选、清除筛选、详情版本与数据时间、PDF 不可用状态和确定性返回路径。报告库筛选维度之间使用 AND；类型、行业和主题各维度内部使用多值 OR，不能继续只保留 `reportTypes[0]`。详情页直接打开或收到非法返回路径时固定回退 `/reports`，不得无条件依赖 `navigate(-1)`。
 
-- [ ] **Step 2: 写 HTML 安全失败测试**
+- [x] **Step 2: 写 HTML 安全失败测试**
 
 采用与报告引擎逐项同构、但在客户端独立实现的拒绝式白名单，不增加运行时依赖，也不跨包导入 `report-engine/src/`。接受受控正文标签、安全 HTTPS 链接和 `td[data-label]`；拒绝 `script`、事件属性、任意样式、iframe、表单、远程图片、危险 URL、错误嵌套和违规交易表述。恶意样例必须整段返回脱敏阻断状态，阻断结果不得携带原始 HTML；只有 safe 分支可以进入唯一的 `dangerouslySetInnerHTML`。
 
-- [ ] **Step 3: 运行测试确认 RED**
+- [x] **Step 3: 运行测试确认 RED**
 
-- [ ] **Step 4: 实现三页与受控渲染器**
+- [x] **Step 4: 实现三页与受控渲染器**
 
 严格对照 `today-report.html`、`report-library.html` 和 `report-detail.html`；不新增顶部异常看板，不伪造不存在的 PDF。PDF 入口必须使用原生禁用状态并解释固定夹具给出的不可用原因。详情页采用独立返回工具栏并隐藏底部一级导航。当前领域模型未提供任务状态、计划时间、延迟原因、历史版数据截至时间、目录、自动续读或字体偏好，本任务不得推导或伪造这些能力。
 
@@ -238,7 +238,7 @@ export interface ReportRepository {
 
 样式只使用既有 Token，并在本任务覆盖 390px 无横向滚动、超长标题/错误内容换行和系统减少动态效果。`ReportCard` 的 `daily_review` 标签统一为正式名称“每日复盘”。
 
-- [ ] **Step 5: 运行测试确认 GREEN**
+- [x] **Step 5: 运行测试确认 GREEN**
 
 ---
 

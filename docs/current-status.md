@@ -25,6 +25,7 @@
 - 已在隔离 worktree 的 `feature/android-client-offline` 分支完成 `client-app/` Task 2：`tokens.css` 是唯一实际视觉值来源，`tokens.ts` 只导出 CSS Custom Property 引用；已实现 `AppShell`、今日/报告库/研究/我的四入口底部导航、Hash 详情前缀激活、Android 安全区与减少动态效果。Vitest 4/4、构建、lint、生产依赖审计及独立审查均为 PASS；“我的”正式路由与交接稿不一致的 `/mine` → `/me` 偏差已在提交 `2934d8f` 修复；
 - 已在同一隔离分支完成 `client-app/` Task 3：建立报告、行业研究与标的池领域类型，覆盖 7 类报告；加入 7 份明确虚构报告、4 个虚构行业研究单元、2 个虚构主题和两期完整标的池快照；`FixtureReportRepository` 已实现组合筛选、确定性排序、显式日期的 Today 四槽聚合、周期报告动态聚合、报告/行业/标的双向关联和防御性副本。客户端 Vitest 全量 34/34、构建、lint、生产依赖审计及独立审查均为 PASS；
 - 已在同一隔离分支完成 `client-app/` Task 4：交付纯 `resolvePageState`、8 个状态组件（含 `ActionFeedback`）、共享报告卡片/筛选/证据/风险/时间线/文字徽标；完成离线缓存陈旧态、可选重试与提交中防重复触发的 fix round 1。客户端 Vitest 全量 53/53、构建、lint、生产依赖审计及独立复审均为 PASS；
+- 已在同一隔离分支完成 `client-app/` Task 5：交付 B2 阅读优先的今日页、支持多类型/日期/行业/主题组合筛选的报告库、沉浸式报告详情、确定性返回路径、禁用 PDF 边界和客户端拒绝式 HTML 白名单；两轮修复关闭跨报告陈旧内容、HTML 实体链接绕过、路由匹配和同报告 stale 保留问题。客户端 Vitest 全量 112/112、构建、lint、生产依赖审计及独立复审均为 PASS；390px Chrome 检查三页无横向溢出；
 - 当前没有真实交易日历、真实数据源、模型、网络、环境变量、云端调度、APK、用户认证、归档、发布、通知或正式 PDF 导出。
 
 ## 最近完成的切片
@@ -56,7 +57,7 @@ HTML 是主阅读格式，现有 A4 打印 CSS 不等于正式 PDF 已完成；�
 
 ## 下一步候选
 
-Android Studio、SDK Platform 36、Build Tools、Platform Tools、Command-line Tools、ADB 与内置 JDK 已完成本机验证；单一 API 36 AVD 已创建、启动并通过 ADB 开机检查。客户端工程初始化门槛及 `client-app/` Task 1 至 Task 4 均已通过；下一步按正式计划执行 Task 5：实现今日、报告库与报告详情。
+Android Studio、SDK Platform 36、Build Tools、Platform Tools、Command-line Tools、ADB 与内置 JDK 已完成本机验证；单一 API 36 AVD 已创建、启动并通过 ADB 开机检查。客户端工程初始化门槛及 `client-app/` Task 1 至 Task 5 均已通过；下一步按正式计划执行 Task 6：实现研究总览、行业列表/详情和标的池列表/详情。
 
 当前采用“模拟器先行、真机最终验收”：客户端工程初始化和日常开发不要求立即连接手机；首个调试 APK 可先在模拟器安装，但离线客户端切片完成前仍须在自有手机完成一次安装和关键冒烟。
 
@@ -65,7 +66,7 @@ Android Studio、SDK Platform 36、Build Tools、Platform Tools、Command-line T
 - `docs/superpowers/plans/2026-08-03-client-foundation-readiness.md`
 - `docs/superpowers/plans/2026-08-03-personal-android-client-offline-slice.md`
 
-地基计划的工程初始化门槛与客户端 Task 1 至 Task 4 已通过；`client-app/` 只允许按离线固定样例计划推进，任何阶段都不提前接入真实数据、网络、密钥、云端调度、用户认证或正式 PDF。品牌资产生成工具已明确延后到 Task 9 单独验证 Node.js 24 兼容性，不使用安装脚本绕过或传递依赖强制覆盖。
+地基计划的工程初始化门槛与客户端 Task 1 至 Task 5 已通过；`client-app/` 只允许按离线固定样例计划推进，任何阶段都不提前接入真实数据、网络、密钥、云端调度、用户认证或正式 PDF。品牌资产生成工具已明确延后到 Task 9 单独验证 Node.js 24 兼容性，不使用安装脚本绕过或传递依赖强制覆盖。
 
 后续独立能力：报告引擎对 `holiday_digest`、`month_end_review`、`industry_research` 的正式生成，`watchlist_snapshot` 正式交付、正式 PDF 导出、数据适配器契约和可信云端运行时。
 

@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router'
 import { ReportHtmlRenderer } from '../components/ReportHtmlRenderer'
 import { BlockingFailureState } from '../components/states/BlockingFailureState'
 import { PageSkeleton } from '../components/states/PageSkeleton'
+import { StaleContentNotice } from '../components/states/StaleContentNotice'
 import { formatTimestamp } from '../components/shared'
 import type { ReportDetail, ReportType } from '../domain/report'
 import { FixtureReportRepository } from '../repositories/FixtureReportRepository'
@@ -25,15 +26,23 @@ export function ReportDetailPage({ repository = defaultRepository }: { repositor
   const location = useLocation()
   const navigate = useNavigate()
   const [loadState, setLoadState] = useState<
+    | { kind: 'initial'; reportId: string }
     | { kind: 'loading'; reportId: string }
     | { kind: 'success'; reportId: string; report: ReportDetail }
+    | { kind: 'stale'; reportId: string; report: ReportDetail }
     | { kind: 'missing'; reportId: string }
     | { kind: 'failure'; reportId: string }
-  >(() => ({ kind: 'loading', reportId }))
+  >(() => ({ kind: 'initial', reportId }))
 
   useEffect(() => {
     let active = true
-    setLoadState({ kind: 'loading', reportId })
+    setLoadState((previous) => {
+      if (
+        previous.reportId === reportId &&
+        (previous.kind === 'success' || previous.kind === 'stale')
+      ) return previous
+      return { kind: 'loading', reportId }
+    })
     repository.getReport(reportId).then((value) => {
       if (!active) return
       setLoadState(value
@@ -41,7 +50,13 @@ export function ReportDetailPage({ repository = defaultRepository }: { repositor
         : { kind: 'missing', reportId })
     }).catch(() => {
       if (!active) return
-      setLoadState({ kind: 'failure', reportId })
+      setLoadState((previous) => {
+        if (
+          previous.reportId === reportId &&
+          (previous.kind === 'success' || previous.kind === 'stale')
+        ) return { kind: 'stale', reportId, report: previous.report }
+        return { kind: 'failure', reportId }
+      })
     })
     return () => { active = false }
   }, [reportId, repository])
@@ -49,8 +64,8 @@ export function ReportDetailPage({ repository = defaultRepository }: { repositor
   const returnTo = controlledReturnTo(location.state)
   const currentState = loadState.reportId === reportId
     ? loadState
-    : { kind: 'loading' as const, reportId }
-  if (currentState.kind === 'loading') return <PageSkeleton label="报告详情" />
+    : { kind: 'initial' as const, reportId }
+  if (currentState.kind === 'initial' || currentState.kind === 'loading') return <PageSkeleton label="报告详情" />
   if (currentState.kind === 'failure') return <><DetailToolbar onBack={() => navigate(returnTo)} /><BlockingFailureState errorCode="LOCAL_FIXTURE_UNAVAILABLE" /></>
   if (currentState.kind === 'missing') return <><DetailToolbar onBack={() => navigate(returnTo)} /><section className="state-card" role="status"><p>报告不存在或已不可用</p></section></>
 
@@ -59,6 +74,7 @@ export function ReportDetailPage({ repository = defaultRepository }: { repositor
   return (
     <div className="report-detail">
       <DetailToolbar title={labels[report.type]} subtitle={report.title} onBack={() => navigate(returnTo)} />
+      {currentState.kind === 'stale' && <StaleContentNotice errorCode="LOCAL_FIXTURE_UNAVAILABLE" lastSuccessfulSyncAt={report.generatedAt} />}
       <article className="report-detail__article">
         <p className="report-detail__eyebrow">{labels[report.type]}</p>
         <h1>{report.title}</h1>

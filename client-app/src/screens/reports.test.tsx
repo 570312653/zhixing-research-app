@@ -245,6 +245,28 @@ describe('Report detail page and routes', () => {
     expect(screen.queryByText(/网络|重试/)).not.toBeInTheDocument()
   })
 
+  it('keeps the same report and shows a sanitized stale notice when its replacement repository fails', async () => {
+    const repositoryA = new FixtureReportRepository()
+    const repositoryB = new FixtureReportRepository()
+    vi.spyOn(repositoryA, 'getReport').mockResolvedValue(reportFixtures[0])
+    vi.spyOn(repositoryB, 'getReport').mockRejectedValue(new Error('secret refresh failure details'))
+    const renderDetail = (repository: FixtureReportRepository) => (
+      <MemoryRouter initialEntries={['/reports/demo-morning-2099-06-18']}>
+        <Routes><Route path="/reports/:reportId" element={<ReportDetailPage repository={repository} />} /></Routes>
+      </MemoryRouter>
+    )
+    const { rerender } = render(renderDetail(repositoryA))
+    expect(await screen.findByRole('heading', { name: '知行虚构早盘扫描｜2099-06-18' })).toBeInTheDocument()
+
+    rerender(renderDetail(repositoryB))
+
+    const staleNotice = await screen.findByRole('status', { name: '内容可能已过期' })
+    expect(screen.getByRole('heading', { name: '知行虚构早盘扫描｜2099-06-18' })).toBeInTheDocument()
+    expect(staleNotice).toHaveTextContent('错误代码：LOCAL_FIXTURE_UNAVAILABLE')
+    expect(staleNotice).toHaveTextContent('最后成功同步：2099-06-18 08:45')
+    expect(screen.queryByText('secret refresh failure details')).not.toBeInTheDocument()
+  })
+
   it('clears report A while report B is pending and blocks B failure without leaking A', async () => {
     const user = userEvent.setup()
     const pendingB = deferred<Awaited<ReturnType<FixtureReportRepository['getReport']>>>()

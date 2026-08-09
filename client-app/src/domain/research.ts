@@ -26,6 +26,7 @@ export interface IndustrySummary {
   reportIds: readonly string[]
   watchlistSymbols: readonly string[]
   updatedAt: string
+  thesis: string
 }
 
 export interface IndustryTimelineEvent {
@@ -36,7 +37,6 @@ export interface IndustryTimelineEvent {
 }
 
 export interface IndustryDetail extends IndustrySummary {
-  thesis: string
   supportingEvidence: readonly ResearchEvidence[]
   counterEvidence: readonly ResearchEvidence[]
   timeline: readonly IndustryTimelineEvent[]

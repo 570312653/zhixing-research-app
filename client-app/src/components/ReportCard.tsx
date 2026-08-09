@@ -14,8 +14,17 @@ const reportTypeLabels: Record<ReportType, string> = {
   industry_research: '产业研究',
 }
 
+export type ReportReturnPath =
+  | '/today'
+  | '/reports'
+  | '/research'
+  | '/research/industries'
+  | `/research/industries/${string}`
+  | '/research/watchlist'
+  | `/research/watchlist/${string}`
+
 type ReportCardProps =
-  | { report: ReportSummary; to: string; returnTo: '/today' | '/reports'; onOpen?: never }
+  | { report: ReportSummary; to: string; returnTo: ReportReturnPath; onOpen?: never }
   | { report: ReportSummary; onOpen: () => void; to?: never; returnTo?: never }
 
 export function ReportCard(props: ReportCardProps) {

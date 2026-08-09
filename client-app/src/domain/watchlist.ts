@@ -42,6 +42,27 @@ export interface WatchlistDetail extends Omit<WatchlistItem, 'status'> {
   events: readonly WatchlistEvent[]
 }
 
+export interface WatchlistChangeRecord {
+  symbol: string
+  displayName: string
+  industryIds: readonly string[]
+  type: 'added' | 'reason_changed' | 'removed'
+  occurredAt: string
+  reason: string
+}
+
+export interface WatchlistOverviewItem extends WatchlistItem {
+  riskNote: string
+}
+
+export interface WatchlistOverview {
+  snapshotId: string
+  snapshotAt: string
+  currentItems: readonly WatchlistOverviewItem[]
+  delta: WatchlistDelta
+  changes: readonly WatchlistChangeRecord[]
+}
+
 export function deriveWatchlistDelta(
   prior: WatchlistSnapshot,
   current: WatchlistSnapshot,

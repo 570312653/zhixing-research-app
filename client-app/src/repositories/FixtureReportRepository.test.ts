@@ -262,6 +262,60 @@ describe('FixtureReportRepository research links', () => {
 describe('FixtureReportRepository watchlist snapshots', () => {
   const repository = new FixtureReportRepository()
 
+  it('returns the complete current snapshot, deterministic cross-item changes and defensive copies', async () => {
+    const first = await repository.getWatchlistOverview()
+
+    expect(first).toEqual({
+      snapshotId: 'demo-watchlist-current',
+      snapshotAt: '2099-06-18T20:00:00+08:00',
+      currentItems: expect.arrayContaining([
+        expect.objectContaining({ symbol: 'DEMO-A01', status: 'current', riskNote: '仅为虚构研究观察项。' }),
+        expect.objectContaining({ symbol: 'DEMO-B02', status: 'current', riskNote: '仅为虚构研究观察项。' }),
+        expect.objectContaining({ symbol: 'DEMO-D04', status: 'current', riskNote: '仅为虚构研究观察项。' }),
+      ]),
+      delta: {
+        added: ['DEMO-D04'],
+        continuing: ['DEMO-A01', 'DEMO-B02'],
+        removed: ['DEMO-C03'],
+        reasonChanged: ['DEMO-B02'],
+      },
+      changes: [
+        {
+          symbol: 'DEMO-D04',
+          displayName: '演示标的丁',
+          industryIds: ['industry-cleanloop-energy'],
+          type: 'added',
+          occurredAt: '2099-06-18T20:00:00+08:00',
+          reason: '虚构能源线索新增观察。',
+        },
+        {
+          symbol: 'DEMO-B02',
+          displayName: '演示标的乙',
+          industryIds: ['industry-deepwave-computing'],
+          type: 'reason_changed',
+          occurredAt: '2099-06-18T20:00:00+08:00',
+          reason: '虚构计算线索获得新增验证。',
+        },
+        {
+          symbol: 'DEMO-C03',
+          displayName: '演示标的丙',
+          industryIds: ['industry-frontier-logistics'],
+          type: 'removed',
+          occurredAt: '2099-06-18T20:00:00+08:00',
+          reason: '虚构物流证据不足，移出当前观察。',
+        },
+      ],
+    })
+    expect(first.currentItems.map(({ symbol }) => symbol)).toEqual(['DEMO-A01', 'DEMO-B02', 'DEMO-D04'])
+
+    ;(first.currentItems[0] as { reason: string }).reason = '污染原因'
+    ;(first.changes[0] as { reason: string }).reason = '污染变更'
+    const second = await repository.getWatchlistOverview()
+
+    expect(second.currentItems[0].reason).toBe('虚构材料线索待跟踪。')
+    expect(second.changes[0].reason).toBe('虚构能源线索新增观察。')
+  })
+
   it('excludes removed items from the current list while keeping removed detail queryable', async () => {
     const [current, removed] = await Promise.all([
       repository.listWatchlist(),

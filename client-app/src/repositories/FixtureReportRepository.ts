@@ -10,7 +10,14 @@ import {
   type TodayReportSet,
 } from '../domain/report'
 import type { IndustryDetail, IndustrySummary } from '../domain/research'
-import type { WatchlistDetail, WatchlistItem } from '../domain/watchlist'
+import {
+  deriveWatchlistDelta,
+  type WatchlistChangeRecord,
+  type WatchlistDetail,
+  type WatchlistItem,
+  type WatchlistOverview,
+  type WatchlistOverviewItem,
+} from '../domain/watchlist'
 import {
   industryFixtures,
   researchThemes,
@@ -41,7 +48,6 @@ function toSummary(report: ReportDetail): ReportSummary {
 
 function toIndustrySummary(industry: IndustryDetail): IndustrySummary {
   const {
-    thesis: _thesis,
     supportingEvidence: _supportingEvidence,
     counterEvidence: _counterEvidence,
     timeline: _timeline,
@@ -81,6 +87,40 @@ function matchesQuery(report: ReportDetail, rawQuery?: string) {
     .join(' ')
     .toLocaleLowerCase()
     .includes(query)
+}
+
+function currentWatchlistItems(): WatchlistItem[] {
+  const currentSnapshot = watchlistSnapshots[1]
+  return currentSnapshot.items.map(({ symbol }) => {
+    const detail = watchlistDetails.find((item) => item.symbol === symbol)
+    if (!detail || detail.status !== 'current') throw new Error('INVALID_WATCHLIST_FIXTURE')
+    const { status: _status, riskNote: _riskNote, events: _events, ...item } = detail
+    return { ...item, status: 'current' as const }
+  })
+}
+
+function currentWatchlistOverviewItems(): WatchlistOverviewItem[] {
+  const currentSnapshot = watchlistSnapshots[1]
+  return currentSnapshot.items.map(({ symbol }) => {
+    const detail = watchlistDetails.find((item) => item.symbol === symbol)
+    if (!detail || detail.status !== 'current') throw new Error('INVALID_WATCHLIST_FIXTURE')
+    const { status: _status, events: _events, ...item } = detail
+    return { ...item, status: 'current' as const }
+  })
+}
+
+function watchlistChange(symbol: string, type: WatchlistChangeRecord['type']): WatchlistChangeRecord {
+  const detail = watchlistDetails.find((item) => item.symbol === symbol)
+  const event = detail?.events.findLast((candidate) => candidate.type === type)
+  if (!detail || !event) throw new Error('INVALID_WATCHLIST_FIXTURE')
+  return {
+    symbol,
+    displayName: detail.displayName,
+    industryIds: detail.industryIds,
+    type,
+    occurredAt: event.occurredAt,
+    reason: event.reason,
+  }
 }
 
 export class FixtureReportRepository implements ReportRepository {
@@ -157,21 +197,23 @@ export class FixtureReportRepository implements ReportRepository {
   }
 
   async listWatchlist(): Promise<WatchlistItem[]> {
-    const currentSnapshot = watchlistSnapshots[1]
-    const currentItems = currentSnapshot.items.map(({ symbol }) => {
-      const detail = watchlistDetails.find((item) => item.symbol === symbol)
-      if (!detail || detail.status !== 'current') {
-        throw new Error('INVALID_WATCHLIST_FIXTURE')
-      }
-      const {
-        status: _status,
-        riskNote: _riskNote,
-        events: _events,
-        ...item
-      } = detail
-      return { ...item, status: 'current' as const }
+    return clone(currentWatchlistItems())
+  }
+
+  async getWatchlistOverview(): Promise<WatchlistOverview> {
+    const [prior, current] = watchlistSnapshots
+    const delta = deriveWatchlistDelta(prior, current)
+    return clone({
+      snapshotId: current.id,
+      snapshotAt: current.snapshotAt,
+      currentItems: currentWatchlistOverviewItems(),
+      delta,
+      changes: [
+        ...delta.added.map((symbol) => watchlistChange(symbol, 'added')),
+        ...delta.reasonChanged.map((symbol) => watchlistChange(symbol, 'reason_changed')),
+        ...delta.removed.map((symbol) => watchlistChange(symbol, 'removed')),
+      ],
     })
-    return clone(currentItems)
   }
 
   async getWatchlistItem(symbol: string): Promise<WatchlistDetail | null> {

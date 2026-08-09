@@ -15,10 +15,21 @@ const labels: Record<ReportType, string> = {
   morning_scan: '早盘扫描', midday_review: '午间复盘', daily_review: '每日复盘', industry_tracking: '行业跟踪', holiday_digest: '休市信息摘要', month_end_review: '月末复盘', industry_research: '产业研究',
 }
 
-function controlledReturnTo(state: unknown): '/today' | '/reports' {
+const controlledResearchReturn = /^\/research\/(?:industries\/[a-z0-9]+(?:-[a-z0-9]+)*|watchlist\/[A-Z0-9]+(?:-[A-Z0-9]+)*)$/
+
+function controlledReturnTo(state: unknown): import('../components/ReportCard').ReportReturnPath {
   if (typeof state !== 'object' || state === null || !('returnTo' in state)) return '/reports'
   const returnTo = (state as { returnTo?: unknown }).returnTo
-  return returnTo === '/today' || returnTo === '/reports' ? returnTo : '/reports'
+  if (
+    returnTo === '/today' ||
+    returnTo === '/reports' ||
+    returnTo === '/research' ||
+    returnTo === '/research/industries' ||
+    returnTo === '/research/watchlist'
+  ) return returnTo
+  return typeof returnTo === 'string' && controlledResearchReturn.test(returnTo)
+    ? returnTo as import('../components/ReportCard').ReportReturnPath
+    : '/reports'
 }
 
 export function ReportDetailPage({ repository = defaultRepository }: { repository?: ReportRepository }) {

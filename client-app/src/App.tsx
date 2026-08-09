@@ -3,6 +3,11 @@ import { AppShell } from './layout/AppShell'
 import { ReportDetailPage } from './screens/ReportDetailPage'
 import { ReportLibraryPage } from './screens/ReportLibraryPage'
 import { TodayPage } from './screens/TodayPage'
+import { IndustryDetailPage } from './screens/IndustryDetailPage'
+import { IndustryListPage } from './screens/IndustryListPage'
+import { ResearchOverviewPage } from './screens/ResearchOverviewPage'
+import { WatchlistDetailPage } from './screens/WatchlistDetailPage'
+import { WatchlistPage } from './screens/WatchlistPage'
 import './styles/global.css'
 
 function PlaceholderPage({ label }: { label: string }) {
@@ -24,7 +29,11 @@ function AppContent() {
         <Route path="/today" element={<TodayPage />} />
         <Route path="/reports" element={<ReportLibraryPage />} />
         <Route path="/reports/:reportId" element={<ReportDetailPage />} />
-        <Route path="/research/*" element={<PlaceholderPage label="研究" />} />
+        <Route path="/research" element={<ResearchOverviewPage />} />
+        <Route path="/research/industries" element={<IndustryListPage />} />
+        <Route path="/research/industries/:industryId" element={<IndustryDetailPage />} />
+        <Route path="/research/watchlist" element={<WatchlistPage />} />
+        <Route path="/research/watchlist/:symbol" element={<WatchlistDetailPage />} />
         <Route path="/me/*" element={<PlaceholderPage label="我的" />} />
         <Route path="*" element={<Navigate replace to="/today" />} />
       </Routes>

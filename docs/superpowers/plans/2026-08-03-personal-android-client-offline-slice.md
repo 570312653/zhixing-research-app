@@ -250,20 +250,37 @@ export interface ReportRepository {
 - Create: `client-app/src/screens/IndustryDetailPage.tsx`
 - Create: `client-app/src/screens/WatchlistPage.tsx`
 - Create: `client-app/src/screens/WatchlistDetailPage.tsx`
+- Create: `client-app/src/screens/researchShared.tsx`
+- Create: `client-app/src/screens/researchResource.ts`
+- Create: `client-app/src/screens/research.css`
 - Create: `client-app/src/screens/research.test.tsx`
 - Modify: `client-app/src/App.tsx`
+- Modify: `client-app/src/domain/research.ts`
+- Modify: `client-app/src/domain/watchlist.ts`
+- Modify: `client-app/src/repositories/ReportRepository.ts`
+- Modify: `client-app/src/repositories/FixtureReportRepository.ts`
+- Modify: `client-app/src/repositories/FixtureReportRepository.test.ts`
+- Modify: `client-app/src/components/ReportCard.tsx`
+- Modify: `client-app/src/screens/ReportDetailPage.tsx`
+- Modify: `client-app/src/screens/reports.test.tsx`
 
-- [ ] **Step 1: 写五页失败测试**
+**Repository-first Option A clarification:**
+
+五份正式研究页面需要完整快照元数据、当前项、相邻快照派生的新增/原因更新/移出记录，以及行业卡片的一句话趋势结论。为避免页面直接导入 `fixtures/*`，Task 6 将这些正式 UI 所需投影扩展到 domain 与 `ReportRepository`，并由 `FixtureReportRepository` 基于完整快照夹具统一组装、防御性复制。`fixtures/watchlist.ts` 继续作为唯一离线完整快照来源；本任务核对后确认现有去敏夹具已覆盖所需事件与双向关联，因此无需复制或补写页面专用市场事实。这只是固定样例仓库的读模型扩展，不改变未来 API、数据源、权限或产品架构。
+
+行业/标的关联报告通过受控 `returnTo` 返回当前研究页面；白名单只接受五类已批准研究路由的静态路径或受限参数段，拒绝查询串、协议、外部 URL 和任意路径注入。
+
+- [x] **Step 1: 写五页失败测试**
 
 覆盖研究总览、行业/标的池顶部分段入口、行业趋势与反向证据、关联报告、完整标的快照、移出原因、行业与标的双向导航。
 
-- [ ] **Step 2: 运行测试确认 RED**
+- [x] **Step 2: 运行测试确认 RED**
 
-- [ ] **Step 3: 实现五页**
+- [x] **Step 3: 实现五页**
 
 严格对照五份正式页面稿；不得加入综合评分、买卖建议、手动趋势编辑或从正文自动提取标的。
 
-- [ ] **Step 4: 运行测试确认 GREEN**
+- [x] **Step 4: 运行测试确认 GREEN**
 
 ---
 

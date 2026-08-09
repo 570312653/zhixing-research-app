@@ -5,7 +5,7 @@ import type {
   TodayReportSet,
 } from '../domain/report'
 import type { IndustryDetail, IndustrySummary } from '../domain/research'
-import type { WatchlistDetail, WatchlistItem } from '../domain/watchlist'
+import type { WatchlistDetail, WatchlistItem, WatchlistOverview } from '../domain/watchlist'
 
 export interface ReportRepository {
   listReports(filter?: ReportFilter): Promise<ReportSummary[]>
@@ -14,5 +14,6 @@ export interface ReportRepository {
   listIndustries(): Promise<IndustrySummary[]>
   getIndustry(industryId: string): Promise<IndustryDetail | null>
   listWatchlist(): Promise<WatchlistItem[]>
+  getWatchlistOverview(): Promise<WatchlistOverview>
   getWatchlistItem(symbol: string): Promise<WatchlistDetail | null>
 }

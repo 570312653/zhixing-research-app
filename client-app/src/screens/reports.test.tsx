@@ -216,8 +216,15 @@ describe('Report detail page and routes', () => {
   it.each([
     [undefined, '/reports'],
     [{ returnTo: '/malicious' }, '/reports'],
+    [{ returnTo: 'https://example.invalid' }, '/reports'],
+    [{ returnTo: '/research?next=/reports' }, '/reports'],
     [{ returnTo: '/today' }, '/today'],
     [{ returnTo: '/reports' }, '/reports'],
+    [{ returnTo: '/research' }, '/research'],
+    [{ returnTo: '/research/industries' }, '/research/industries'],
+    [{ returnTo: '/research/industries/industry-cleanloop-energy' }, '/research/industries/industry-cleanloop-energy'],
+    [{ returnTo: '/research/watchlist' }, '/research/watchlist'],
+    [{ returnTo: '/research/watchlist/DEMO-C03' }, '/research/watchlist/DEMO-C03'],
   ] as const)('uses a controlled deterministic back target for state %j', async (state, expectedPath) => {
     const user = userEvent.setup()
     render(
@@ -226,12 +233,24 @@ describe('Report detail page and routes', () => {
           <Route path="/reports/:reportId" element={<ReportDetailPage repository={new FixtureReportRepository()} />} />
           <Route path="/reports" element={<p>报告库落点</p>} />
           <Route path="/today" element={<p>今日落点</p>} />
+          <Route path="/research" element={<p>研究落点</p>} />
+          <Route path="/research/industries" element={<p>行业列表落点</p>} />
+          <Route path="/research/industries/:industryId" element={<p>行业详情落点</p>} />
+          <Route path="/research/watchlist" element={<p>标的池落点</p>} />
+          <Route path="/research/watchlist/:symbol" element={<p>标的详情落点</p>} />
         </Routes>
       </MemoryRouter>,
     )
     await user.click(await screen.findByRole('button', { name: '返回' }))
 
-    expect(screen.getByText(expectedPath === '/today' ? '今日落点' : '报告库落点')).toBeInTheDocument()
+    const expectedLanding = expectedPath === '/today' ? '今日落点'
+      : expectedPath === '/research' ? '研究落点'
+        : expectedPath === '/research/industries' ? '行业列表落点'
+          : expectedPath.startsWith('/research/industries/') ? '行业详情落点'
+            : expectedPath === '/research/watchlist' ? '标的池落点'
+              : expectedPath.startsWith('/research/watchlist/') ? '标的详情落点'
+                : '报告库落点'
+    expect(screen.getByText(expectedLanding)).toBeInTheDocument()
   })
 
   it('treats an unknown id as unavailable content rather than a network failure', async () => {

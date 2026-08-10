@@ -10,5 +10,7 @@
 - 数据源方向：iFind 仅是未来个人使用场景的候选主数据源，尚未验证接口形态、云端可调用性、字段、时效、凭证或真实数据。
 - 当前 UI/UX 进度：页面级总稿、跨页面状态和品牌视觉基础已于 2026-08-03 获用户批准；九个页面均有正式 HTML/PNG，“深海蓝研究院”Token、折页与路径 App 图标及浅色启动页已固化。
 - 已确认工程参数：项目根单仓库、私有 GitHub 后置、`client-app/`、React + TypeScript + Vite、Capacitor 8、Hash 路由、应用 ID `com.zhixing.research`、`minSdk 24 / compileSdk 36 / targetSdk 36`，首轮只构建调试 APK。
-- 当前地基进度：已生成地基与客户端文件级实施计划；根 `.gitignore` 和路径级安全预审已完成，185 个提交候选中禁止类别为 0，项目仍未初始化 Git。
-- 当前下一步：确认历史 `phase1-webhook-test` POC 是否仍使用；若可能有效先在平台侧轮换凭证，再明确授权 `git init`。随后安装并验证 Android Studio/SDK/ADB 与真机链路，地基验收通过后才创建客户端工程。
+- 当前地基进度：历史 `phase1-webhook-test` Vercel 项目已暂停；项目根本地 Git 已初始化为 `main`，安全基线提交为 `5d9c320`，并新增 `.worktrees/` 忽略提交 `6c4a6c3`。Android Studio、SDK Platform 36、Build Tools、Platform Tools、Command-line Tools、内置 JDK、WHPX 与单一 API 36 AVD 均已验收；报告引擎回归 124/124 通过。未添加 remote、未连接 GitHub、未推送。
+- 当前客户端进度：隔离 worktree `.worktrees/android-client-offline` 的 `feature/android-client-offline` 分支已完成 Task 1～7。Task 6 已交付研究总览、行业列表/详情与标的池列表/详情，采用 repository-first 快照投影、异常状态返回路径、历史折叠、双向导航和移动端无障碍规则；经两轮审查修复全部关闭。Task 7 已交付“我的”页面和只读未配置 `FutureApiClient`，刷新、重试、检查更新和未缓存 PDF 均保持真实禁用且原因可见。最新提交为 `5ac8efc`，尚未合并 `main`、连接远端或上传 GitHub。
+- 当前验证：客户端测试 149/149、构建、lint 和生产依赖审计通过；报告引擎回归 124/124 与构建通过；Task 6、Task 7 独立复审均为 PASS。390px Chrome 检查覆盖五个研究页面且无横向溢出，摘要、变化和证据网格保持正式稿密度。`client-app/android/` 尚未创建，未接入网络、真实数据、系统时间、密钥、认证或真实 PDF。
+- 当前下一步：按离线客户端正式计划执行 Task 8，加入 Playwright 浏览器端到端回归，覆盖导航、筛选、报告阅读、研究页面、状态分支和 390px 布局；Task 9 再单独验证品牌资产工具的 Node 24 兼容性，不使用安装脚本绕过或传递依赖强制覆盖。

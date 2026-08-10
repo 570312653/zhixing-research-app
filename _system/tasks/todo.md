@@ -1,14 +1,9 @@
 # 待办
 
-## 当前优先：Git 安全地基
-
-- [ ] 确认历史 `phase1-webhook-test` POC 是否仍在使用；若可能有效，先在对应平台轮换凭证，不打开本地 `.env.local` 验证。
-- [ ] 用户明确授权后初始化本地 Git，重新检查忽略规则、暂存候选和不输出匹配值的敏感标记，再创建本地基线提交；暂不连接 GitHub。
-
 ## Android 工程门槛
 
-- [ ] 使用 Google 官方安装器安装 Android Studio 2025.2.1+、SDK 36、Platform Tools 与 Command-line Tools，并验证 Android Studio JDK。
-- [ ] 提供首轮测试手机型号和 Android 版本，启用 USB 调试并通过 ADB 验证；地基验收后才创建 `client-app/`。
+- [ ] 按离线客户端计划执行 Task 8：加入 Playwright 浏览器端到端回归，覆盖导航、报告库、研究页面、跨页面状态与 390px 移动端布局，并完成独立复审。
+- [ ] 首个调试 APK 模拟器验收通过后，再提供测试手机型号和 Android 版本，启用 USB 调试并完成最终真机安装与关键冒烟。
 
 ## 后续独立阶段
 

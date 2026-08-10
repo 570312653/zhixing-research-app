@@ -3,14 +3,14 @@ import { expect, test } from './fixtures'
 
 type E2EFixtureState = 'loading' | 'empty' | 'failure' | 'offline' | 'offline_no_cache' | 'stale'
 
-async function openFixtureState(page: Page, state: E2EFixtureState | 'unknown_fixture') {
+async function openFixtureState(page: Page, state: E2EFixtureState | 'unknown_fixture', path = '/today') {
   await page.addInitScript((fixtureState) => {
     Object.defineProperty(window, '__ZHIXING_E2E_STATE__', {
       configurable: true,
       value: fixtureState,
     })
   }, state)
-  await page.goto('/#/today')
+  await page.goto(`/#${path}`)
 }
 
 test('加载状态由固定测试夹具独立复现并保留导航', async ({ page }) => {
@@ -41,6 +41,16 @@ test('离线无缓存状态保留主导航并关闭报告内容', async ({ page 
   await expect(page.getByRole('alert')).toContainText('离线且没有可用缓存')
   await expect(page.getByRole('navigation', { name: '主导航' })).toBeVisible()
   await expect(page.getByRole('heading', { name: '知行虚构午间复盘｜2099-06-18' })).toHaveCount(0)
+})
+
+test('报告详情的离线无缓存替换态保留确定性返回路径', async ({ page }) => {
+  await openFixtureState(page, 'offline_no_cache', '/reports/demo-morning-2099-06-18')
+  await expect(page.getByRole('alert')).toContainText('离线且没有可用缓存')
+  await expect(page.getByRole('heading', { name: '知行虚构早盘扫描｜2099-06-18' })).toHaveCount(0)
+  await expect(page.getByRole('navigation', { name: '主导航' })).toBeVisible()
+
+  await page.getByRole('link', { name: '今日' }).click()
+  await expect(page).toHaveURL(/\/#\/today$/)
 })
 
 test('未知测试状态关闭报告内容', async ({ page }) => {

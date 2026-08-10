@@ -14,7 +14,7 @@ import { MyOperationsPage } from './screens/MyOperationsPage'
 import { ResearchOverviewPage } from './screens/ResearchOverviewPage'
 import { WatchlistDetailPage } from './screens/WatchlistDetailPage'
 import { WatchlistPage } from './screens/WatchlistPage'
-import { readE2EFixtureState } from './test-fixtures/e2eState'
+import { readE2EFixtureState, type E2EFixtureState } from './test-fixtures/e2eState'
 import './styles/global.css'
 
 const E2E_LAST_SYNCED_AT = '2099-06-18T20:30:00+08:00'
@@ -34,10 +34,9 @@ function AppRoutes() {
   </Routes>
 }
 
-function ContentWithE2EFixture({ contentLabel }: { contentLabel: string }) {
+function ContentWithE2EFixture({ contentLabel, fixtureState }: { contentLabel: string; fixtureState: E2EFixtureState | null }) {
   if (!__ZHIXING_E2E__) return <AppRoutes />
 
-  const fixtureState = readE2EFixtureState()
   if (fixtureState === 'loading') return <PageSkeleton label={contentLabel} />
   if (fixtureState === 'empty') return <ContextualEmptyState reason="no_reports" />
   if (fixtureState === 'failure') return <BlockingFailureState errorCode="E2E_FIXED_FAILURE" />
@@ -56,6 +55,11 @@ function ContentWithE2EFixture({ contentLabel }: { contentLabel: string }) {
 function AppContent() {
   const { pathname } = useLocation()
   const reportDetail = useMatch('/reports/:reportId') !== null
+  const fixtureState = __ZHIXING_E2E__ ? readE2EFixtureState() : null
+  const fixtureReplacesRoute = __ZHIXING_E2E__
+    && fixtureState !== null
+    && fixtureState !== 'offline'
+    && fixtureState !== 'stale'
   const contentLabel = reportDetail ? '报告详情'
     : pathname.startsWith('/reports') ? '报告库'
     : pathname.startsWith('/research') ? '研究'
@@ -63,8 +67,8 @@ function AppContent() {
         : '今日'
 
   return (
-    <AppShell contentLabel={contentLabel} immersive={reportDetail}>
-      <ContentWithE2EFixture contentLabel={contentLabel} />
+    <AppShell contentLabel={contentLabel} immersive={reportDetail && !fixtureReplacesRoute}>
+      <ContentWithE2EFixture contentLabel={contentLabel} fixtureState={fixtureState} />
     </AppShell>
   )
 }

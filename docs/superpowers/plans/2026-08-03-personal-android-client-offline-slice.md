@@ -324,21 +324,21 @@ export interface FutureApiClient {
 - Create: `client-app/e2e/states.spec.ts`
 - Modify: `client-app/package.json`
 
-- [ ] **Step 1: 编写 E2E 测试**
+- [x] **Step 1: 编写 E2E 测试**
 
 覆盖九个页面、报告/行业/标的交叉导航、搜索筛选、离线/空/失败状态入口、390px 无横向滚动、底部导航安全区和不存在分享/交易/成员入口。
 
-- [ ] **Step 2: 运行测试确认 RED 或缺失实现**
+- [x] **Step 2: 运行测试确认 RED 或缺失实现**
 
 ```powershell
 npm.cmd run test:e2e
 ```
 
-- [ ] **Step 3: 只修正真实差异**
+- [x] **Step 3: 只修正真实差异**
 
 不得为了通过测试改变已确认的信息架构；如正式稿与实现要求冲突，停止并报告偏离点。
 
-- [ ] **Step 4: 运行全量 Web 验证**
+- [x] **Step 4: 运行全量 Web 验证**
 
 ```powershell
 npm.cmd test -- --run

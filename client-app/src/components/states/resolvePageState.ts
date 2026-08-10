@@ -4,6 +4,9 @@ export type EmptyReason =
   | 'filter_no_results'
   | 'no_history'
   | 'no_watchlist'
+  | 'no_industries'
+  | 'filter_no_industries'
+  | 'filter_no_watchlist'
 
 export type ResolvedPageState =
   | { kind: 'owner_blocked'; reason: string }

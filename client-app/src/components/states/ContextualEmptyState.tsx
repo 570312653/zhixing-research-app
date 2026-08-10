@@ -7,6 +7,9 @@ const messages: Record<EmptyReason, string> = {
   filter_no_results: '当前筛选条件下没有报告',
   no_history: '暂无历史记录',
   no_watchlist: '暂无关注标的',
+  no_industries: '暂无关注行业',
+  filter_no_industries: '当前筛选条件下没有行业',
+  filter_no_watchlist: '当前筛选条件下没有标的',
 }
 
 export function ContextualEmptyState({ reason, action }: { reason: EmptyReason; action?: { label: string; onClick: () => void } }) {

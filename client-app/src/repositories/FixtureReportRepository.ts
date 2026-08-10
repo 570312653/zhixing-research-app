@@ -89,23 +89,70 @@ function matchesQuery(report: ReportDetail, rawQuery?: string) {
     .includes(query)
 }
 
+function validateWatchlistFixtures(): void {
+  const [prior, current] = watchlistSnapshots
+  const delta = deriveWatchlistDelta(prior, current)
+  const currentSymbols = new Set(current.items.map(({ symbol }) => symbol))
+  const priorSymbols = new Set(prior.items.map(({ symbol }) => symbol))
+  if (currentSymbols.size !== current.items.length || priorSymbols.size !== prior.items.length) {
+    throw new Error('INVALID_WATCHLIST_FIXTURE')
+  }
+
+  for (const snapshotItem of current.items) {
+    const symbol = snapshotItem.symbol
+    const detail = watchlistDetails.find((item) => item.symbol === symbol)
+    const expectedEventType = delta.added.includes(symbol)
+      ? 'added'
+      : delta.reasonChanged.includes(symbol)
+        ? 'reason_changed'
+        : 'continued'
+    const latestEvent = detail?.events.at(-1)
+    if (
+      !detail ||
+      detail.status !== 'current' ||
+      detail.reason !== snapshotItem.reason ||
+      detail.lastObservedAt !== current.snapshotAt ||
+      latestEvent?.type !== expectedEventType ||
+      latestEvent.occurredAt !== current.snapshotAt ||
+      latestEvent.reason !== snapshotItem.reason
+    ) throw new Error('INVALID_WATCHLIST_FIXTURE')
+  }
+
+  for (const symbol of delta.removed) {
+    const detail = watchlistDetails.find((item) => item.symbol === symbol)
+    const removedEvent = detail?.events.at(-1)
+    if (
+      !detail ||
+      detail.status !== 'removed' ||
+      removedEvent?.type !== 'removed' ||
+      detail.reason !== removedEvent.reason ||
+      detail.lastObservedAt !== current.snapshotAt ||
+      removedEvent.occurredAt !== current.snapshotAt
+    ) throw new Error('INVALID_WATCHLIST_FIXTURE')
+  }
+
+  if (watchlistDetails.some((detail) => detail.status === 'current' && !currentSymbols.has(detail.symbol))) {
+    throw new Error('INVALID_WATCHLIST_FIXTURE')
+  }
+}
+
 function currentWatchlistItems(): WatchlistItem[] {
   const currentSnapshot = watchlistSnapshots[1]
-  return currentSnapshot.items.map(({ symbol }) => {
+  return currentSnapshot.items.map(({ symbol, reason }) => {
     const detail = watchlistDetails.find((item) => item.symbol === symbol)
     if (!detail || detail.status !== 'current') throw new Error('INVALID_WATCHLIST_FIXTURE')
-    const { status: _status, riskNote: _riskNote, events: _events, ...item } = detail
-    return { ...item, status: 'current' as const }
+    const { status: _status, reason: _reason, riskNote: _riskNote, events: _events, ...item } = detail
+    return { ...item, reason, status: 'current' as const }
   })
 }
 
 function currentWatchlistOverviewItems(): WatchlistOverviewItem[] {
   const currentSnapshot = watchlistSnapshots[1]
-  return currentSnapshot.items.map(({ symbol }) => {
+  return currentSnapshot.items.map(({ symbol, reason }) => {
     const detail = watchlistDetails.find((item) => item.symbol === symbol)
     if (!detail || detail.status !== 'current') throw new Error('INVALID_WATCHLIST_FIXTURE')
-    const { status: _status, events: _events, ...item } = detail
-    return { ...item, status: 'current' as const }
+    const { status: _status, reason: _reason, events: _events, ...item } = detail
+    return { ...item, reason, status: 'current' as const }
   })
 }
 
@@ -113,13 +160,15 @@ function watchlistChange(symbol: string, type: WatchlistChangeRecord['type']): W
   const detail = watchlistDetails.find((item) => item.symbol === symbol)
   const event = detail?.events.findLast((candidate) => candidate.type === type)
   if (!detail || !event) throw new Error('INVALID_WATCHLIST_FIXTURE')
+  const currentReason = watchlistSnapshots[1].items.find((item) => item.symbol === symbol)?.reason
+  if (type !== 'removed' && currentReason === undefined) throw new Error('INVALID_WATCHLIST_FIXTURE')
   return {
     symbol,
     displayName: detail.displayName,
     industryIds: detail.industryIds,
     type,
     occurredAt: event.occurredAt,
-    reason: event.reason,
+    reason: type === 'removed' ? event.reason : currentReason!,
   }
 }
 
@@ -197,10 +246,12 @@ export class FixtureReportRepository implements ReportRepository {
   }
 
   async listWatchlist(): Promise<WatchlistItem[]> {
+    validateWatchlistFixtures()
     return clone(currentWatchlistItems())
   }
 
   async getWatchlistOverview(): Promise<WatchlistOverview> {
+    validateWatchlistFixtures()
     const [prior, current] = watchlistSnapshots
     const delta = deriveWatchlistDelta(prior, current)
     return clone({
@@ -217,7 +268,10 @@ export class FixtureReportRepository implements ReportRepository {
   }
 
   async getWatchlistItem(symbol: string): Promise<WatchlistDetail | null> {
+    validateWatchlistFixtures()
     const detail = watchlistDetails.find((item) => item.symbol === symbol)
-    return detail ? clone(detail) : null
+    if (!detail) return null
+    const snapshotReason = watchlistSnapshots[1].items.find((item) => item.symbol === symbol)?.reason
+    return clone(snapshotReason === undefined ? detail : { ...detail, reason: snapshotReason })
   }
 }

@@ -5,6 +5,7 @@ import {
   selectFeaturedReportId,
 } from '../domain/report'
 import { deriveWatchlistDelta, type WatchlistSnapshot } from '../domain/watchlist'
+import { watchlistDetails } from '../fixtures/watchlist'
 import { FixtureReportRepository } from './FixtureReportRepository'
 
 const SAMPLE_DATE = '2099-06-18'
@@ -353,6 +354,31 @@ describe('FixtureReportRepository watchlist snapshots', () => {
       removed: ['DEMO-C03'],
       reasonChanged: ['DEMO-B02'],
     })
+  })
+
+  it('fails closed when a current detail reason contradicts the authoritative snapshot', async () => {
+    const detail = watchlistDetails.find(({ symbol }) => symbol === 'DEMO-B02')!
+    const originalReason = detail.reason
+    ;(detail as { reason: string }).reason = '与快照矛盾的详情原因'
+
+    try {
+      await expect(repository.getWatchlistOverview()).rejects.toThrow('INVALID_WATCHLIST_FIXTURE')
+    } finally {
+      ;(detail as { reason: string }).reason = originalReason
+    }
+  })
+
+  it('fails closed when a removed event contradicts the removed detail', async () => {
+    const detail = watchlistDetails.find(({ symbol }) => symbol === 'DEMO-C03')!
+    const removedEvent = detail.events.find(({ type }) => type === 'removed')!
+    const originalReason = removedEvent.reason
+    ;(removedEvent as { reason: string }).reason = '与移出详情矛盾的事件原因'
+
+    try {
+      await expect(repository.getWatchlistOverview()).rejects.toThrow('INVALID_WATCHLIST_FIXTURE')
+    } finally {
+      ;(removedEvent as { reason: string }).reason = originalReason
+    }
   })
 })
 

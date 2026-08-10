@@ -7,6 +7,7 @@ import App from '../App'
 import { FixtureReportRepository } from '../repositories/FixtureReportRepository'
 import { IndustryDetailPage } from './IndustryDetailPage'
 import { IndustryListPage } from './IndustryListPage'
+import { ResearchOverviewPage } from './ResearchOverviewPage'
 import { WatchlistDetailPage } from './WatchlistDetailPage'
 import { WatchlistPage } from './WatchlistPage'
 
@@ -62,6 +63,8 @@ describe('research pages', () => {
       expect.stringContaining('轨道材料'),
     ])
     expect(screen.getAllByText('最新专题报告')).toHaveLength(4)
+    expect(screen.getByRole('group', { name: '行业趋势筛选' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '全部' })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByRole('link', { name: /查看行业：轨道材料/ })).toHaveTextContent('知行虚构重点行业观察｜2099-06-18')
     expect(screen.getByRole('link', { name: /查看行业：轨道材料/ })).toHaveTextContent('关联专题报告 1 篇')
     expect(screen.getByRole('link', { name: /查看行业：轨道材料/ })).toHaveTextContent('状态更新于 2099-06-18 20:10')
@@ -183,6 +186,15 @@ describe('research pages', () => {
     ])
     expect(screen.getAllByText('主要风险：')).toHaveLength(3)
     expect(screen.getByRole('button', { name: '刷新' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: '刷新' })).toHaveAttribute('aria-describedby')
+    expect(screen.getByText('离线固定样例未接入刷新。')).toBeInTheDocument()
+    expect(screen.getByRole('navigation', { name: '研究分段导航' })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: '当前关注' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByRole('group', { name: '标的池筛选' })).toBeInTheDocument()
+
+    const currentCard = screen.getByText('虚构计算线索获得新增验证。').closest('a')
+    expect(currentCard).toHaveAttribute('href', '#/research/watchlist/DEMO-B02')
+    expect(screen.getByRole('link', { name: '深波计算' })).toHaveAttribute('href', '#/research/industries/industry-deepwave-computing')
 
     await user.type(screen.getByRole('searchbox', { name: '搜索证券代码或名称' }), 'DEMO-B02')
     expect(screen.getByRole('link', { name: /演示标的乙/ })).toBeInTheDocument()
@@ -198,7 +210,7 @@ describe('research pages', () => {
     expect(screen.getByRole('link', { name: /演示标的丁/ })).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: /演示标的甲/ })).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: '变更记录' }))
+    await user.click(screen.getByRole('tab', { name: '变更记录' }))
     expect(screen.getByText('新增关注：演示标的丁')).toBeInTheDocument()
     expect(screen.getByText('原因更新：演示标的乙')).toBeInTheDocument()
     const removed = screen.getByRole('link', { name: /已移出：演示标的丙/ })
@@ -219,6 +231,8 @@ describe('research pages', () => {
     expect(within(removalSection!).getByText('虚构物流证据不足，移出当前观察。')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: '主要风险' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '刷新' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: '刷新' })).toHaveAttribute('aria-describedby')
+    expect(screen.getByText('离线固定样例未接入刷新。')).toBeInTheDocument()
     expect(screen.getByRole('region', { name: '观察历史' })).toHaveTextContent('虚构物流证据待补充')
     expect(screen.getByRole('link', { name: '查看行业：前沿物流' })).toHaveAttribute(
       'href',
@@ -270,6 +284,8 @@ describe('research pages', () => {
     )
 
     const alert = await screen.findByRole('alert')
+    expect(screen.getByRole('heading', { name: '行业详情' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '返回行业列表' })).toHaveAttribute('href', '/research/industries')
     expect(alert).toHaveTextContent('LOCAL_FIXTURE_UNAVAILABLE')
     expect(alert).not.toHaveTextContent('private adapter details')
     expect(screen.queryByRole('button', { name: /重试/ })).not.toBeInTheDocument()
@@ -288,6 +304,8 @@ describe('research pages', () => {
     const notice = await screen.findByRole('status', { name: '内容可能已过期' })
     expect(screen.getByRole('heading', { name: '轨道材料' })).toBeInTheDocument()
     expect(notice).toHaveTextContent('LOCAL_FIXTURE_UNAVAILABLE')
+    expect(notice).toHaveTextContent('最后可用快照/数据时间')
+    expect(notice).not.toHaveTextContent('最后成功同步')
     expect(notice).not.toHaveTextContent('private refresh details')
   })
 
@@ -340,5 +358,110 @@ describe('research pages', () => {
     expect(await screen.findByRole('heading', { name: '清环能源' })).toBeInTheDocument()
     pendingA.resolve(await getIndustry.call(actual, 'industry-orbit-materials'))
     await waitFor(() => expect(screen.queryByRole('heading', { name: '轨道材料' })).not.toBeInTheDocument())
+  })
+
+  it('preserves deterministic detail titles and return links while loading or missing', async () => {
+    const industryRepository = new FixtureReportRepository()
+    const pendingIndustry = deferred<never>()
+    vi.spyOn(industryRepository, 'getIndustry').mockReturnValue(pendingIndustry.promise)
+    const industryView = render(<MemoryRouter initialEntries={['/research/industries/industry-missing']}><Routes><Route path="/research/industries/:industryId" element={<IndustryDetailPage repository={industryRepository} />} /></Routes></MemoryRouter>)
+    expect(screen.getByRole('heading', { name: '行业详情' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '返回行业列表' })).toHaveAttribute('href', '/research/industries')
+    industryView.unmount()
+
+    const watchlistRepository = new FixtureReportRepository()
+    vi.spyOn(watchlistRepository, 'getWatchlistItem').mockResolvedValue(null)
+    render(<MemoryRouter initialEntries={['/research/watchlist/DEMO-MISSING']}><Routes><Route path="/research/watchlist/:symbol" element={<WatchlistDetailPage repository={watchlistRepository} />} /></Routes></MemoryRouter>)
+    expect(await screen.findByRole('heading', { name: '标的详情' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '返回标的池' })).toHaveAttribute('href', '/research/watchlist')
+    expect(screen.getByText('标的不存在或已不可用')).toBeInTheDocument()
+  })
+
+  it('preserves the other detail title and return paths on failure or missing', async () => {
+    const watchlistRepository = new FixtureReportRepository()
+    vi.spyOn(watchlistRepository, 'getWatchlistItem').mockRejectedValue(new Error('private watchlist details'))
+    const watchlistView = render(<MemoryRouter initialEntries={['/research/watchlist/DEMO-A01']}><Routes><Route path="/research/watchlist/:symbol" element={<WatchlistDetailPage repository={watchlistRepository} />} /></Routes></MemoryRouter>)
+    expect(await screen.findByRole('alert')).toHaveTextContent('LOCAL_FIXTURE_UNAVAILABLE')
+    expect(screen.getByRole('heading', { name: '标的详情' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '返回标的池' })).toHaveAttribute('href', '/research/watchlist')
+    watchlistView.unmount()
+
+    const industryRepository = new FixtureReportRepository()
+    vi.spyOn(industryRepository, 'getIndustry').mockResolvedValue(null)
+    render(<MemoryRouter initialEntries={['/research/industries/industry-missing']}><Routes><Route path="/research/industries/:industryId" element={<IndustryDetailPage repository={industryRepository} />} /></Routes></MemoryRouter>)
+    expect(await screen.findByText('行业不存在或已不可用')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '行业详情' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '返回行业列表' })).toHaveAttribute('href', '/research/industries')
+  })
+
+  it('limits industry history to the latest 30 days from its repository timestamp and expands older events', async () => {
+    const user = userEvent.setup()
+    const repository = new FixtureReportRepository()
+    const industry = await repository.getIndustry('industry-orbit-materials')
+    vi.spyOn(repository, 'getIndustry').mockResolvedValue({
+      ...industry!,
+      timeline: [
+        ...industry!.timeline,
+        { id: 'older-than-window', occurredAt: '2099-05-01T20:00:00+08:00', trendState: 'continuing', note: '超过30天的固定历史' },
+      ],
+    })
+    render(<MemoryRouter initialEntries={['/research/industries/industry-orbit-materials']}><Routes><Route path="/research/industries/:industryId" element={<IndustryDetailPage repository={repository} />} /></Routes></MemoryRouter>)
+
+    const history = await screen.findByRole('region', { name: '趋势历史' })
+    expect(within(history).queryByText('超过30天的固定历史')).not.toBeInTheDocument()
+    await user.click(within(history).getByRole('button', { name: '展开全部历史' }))
+    expect(within(history).getByText('超过30天的固定历史')).toBeInTheDocument()
+  })
+
+  it('limits watchlist observation history to five records and expands all records', async () => {
+    const user = userEvent.setup()
+    const repository = new FixtureReportRepository()
+    const item = await repository.getWatchlistItem('DEMO-A01')
+    vi.spyOn(repository, 'getWatchlistItem').mockResolvedValue({
+      ...item!,
+      events: Array.from({ length: 6 }, (_, index) => ({ id: `event-${index}`, type: 'continued' as const, occurredAt: `2099-06-${String(18 - index).padStart(2, '0')}T20:00:00+08:00`, reason: `观察历史${index + 1}` })),
+    })
+    render(<MemoryRouter initialEntries={['/research/watchlist/DEMO-A01']}><Routes><Route path="/research/watchlist/:symbol" element={<WatchlistDetailPage repository={repository} />} /></Routes></MemoryRouter>)
+
+    const history = await screen.findByRole('region', { name: '观察历史' })
+    expect(within(history).getAllByRole('listitem')).toHaveLength(5)
+    await user.click(within(history).getByRole('button', { name: '展开全部观察历史' }))
+    expect(within(history).getAllByRole('listitem')).toHaveLength(6)
+  })
+
+  it('uses contextual empty states when repository collections are empty', async () => {
+    const industryRepository = new FixtureReportRepository()
+    vi.spyOn(industryRepository, 'listIndustries').mockResolvedValue([])
+    const industryView = render(<MemoryRouter><IndustryListPage repository={industryRepository} /></MemoryRouter>)
+    expect((await screen.findByText('暂无关注行业')).closest('[role="status"]')).not.toBeNull()
+    industryView.unmount()
+
+    const watchlistRepository = new FixtureReportRepository()
+    const overview = await watchlistRepository.getWatchlistOverview()
+    vi.spyOn(watchlistRepository, 'getWatchlistOverview').mockResolvedValue({ ...overview, currentItems: [], changes: [], delta: { added: [], continuing: [], removed: [], reasonChanged: [] } })
+    render(<MemoryRouter><WatchlistPage repository={watchlistRepository} /></MemoryRouter>)
+    expect((await screen.findByText('暂无关注标的')).closest('[role="status"]')).not.toBeNull()
+  })
+
+  it('keeps the formal research grids at 390px-safe column counts', async () => {
+    const overviewView = render(<MemoryRouter><ResearchOverviewPage /></MemoryRouter>)
+    const overviewMetrics = await screen.findByRole('group', { name: '研究变化指标' })
+    expect(getComputedStyle(overviewMetrics).gridTemplateColumns).toContain('repeat(3')
+    expect(getComputedStyle(screen.getByRole('list', { name: '标的池变化' })).gridTemplateColumns).toContain('repeat(2')
+    overviewView.unmount()
+
+    render(<MemoryRouter><WatchlistPage /></MemoryRouter>)
+    const watchlistMetrics = await screen.findByRole('group', { name: '标的池指标' })
+    expect(getComputedStyle(watchlistMetrics).gridTemplateColumns).toContain('repeat(4')
+    expect(getComputedStyle(screen.getByText('当前关注 3').closest('.research-page')!).maxWidth).toBe('100%')
+    cleanup()
+
+    render(<MemoryRouter initialEntries={['/research/industries/industry-cleanloop-energy']}><Routes><Route path="/research/industries/:industryId" element={<IndustryDetailPage />} /></Routes></MemoryRouter>)
+    const evidenceGrid = (await screen.findByText('虚构供需观察值回落')).closest('.research-evidence-grid')
+    expect(evidenceGrid).not.toBeNull()
+    expect(getComputedStyle(evidenceGrid!).gridTemplateColumns).toContain('repeat(2')
+    const reportStack = screen.getByRole('heading', { name: '专项行业报告' }).parentElement?.querySelector('.research-report-stack')
+    expect(reportStack).not.toBeNull()
+    expect(getComputedStyle(reportStack!).gridTemplateColumns).toBe('minmax(0,1fr)')
   })
 })

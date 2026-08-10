@@ -9,7 +9,7 @@ import type { IndustryDetail } from '../domain/research'
 import type { WatchlistOverview } from '../domain/watchlist'
 import type { ReportRepository } from '../repositories/ReportRepository'
 import './research.css'
-import { ResearchFailure, ResearchLoading, ResearchStale } from './researchShared'
+import { ResearchDetailState, ResearchFailure, ResearchLoading, ResearchStale } from './researchShared'
 import { changeLabels, defaultResearchRepository, trendLabels, useResearchResource } from './researchResource'
 
 type IndustryPageData = { industry: IndustryDetail; reports: ReportSummary[]; watchlist: WatchlistOverview }
@@ -18,13 +18,14 @@ export function IndustryDetailPage({ repository = defaultResearchRepository }: {
   const { industryId = '' } = useParams()
   const [expandedIndustryId, setExpandedIndustryId] = useState<string | null>(null)
   const [expandedReportsIndustryId, setExpandedReportsIndustryId] = useState<string | null>(null)
+  const [historyExpandedIndustryId, setHistoryExpandedIndustryId] = useState<string | null>(null)
   const state = useResearchResource<IndustryPageData>(`industry:${industryId}`, repository, async () => {
     const [industry, reports, watchlist] = await Promise.all([repository.getIndustry(industryId), repository.listReports({ reportTypes: ['industry_tracking', 'industry_research'] }), repository.getWatchlistOverview()])
     return industry ? { industry, reports: reports.filter(({ id }) => industry.reportIds.includes(id)), watchlist } : null
   })
-  if (state.kind === 'loading') return <ResearchLoading label="行业详情" />
-  if (state.kind === 'failure') return <ResearchFailure />
-  if (state.kind === 'missing') return <section className="research-empty">行业不存在或已不可用</section>
+  if (state.kind === 'loading') return <ResearchDetailState title="行业详情" backTo="/research/industries" backLabel="返回行业列表"><ResearchLoading label="行业详情" /></ResearchDetailState>
+  if (state.kind === 'failure') return <ResearchDetailState title="行业详情" backTo="/research/industries" backLabel="返回行业列表"><ResearchFailure /></ResearchDetailState>
+  if (state.kind === 'missing') return <ResearchDetailState title="行业详情" backTo="/research/industries" backLabel="返回行业列表"><p className="research-empty">行业不存在或已不可用</p></ResearchDetailState>
   const { industry, reports, watchlist } = state.value
   const currentItems = watchlist.currentItems.filter((item) => item.industryIds.includes(industry.id))
   const changes = watchlist.changes
@@ -32,6 +33,10 @@ export function IndustryDetailPage({ repository = defaultResearchRepository }: {
     .toSorted((left, right) => right.occurredAt.localeCompare(left.occurredAt) || left.symbol.localeCompare(right.symbol))
   const visibleChanges = expandedIndustryId === industry.id ? changes : changes.slice(0, 5)
   const visibleReports = expandedReportsIndustryId === industry.id ? reports : reports.slice(0, 3)
+  const historyAnchor = Date.parse(industry.updatedAt)
+  const historyWindowStart = historyAnchor - 30 * 24 * 60 * 60 * 1000
+  const recentTimeline = industry.timeline.filter(({ occurredAt }) => Date.parse(occurredAt) >= historyWindowStart && Date.parse(occurredAt) <= historyAnchor)
+  const visibleTimeline = historyExpandedIndustryId === industry.id ? industry.timeline : recentTimeline
   const returnTo = `/research/industries/${industry.id}` as const
 
   return <article className="research-page research-detail">
@@ -44,7 +49,7 @@ export function IndustryDetailPage({ repository = defaultResearchRepository }: {
       <h2>反向证据</h2>
       {industry.counterEvidence.length > 0 ? <div className="research-evidence-grid">{industry.counterEvidence.map((evidence) => <EvidenceCard key={evidence.id} evidence={evidence} />)}</div> : <p className="research-empty">暂无结构化反向证据</p>}
     </section>
-    <section className="research-section" role="region" aria-label="趋势历史"><h2>趋势历史</h2><ol className="research-timeline">{industry.timeline.map((event) => <li key={event.id}><time>{formatTimestamp(event.occurredAt)}</time><strong>{trendLabels[event.trendState]}</strong><p>{event.note}</p></li>)}</ol></section>
+    <section className="research-section" role="region" aria-label="趋势历史"><h2>趋势历史</h2><ol className="research-timeline">{visibleTimeline.map((event) => <li key={event.id}><time>{formatTimestamp(event.occurredAt)}</time><strong>{trendLabels[event.trendState]}</strong><p>{event.note}</p></li>)}</ol>{recentTimeline.length < industry.timeline.length && historyExpandedIndustryId !== industry.id && <button type="button" onClick={() => setHistoryExpandedIndustryId(industry.id)}>展开全部历史</button>}</section>
     <section className="research-section"><h2>当前关注标的</h2><ul className="research-list">{currentItems.map((item) => {
       const change = changes.find(({ symbol }) => symbol === item.symbol)
       return <li key={item.symbol}><Link to={`/research/watchlist/${item.symbol}`} aria-label={`查看标的：${item.displayName}`}>

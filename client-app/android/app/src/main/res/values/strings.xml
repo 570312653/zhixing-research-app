@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">知行</string>
+    <string name="title_activity_main">知行</string>
+    <string name="package_name">com.zhixing.research</string>
+    <string name="custom_url_scheme">com.zhixing.research</string>
+</resources>

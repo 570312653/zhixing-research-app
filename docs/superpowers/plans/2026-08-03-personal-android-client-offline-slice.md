@@ -359,11 +359,11 @@ npm.cmd run test:e2e
 - Modify generated Android resources under: `client-app/android/app/src/main/res/`
 - Modify: `client-app/package.json`
 
-- [ ] **Step 1: 选择并验证 Node.js 24 兼容的资产生成方案**
+- [x] **Step 1: 选择并验证 Node.js 24 兼容的资产生成方案**
 
 先在隔离分支中验证候选工具是否支持当前 Node.js 24、Capacitor 8 和 Android 36。`@capacitor/assets@3.0.5` 因固定依赖 `sharp@0.32.6`，不得作为默认方案；也不得通过 `--ignore-scripts`、强制覆盖传递依赖或补装与项目无关的本机编译链来绕过。若没有安全兼容的工具，应改为可审计的 SVG/PNG 到 Android `res/` 的确定性生成脚本，并补充测试与生成说明。
 
-- [ ] **Step 2: 从已批准 SVG 生成源资产**
+- [x] **Step 2: 从已批准 SVG 生成源资产**
 
 输入只来自：
 
@@ -372,9 +372,9 @@ docs/ui-ux/brand/app-icon-master.svg
 docs/ui-ux/brand/splash-screen-preview.svg
 ```
 
-图标源至少 1024×1024，启动图源至少 2732×2732；不得自行改变图形、文字和颜色。
+两份 SVG 都是无损矢量主稿，不能将其 `viewBox` 像素数误判为源图不足。确定性生成输出的图标 PNG 至少为 1024×1024，方形启动图 PNG 固定为 2732×2732；不得自行改变图形或颜色。Android 12+ 启动资源只使用图标和浅色背景，文字完整的启动页预览仅作视觉参考。
 
-- [ ] **Step 3: 添加 Android 平台**
+- [x] **Step 3: 添加 Android 平台**
 
 ```powershell
 npm.cmd run build
@@ -382,17 +382,17 @@ npx.cmd cap add android
 npx.cmd cap sync android
 ```
 
-- [ ] **Step 4: 验证 Android 参数**
+- [x] **Step 4: 验证 Android 参数**
 
 确认应用 ID `com.zhixing.research`、显示名“知行”、`minSdk 24 / compileSdk 36 / targetSdk 36`，并确认 `local.properties` 被 Git 忽略。
 
-- [ ] **Step 5: 生成自适应图标与启动页资源**
+- [x] **Step 5: 生成自适应图标与启动页资源**
 
 执行 Step 1 已验证并锁定版本的资产生成命令；若采用项目内确定性脚本，则运行对应的 `npm.cmd run assets:android`。不得在此步骤临时切换未经验证的工具。
 
 检查 Android 12+ 启动页使用品牌图标和浅色背景，不显示伪加载进度。
 
-- [ ] **Step 6: 运行 Web 回归**
+- [x] **Step 6: 运行 Web 回归**
 
 确保添加原生外壳没有改变 Web 页面和测试。
 

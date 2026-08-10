@@ -41,6 +41,11 @@ function ContentWithE2EFixture({ contentLabel }: { contentLabel: string }) {
   if (fixtureState === 'loading') return <PageSkeleton label={contentLabel} />
   if (fixtureState === 'empty') return <ContextualEmptyState reason="no_reports" />
   if (fixtureState === 'failure') return <BlockingFailureState errorCode="E2E_FIXED_FAILURE" />
+  if (fixtureState === 'offline_no_cache') return <section className="state-card state-card--alert" role="alert">
+    <span aria-hidden="true">⚠</span>
+    <p>离线且没有可用缓存</p>
+    <p>连接恢复后再试。</p>
+  </section>
   return <>
     {fixtureState === 'offline' && <OfflineBanner lastSyncedAt={E2E_LAST_SYNCED_AT} />}
     {fixtureState === 'stale' && <StaleContentNotice errorCode="E2E_FIXED_STALE" lastSuccessfulSyncAt={E2E_LAST_SYNCED_AT} />}

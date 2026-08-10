@@ -1,9 +1,9 @@
 import type { Page } from '@playwright/test'
 import { expect, test } from './fixtures'
 
-type E2EFixtureState = 'loading' | 'empty' | 'failure' | 'offline' | 'stale'
+type E2EFixtureState = 'loading' | 'empty' | 'failure' | 'offline' | 'offline_no_cache' | 'stale'
 
-async function openFixtureState(page: Page, state: E2EFixtureState) {
+async function openFixtureState(page: Page, state: E2EFixtureState | 'unknown_fixture') {
   await page.addInitScript((fixtureState) => {
     Object.defineProperty(window, '__ZHIXING_E2E_STATE__', {
       configurable: true,
@@ -34,6 +34,19 @@ test('离线缓存状态保留可读报告并禁用在线操作', async ({ page 
   await expect(page.getByRole('status', { name: '当前离线' })).toContainText('在线操作当前不可用')
   await expect(page.getByRole('heading', { name: '今日' })).toBeVisible()
   await expect(page.getByRole('heading', { name: '知行虚构午间复盘｜2099-06-18' }).first()).toBeVisible()
+})
+
+test('离线无缓存状态保留主导航并关闭报告内容', async ({ page }) => {
+  await openFixtureState(page, 'offline_no_cache')
+  await expect(page.getByRole('alert')).toContainText('离线且没有可用缓存')
+  await expect(page.getByRole('navigation', { name: '主导航' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '知行虚构午间复盘｜2099-06-18' })).toHaveCount(0)
+})
+
+test('未知测试状态关闭报告内容', async ({ page }) => {
+  await openFixtureState(page, 'unknown_fixture')
+  await expect(page.getByRole('alert')).toContainText('离线且没有可用缓存')
+  await expect(page.getByRole('heading', { name: '知行虚构午间复盘｜2099-06-18' })).toHaveCount(0)
 })
 
 test('过期内容状态保留可读报告并展示最后成功时间', async ({ page }) => {

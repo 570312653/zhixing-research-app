@@ -5,14 +5,11 @@ import { ReportLibraryPage } from './screens/ReportLibraryPage'
 import { TodayPage } from './screens/TodayPage'
 import { IndustryDetailPage } from './screens/IndustryDetailPage'
 import { IndustryListPage } from './screens/IndustryListPage'
+import { MyOperationsPage } from './screens/MyOperationsPage'
 import { ResearchOverviewPage } from './screens/ResearchOverviewPage'
 import { WatchlistDetailPage } from './screens/WatchlistDetailPage'
 import { WatchlistPage } from './screens/WatchlistPage'
 import './styles/global.css'
-
-function PlaceholderPage({ label }: { label: string }) {
-  return <p className="app-shell__placeholder">{label}</p>
-}
 
 function AppContent() {
   const { pathname } = useLocation()
@@ -34,7 +31,7 @@ function AppContent() {
         <Route path="/research/industries/:industryId" element={<IndustryDetailPage />} />
         <Route path="/research/watchlist" element={<WatchlistPage />} />
         <Route path="/research/watchlist/:symbol" element={<WatchlistDetailPage />} />
-        <Route path="/me/*" element={<PlaceholderPage label="我的" />} />
+        <Route path="/me/*" element={<MyOperationsPage />} />
         <Route path="*" element={<Navigate replace to="/today" />} />
       </Routes>
     </AppShell>

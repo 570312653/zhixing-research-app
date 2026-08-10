@@ -185,11 +185,18 @@ describe('research pages', () => {
       expect.stringContaining('演示标的甲'),
     ])
     expect(screen.getAllByText('主要风险：')).toHaveLength(3)
-    expect(screen.getByRole('button', { name: '刷新' })).toBeDisabled()
-    expect(screen.getByRole('button', { name: '刷新' })).toHaveAttribute('aria-describedby')
+    const refreshButton = screen.getByRole('button', { name: '刷新' })
+    expect(refreshButton).toBeDisabled()
+    expect(refreshButton).toHaveAttribute('aria-describedby')
+    const refreshReason = document.getElementById(refreshButton.getAttribute('aria-describedby')!)
+    expect(refreshReason).not.toBeNull()
     expect(screen.getByText('离线固定样例未接入刷新。')).toBeInTheDocument()
     expect(screen.getByRole('navigation', { name: '研究分段导航' })).toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: '当前关注' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByRole('group', { name: '标的池内容分段' })).toBeInTheDocument()
+    expect(screen.queryByRole('tablist')).not.toBeInTheDocument()
+    expect(screen.queryByRole('tab')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '当前关注' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: '变更记录' })).toHaveAttribute('aria-pressed', 'false')
     expect(screen.getByRole('group', { name: '标的池筛选' })).toBeInTheDocument()
 
     const currentCard = screen.getByText('虚构计算线索获得新增验证。').closest('a')
@@ -210,11 +217,21 @@ describe('research pages', () => {
     expect(screen.getByRole('link', { name: /演示标的丁/ })).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: /演示标的甲/ })).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('tab', { name: '变更记录' }))
+    await user.click(screen.getByRole('button', { name: '变更记录' }))
+    expect(screen.getByRole('button', { name: '变更记录' })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByText('新增关注：演示标的丁')).toBeInTheDocument()
     expect(screen.getByText('原因更新：演示标的乙')).toBeInTheDocument()
     const removed = screen.getByRole('link', { name: /已移出：演示标的丙/ })
     expect(removed).toHaveAttribute('href', '#/research/watchlist/DEMO-C03')
+  })
+
+  it('lets the disabled refresh explanation use the available inline width', async () => {
+    renderRoute('/research/watchlist')
+
+    const refreshButton = await screen.findByRole('button', { name: '刷新' })
+    const refreshReason = document.getElementById(refreshButton.getAttribute('aria-describedby')!)
+    expect(refreshReason).not.toBeNull()
+    expect(getComputedStyle(refreshReason!).maxWidth).toBe('none')
   })
 
   it('keeps removed detail queryable with removal reason, evidence, risk, timeline and bidirectional links', async () => {

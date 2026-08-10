@@ -41,8 +41,8 @@ export function WatchlistPage({ repository = defaultResearchRepository }: { repo
     <ResearchTabs />
     {state.kind === 'stale' && <ResearchStale lastSuccessfulSyncAt={overview.snapshotAt} />}
     <div className="research-metrics research-metrics--watchlist" role="group" aria-label="标的池指标"><strong>当前关注 {overview.currentItems.length}</strong><strong>本期新增 {overview.delta.added.length}</strong><strong>原因更新 {overview.delta.reasonChanged.length}</strong><strong>近期移出 {overview.delta.removed.length}</strong></div>
-    <div className="research-switch" role="tablist" aria-label="标的池内容分段"><button id="watchlist-current-tab" role="tab" aria-selected={tab === 'current'} aria-controls="watchlist-current-panel" className={tab === 'current' ? 'is-active' : ''} type="button" onClick={() => setTab('current')}>当前关注</button><button id="watchlist-changes-tab" role="tab" aria-selected={tab === 'changes'} aria-controls="watchlist-changes-panel" className={tab === 'changes' ? 'is-active' : ''} type="button" onClick={() => setTab('changes')}>变更记录</button></div>
-    {tab === 'current' ? <div id="watchlist-current-panel" role="tabpanel" aria-labelledby="watchlist-current-tab">
+    <div className="research-switch" role="group" aria-label="标的池内容分段"><button aria-pressed={tab === 'current'} className={tab === 'current' ? 'is-active' : ''} type="button" onClick={() => setTab('current')}>当前关注</button><button aria-pressed={tab === 'changes'} className={tab === 'changes' ? 'is-active' : ''} type="button" onClick={() => setTab('changes')}>变更记录</button></div>
+    {tab === 'current' ? <div>
       <div className="research-control-grid" role="group" aria-label="标的池筛选">
         <label>搜索证券代码或名称<input type="search" value={query} onChange={(event) => setQuery(event.target.value)} /></label>
         <label>行业筛选<select value={industryId} onChange={(event) => setIndustryId(event.target.value)}><option value="">全部行业</option>{industries.map((industry) => <option value={industry.id} key={industry.id}>{industry.displayName}</option>)}</select></label>
@@ -53,7 +53,7 @@ export function WatchlistPage({ repository = defaultResearchRepository }: { repo
       <ul className="research-list">{visible.map((item) => <CurrentItem key={item.symbol} item={item} changeType={overview.delta.added.includes(item.symbol) ? 'added' : overview.delta.reasonChanged.includes(item.symbol) ? 'reason_changed' : 'continuing'} industryName={industries.find(({ id }) => id === item.industryIds[0])?.displayName} />)}</ul>
       {overview.currentItems.length === 0 ? <ContextualEmptyState reason="no_watchlist" /> : visible.length === 0 && <ContextualEmptyState reason="filter_no_watchlist" />}
       <p className="research-empty">移出标的不在当前列表展示，可切换“变更记录”追溯。</p>
-    </div> : <div id="watchlist-changes-panel" role="tabpanel" aria-labelledby="watchlist-changes-tab">{overview.changes.length > 0 ? <ul className="research-list">{overview.changes.map((change) => <ChangeItem key={`${change.type}-${change.symbol}`} change={change} />)}</ul> : <ContextualEmptyState reason="no_history" />}</div>}
+    </div> : <div>{overview.changes.length > 0 ? <ul className="research-list">{overview.changes.map((change) => <ChangeItem key={`${change.type}-${change.symbol}`} change={change} />)}</ul> : <ContextualEmptyState reason="no_history" />}</div>}
   </section>
 }
 

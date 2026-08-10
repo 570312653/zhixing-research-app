@@ -23,8 +23,9 @@ npm.cmd run lint
 npm.cmd run test:e2e
 ```
 
-浏览器端 E2E 使用 Playwright 驱动本机已安装的 Google Chrome，并由测试命令在
-`127.0.0.1:4173` 启动和回收专用 Vite 服务。运行前请先安装 Google Chrome；当前不依赖
+浏览器端 E2E 使用 Playwright 驱动本机已安装的 Google Chrome。测试命令通过
+`scripts/run-e2e.mjs` 在 `127.0.0.1:4173` 直接创建专用 Vite 服务，用无 shell 子进程运行
+Playwright，并在退出前关闭服务；端口已被占用时会直接失败，不复用或终止占用者。运行前请先安装 Google Chrome；当前不依赖
 Playwright 下载的 Chromium，是因为该浏览器包在 Windows 开发环境中下载超时，而系统
 Chrome 已能稳定覆盖本项目的浏览器回归范围。测试不会复用已有服务，所有非本地请求都会
 被阻断。

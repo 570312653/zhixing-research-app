@@ -1,0 +1,41 @@
+{
+  "name": "client-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:e2e": "node ./node_modules/vite/bin/vite.js --mode e2e",
+    "build": "tsc -b && vite build",
+    "assets:android": "node ./scripts/generate-android-assets.mjs",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:e2e": "node ./scripts/run-e2e.mjs",
+    "test:e2e:lifecycle": "node --test ./scripts/run-e2e.test.mjs"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.0",
+    "@capacitor/core": "^8.5.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router": "8.3.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.0",
+    "@playwright/test": "^1.62.1",
+    "@testing-library/jest-dom": "^7.0.0",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.3",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.4",
+    "jsdom": "^30.0.1",
+    "oxlint": "^1.75.0",
+    "sharp": "0.35.3",
+    "typescript": "~6.0.2",
+    "vite": "^8.2.0",
+    "vitest": "^4.1.10"
+  }
+}

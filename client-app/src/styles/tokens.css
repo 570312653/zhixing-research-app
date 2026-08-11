@@ -1,0 +1,47 @@
+:root {
+  --color-brand-primary: #1E3A8A;
+  --color-brand-ink: #102B44;
+  --color-brand-accent: #2F6C9E;
+  --color-text-primary: #1F2937;
+  --color-text-muted: #6B7280;
+  --color-text-subtle: #98A2B3;
+  --color-surface-page: #F4F7FA;
+  --color-surface-card: #FFFFFF;
+  --color-surface-subtle: #F3F4F6;
+  --color-border-default: #DDE7ED;
+  --color-signal-positive: #15803D;
+  --color-signal-watch: #B45309;
+  --color-signal-risk: #B91C1C;
+  --color-signal-info: #2F6C9E;
+
+  --font-family-system: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+  --font-size-12: 12px;
+  --font-size-14: 14px;
+  --font-size-16: 16px;
+  --font-size-20: 20px;
+  --font-size-24: 24px;
+  --font-size-30: 30px;
+  --line-height-body: 1.7;
+
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-24: 24px;
+  --radius-pill: 999px;
+
+  --border-default: 1px solid #DDE7ED;
+  --shadow-card: 0 2px 8px rgba(16, 43, 68, 0.05);
+  --shadow-overlay: 0 12px 30px rgba(16, 43, 68, 0.12);
+  --duration-fast: 160ms;
+  --duration-standard: 220ms;
+  --motion-distance: 4px;
+  --layout-bottom-navigation: 90px;
+}

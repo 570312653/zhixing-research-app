@@ -1,0 +1,187 @@
+.my-operations,
+.my-operations * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.my-operations {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.my-operations h1,
+.my-operations h2,
+.my-operations h3,
+.my-operations p {
+  margin: 0;
+}
+
+.my-operations__header,
+.my-operations__section-heading,
+.my-operations__owner-top,
+.my-operations__row,
+.my-operations__task-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+.my-operations__header p,
+.my-operations__section-heading p,
+.my-operations__owner small,
+.my-operations__task p,
+.my-operations__row p,
+.my-operations__reason,
+.my-operations__boundary {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-12);
+}
+
+.my-operations__owner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  border-radius: var(--radius-16);
+  background: var(--color-brand-primary);
+  box-shadow: var(--shadow-card);
+  color: var(--color-surface-card);
+  padding: var(--space-24);
+}
+
+.my-operations__owner small,
+.my-operations__owner p {
+  color: var(--color-surface-card);
+}
+
+.my-operations__mode,
+.my-operations__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-card);
+  color: var(--color-brand-primary);
+  font-size: var(--font-size-12);
+  font-weight: 700;
+  padding: var(--space-4) var(--space-8);
+}
+
+.my-operations__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.my-operations__panel,
+.my-operations__task,
+.my-operations__row {
+  border: var(--border-default);
+  border-radius: var(--radius-12);
+  background: var(--color-surface-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-16);
+}
+
+.my-operations__tasks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.my-operations__task {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.my-operations__task .my-operations__status--done {
+  color: var(--color-signal-positive);
+}
+
+.my-operations__task .my-operations__status--failed {
+  color: var(--color-signal-risk);
+}
+
+.my-operations__task .my-operations__status--waiting {
+  color: var(--color-text-muted);
+}
+
+.my-operations__disabled-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-4);
+  text-align: end;
+}
+
+.my-operations__disabled-action button {
+  border: var(--border-default);
+  border-radius: var(--radius-8);
+  background: var(--color-surface-subtle);
+  color: var(--color-text-subtle);
+  padding: var(--space-8) var(--space-12);
+}
+
+.my-operations__reason {
+  max-width: 100%;
+}
+
+.my-operations__diagnostic-list {
+  display: grid;
+  gap: var(--space-8);
+  margin: 0;
+}
+
+.my-operations__diagnostic-list div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-8);
+}
+
+.my-operations__diagnostic-list dt {
+  color: var(--color-text-muted);
+}
+
+.my-operations__diagnostic-list dd {
+  margin: 0;
+  text-align: end;
+}
+
+.my-operations__boundary {
+  border: var(--border-default);
+  border-color: var(--color-signal-watch);
+  border-radius: var(--radius-12);
+  background: var(--color-surface-card);
+  padding: var(--space-12);
+}
+
+@media (max-width: 390px) {
+  .my-operations__tasks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .my-operations__row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .my-operations__disabled-action {
+    width: 100%;
+    align-items: stretch;
+    text-align: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .my-operations * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

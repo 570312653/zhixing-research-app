@@ -1,19 +1,19 @@
 # 知行项目地基清理与开工准备清单
 
-> 状态：批次 A、B、客户端 UI/UX、品牌视觉和工程参数确认已完成；历史 POC 已暂停，正在建立本地 Git 安全基线，下一门槛是 Android 工具链。  
+> 状态：批次 A、B、客户端 UI/UX、品牌视觉、工程参数、Git 安全基线、Android 工具链及离线客户端真机验收均已完成；历史 POC 已暂停。
 > 日期：2026-08-01  
 > 依据：[项目工作系统审计与后续总路线](./2026-08-01-project-work-system-audit-and-master-roadmap.md)
 
 ## 一、现在必须先清理的地基事项
 
-这些事项应在客户端 UI/UX 设计正式开始前完成。
+以下事项记录地基收口全过程；已完成项保留为审计证据，当前只以未勾选门槛和“建议的当前执行范围”为后续入口。
 
 ### 1. 同步项目本地工作系统
 
 - [x] 更新 `_system/context/current-projects.md`：改为个人 Android APK 路线，记录四类离线报告已完成、iFind 为后续个人数据候选。
 - [x] 更新 `_system/tasks/todo.md`：移除 Wind/iFinD/Choice 多人应用询价任务，改为“工作系统收口 → UI/UX 设计 → 客户端规格确认”。
 - [x] 更新 `_system/context/decisions.md`：新增个人 APK、单一所有者、Capacitor、云端引擎和不开放注册的已确认决定；旧数据源决策保留日期和历史语境，不覆盖历史。
-- [x] 新增 2026-08-01 项目日志，记录产品路线变化、正式文档更新、审计结果和尚未开始工程初始化的事实。
+- [x] 新增 2026-08-01 项目日志，记录产品路线变化、正式文档更新、审计结果和当时工程初始化仍未开始的事实（后续已完成）。
 - [x] 保持 `_system/tasks/current-work.md` 继续只指向唯一待办来源，不建立第二套任务清单。
 
 验收：`AGENTS.md`、`docs/current-status.md`、`_system/context/current-projects.md` 与 `_system/tasks/todo.md` 对“当前阶段和下一步”的表述一致。
@@ -29,7 +29,7 @@
 ### 3. 更新辅助阅读导航
 
 - [x] 更新 `docs/obsidian/项目导航.md`：从多人 Web 应用改为个人 Android APK + 云端报告引擎。
-- [x] 更新 `docs/obsidian/决策与风险.md`：四类离线报告、124/124 回归、APK 路线、UI 尚未设计。
+- [x] 更新 `docs/obsidian/决策与风险.md`：四类离线报告、124/124 回归、APK 路线和当时尚未设计 UI 的状态（后续已完成）。
 - [x] 更新 `docs/obsidian/开发日志.md`：补充 2026-07-31 行业跟踪与 2026-08-01 产品路线变化。
 - [x] 检查 `docs/obsidian/首页.md` 的当前阶段描述仍与正式状态一致。
 
@@ -73,12 +73,13 @@
 ### 7. 确认 Android 工程参数与环境
 
 - [x] 确认 Android 应用显示名“知行”和应用 ID `com.zhixing.research`。
-- [x] 确认 `minSdk 24 / compileSdk 36 / targetSdk 36`，首轮真机优先；具体手机型号在真机验收前记录。
+- [x] 确认 `minSdk 24 / compileSdk 36 / targetSdk 36`，首轮使用单一 API 36 模拟器；最终真机仅记录型号代码 `V2408A` 与 Android 15。
 - [x] 确认客户端目录为 `client-app/`，与 `report-engine/` 独立。
-- [ ] 安装并验证 JDK、Android Studio/SDK、ADB；Gradle 优先由 Android 工程包装器管理。
+- [x] 安装并验证 JDK、Android Studio/SDK 36、Platform Tools、Command-line Tools 与 ADB；Gradle 优先由 Android 工程包装器管理。
+- [x] 创建并启动一个 API 36 AVD，确认可通过 ADB 识别；真机连接延后至首个调试 APK 的最终验收。
 - [x] 确认首轮只构建调试 APK，正式证书暂不创建。
 
-验收：环境检查通过，能够构建并安装一个不含业务功能的调试 APK；此时仍未接入真实数据或网络。
+验收：模拟器开发门槛通过后即可初始化客户端工程；首个调试 APK 先在 API 36 AVD 安装，最终仍须在自有真机完成一次安装和冒烟。此时仍未接入真实数据或网络。
 
 ### 8. 生成文件级实施计划
 
@@ -118,19 +119,17 @@
 - `tmp/pdf-review-20260730/`：目前是历史视觉证据；是否清理放到 Git 初始化前决定。
 - `AGENTS.md` 的历史 Coze 章节：顶部 0.2 已覆盖，短期不阻塞 UI；以后如要精简，必须先生成无损迁移预览。
 
-## 五、推荐清理顺序
+## 五、当前剩余顺序
 
 ```text
-批次 A：同步 _system + 修正已确认提案
-  → 批次 B：更新 Obsidian + 收口多 Agent 当前工作包
-  → 检查四个事实入口是否一致
-  → 开始客户端信息架构与 UI/UX 访谈
-  → UI 原型确认
-  → 再处理 Git、敏感文件和 Android 工具链
-  → 生成实施计划
-  → 工程初始化
+已完成：API 36 AVD 与 ADB
+  → 已完成：Git、安全与报告引擎基线
+  → 已完成：client-app Task 1 至 Task 9
+  → 已完成：Debug APK 模拟器安装、离线与九页冒烟
+  → 已完成：`V2408A` / Android 15 真机安装与关键冒烟
+  → 后续独立阶段：真实数据、认证、云端、PDF 与调度
 ```
 
 ## 六、建议的当前执行范围
 
-建议下一次只执行“批次 A + 批次 B”，不安装软件、不读取密钥、不初始化 Git、不修改报告引擎代码。完成后再次做一致性检查，然后正式进入 UI/UX 阶段。
+当前 Debug APK 的 API 36 模拟器与 `V2408A` / Android 15 真机验收均已通过；不读取密钥、不接入真实数据或业务网络、不修改报告引擎业务代码。下一步先完成离线客户端分支收口，再将真实数据、认证、云端、PDF 与调度拆成独立阶段。

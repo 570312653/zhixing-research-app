@@ -1,6 +1,6 @@
 # 知行个人 Android APK 客户端设计
 
-> 状态：页面级 UI/UX、品牌视觉、Git/安全边界与 Android 工程参数已于 2026-08-03 获用户批准；等待按独立计划完成地基执行。  
+> 状态：离线固定样例客户端已实现，并通过 API 36 模拟器与 Android 15 真机验收。
 > 范围：只定义离线固定样例阶段的客户端与接口边界；不实现真实数据、密钥、云端调度或生产 APK 发布。
 
 ## 1. 目标与非目标
@@ -18,7 +18,7 @@
 - 不采用原生 Kotlin/Flutter：当前没有摄像头、蓝牙、复杂离线同步等必须原生实现的能力，重写界面没有收益。
 - 客户端目录固定为 `client-app/`，应用显示名为“知行”，应用 ID 为 `com.zhixing.research`。
 - 使用 React Router Hash 路由；首切片只使用 React 内置状态与仓库接口，不引入全局状态库。
-- Android 参数为 `minSdk 24 / compileSdk 36 / targetSdk 36`；首轮真机优先、模拟器补充。
+- Android 参数为 `minSdk 24 / compileSdk 36 / targetSdk 36`；Debug APK 已在单一 API 36 模拟器和 `V2408A` / Android 15 真机安装和验证。
 - 首个产物只允许调试 APK，不创建正式签名证书。
 - 完整的版本控制、安全和工具链决策见 `2026-08-03-client-engineering-preflight-decisions.md`。
 
@@ -67,7 +67,7 @@ APK 与未来服务端通过类型明确的 API 边界连接；在离线切片�
 
 ### 产业与标的池
 
-- 展示行业跟踪固定样例与只读的标的池占位状态。
+- 展示四个虚构行业研究单元、两期完整虚构标的池快照、派生变化和双向关联详情。
 - 真实 `watchlist_snapshot` 尚未实现时，不能从报告正文自动推断标的。
 
 ### 个人操作页
@@ -118,10 +118,18 @@ APK 与未来服务端通过类型明确的 API 边界连接；在离线切片�
 - 页面索引中的今日、报告库、报告详情、研究、行业、标的池和“我的”均已有正式 HTML 与 PNG。
 - 正常、加载、空、失败、离线及旧内容叠加已有统一决策与视觉稿。
 - `docs/ui-ux/client-ui-ux-handoff.md` 汇总页面地图、导航、共享组件和工程验收清单。
-- 页面级 UI/UX、品牌视觉、Git/安全边界和 Android 参数均已确认；地基与客户端文件级实施计划已经形成。只有地基计划验收通过并再次获得执行授权后，才初始化客户端工程。
+- 页面级 UI/UX、品牌视觉、Git/安全边界和 Android 参数均已确认并实现；地基与客户端 Task 1 至 Task 10 的模拟器及真机范围已经通过。
 
 ## 9. 已确认的工程计划
 
 - 地基执行：`docs/superpowers/plans/2026-08-03-client-foundation-readiness.md`
 - 离线客户端：`docs/superpowers/plans/2026-08-03-personal-android-client-offline-slice.md`
 - 执行顺序固定为“Git/敏感文件与 Android 工具链 → 地基验收 → 客户端离线切片”，不得并行跳过门槛。
+
+## 10. 当前实施结果
+
+- 九个批准页面、跨页面状态、报告 HTML 白名单、组合筛选、行业与标的双向关联和“我的”禁用操作已实现。
+- 客户端 Vitest 149/149、E2E 17/17、报告引擎 124/124 通过。
+- Debug APK 已在 Android 16 / API 36 模拟器及 `V2408A` / Android 15 真机安装；离线冷启动、页面内返回路径、PDF 禁用与静态安全检查通过。
+- 离线固定样例客户端切片的模拟器与真机验收已经完成；正式签名、真实数据、认证、云端、PDF 与调度仍不在本切片范围。
+- 详细证据见 `docs/proposals/2026-08-03-client-offline-slice-verification.md`。

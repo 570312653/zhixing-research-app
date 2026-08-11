@@ -42,7 +42,7 @@
 | 19 | Android 应用 ID | `com.zhixing.research`，首次安装前固定 |
 | 20 | Android SDK | `minSdk 24 / compileSdk 36 / targetSdk 36` |
 | 21 | Android 环境 | Google 官方 Windows EXE + Setup Wizard；由 Android Studio 安装 SDK 与合适 JDK |
-| 22 | 首轮设备 | 个人 Android 真机优先，模拟器补充 |
+| 22 | 首轮设备 | 单一 API 36 模拟器先行；真机作为首个调试 APK 的最终验收门槛 |
 | 23 | 首个 APK | 只构建调试 APK，不创建正式签名证书 |
 | 24 | 第一工程切片 | 九个已确认页面、统一视觉 Token、离线导航、图标与启动页 |
 | 25 | 数据 | 只使用仓库内固定、去敏的样例数据 |

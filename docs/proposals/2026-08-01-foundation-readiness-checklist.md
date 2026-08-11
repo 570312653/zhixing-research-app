@@ -1,6 +1,6 @@
 # 知行项目地基清理与开工准备清单
 
-> 状态：批次 A、B、客户端 UI/UX、品牌视觉、工程参数、Git 安全基线、Android 工具链、离线客户端 Task 1 至 Task 10 模拟器范围均已完成；历史 POC 已暂停，真机最终验收待完成。
+> 状态：批次 A、B、客户端 UI/UX、品牌视觉、工程参数、Git 安全基线、Android 工具链及离线客户端真机验收均已完成；历史 POC 已暂停。
 > 日期：2026-08-01  
 > 依据：[项目工作系统审计与后续总路线](./2026-08-01-project-work-system-audit-and-master-roadmap.md)
 
@@ -73,7 +73,7 @@
 ### 7. 确认 Android 工程参数与环境
 
 - [x] 确认 Android 应用显示名“知行”和应用 ID `com.zhixing.research`。
-- [x] 确认 `minSdk 24 / compileSdk 36 / targetSdk 36`，首轮使用单一 API 36 模拟器；具体手机型号在最终真机验收前记录。
+- [x] 确认 `minSdk 24 / compileSdk 36 / targetSdk 36`，首轮使用单一 API 36 模拟器；最终真机仅记录型号代码 `V2408A` 与 Android 15。
 - [x] 确认客户端目录为 `client-app/`，与 `report-engine/` 独立。
 - [x] 安装并验证 JDK、Android Studio/SDK 36、Platform Tools、Command-line Tools 与 ADB；Gradle 优先由 Android 工程包装器管理。
 - [x] 创建并启动一个 API 36 AVD，确认可通过 ADB 识别；真机连接延后至首个调试 APK 的最终验收。
@@ -126,10 +126,10 @@
   → 已完成：Git、安全与报告引擎基线
   → 已完成：client-app Task 1 至 Task 9
   → 已完成：Debug APK 模拟器安装、离线与九页冒烟
-  → 当前门槛：最终真机安装与关键冒烟
+  → 已完成：`V2408A` / Android 15 真机安装与关键冒烟
   → 后续独立阶段：真实数据、认证、云端、PDF 与调度
 ```
 
 ## 六、建议的当前执行范围
 
-当前 Debug APK 的 API 36 模拟器验收已通过；不读取密钥、不接入真实数据或业务网络、不修改报告引擎业务代码。真机连接仍延后至用户方便时完成最终验收。
+当前 Debug APK 的 API 36 模拟器与 `V2408A` / Android 15 真机验收均已通过；不读取密钥、不接入真实数据或业务网络、不修改报告引擎业务代码。下一步先完成离线客户端分支收口，再将真实数据、认证、云端、PDF 与调度拆成独立阶段。

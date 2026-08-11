@@ -404,7 +404,7 @@ npx.cmd cap sync android
 - Build artifact: `client-app/android/app/build/outputs/apk/debug/app-debug.apk`
 - Create: `docs/proposals/2026-08-03-client-offline-slice-verification.md`
 
-- [ ] **Step 1: 构建调试 APK**
+- [x] **Step 1: 构建调试 APK**
 
 ```powershell
 Set-Location D:\Codex\投顾APP\client-app\android
@@ -413,13 +413,13 @@ Set-Location D:\Codex\投顾APP\client-app\android
 
 预期：生成调试 APK；不生成 release keystore。
 
-- [ ] **Step 2: 安装到 API 36 模拟器**
+- [x] **Step 2: 安装到 API 36 模拟器**
 
 ```powershell
 adb install -r .\app\build\outputs\apk\debug\app-debug.apk
 ```
 
-- [ ] **Step 3: 模拟器冒烟测试**
+- [x] **Step 3: 模拟器冒烟测试**
 
 验证启动页、图标、九个页面、返回路径、390px 等效阅读宽度、离线启动、PDF 不可用提示和所有禁用操作。记录 AVD 的 API 级别，不记录模拟器序列号。
 
@@ -427,11 +427,11 @@ adb install -r .\app\build\outputs\apk\debug\app-debug.apk
 
 在用户方便时，将同一调试 APK 安装到已授权的自有手机并重复关键冒烟测试。只记录手机型号、Android 版本和结果，不记录设备序列号；未完成时明确标记“模拟器通过、真机待验收”。
 
-- [ ] **Step 5: APK 静态安全检查**
+- [x] **Step 5: APK 静态安全检查**
 
 检查源码、构建日志和 APK 解包字符串中不存在真实服务端 URL、Token、API Key、`.env` 值、真实报告或签名口令。命中只报告类别和文件，不输出疑似秘密本身。
 
-- [ ] **Step 6: 写验证记录**
+- [x] **Step 6: 写验证记录**
 
 记录构建命令、测试结果、APK SHA-256、测试设备信息和已知限制。明确这是调试 APK，不可作为正式分发包。
 

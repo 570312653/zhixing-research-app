@@ -67,4 +67,5 @@ pnpm-debug.log*
 /.superpowers/
 /.worktrees/
 /.docx-review/
+/.artifacts/
 /tmp/

@@ -1,6 +1,6 @@
 # 知行项目地基清理与开工准备清单
 
-> 状态：批次 A、B、客户端 UI/UX、品牌视觉、工程参数、本地 Git 安全基线、Android 基础工具链与单一 API 36 AVD 均已完成；历史 POC 已暂停，客户端工程初始化已经放行。
+> 状态：批次 A、B、客户端 UI/UX、品牌视觉、工程参数、Git 安全基线、Android 工具链、离线客户端 Task 1 至 Task 10 模拟器范围均已完成；历史 POC 已暂停，真机最终验收待完成。
 > 日期：2026-08-01  
 > 依据：[项目工作系统审计与后续总路线](./2026-08-01-project-work-system-audit-and-master-roadmap.md)
 
@@ -13,7 +13,7 @@
 - [x] 更新 `_system/context/current-projects.md`：改为个人 Android APK 路线，记录四类离线报告已完成、iFind 为后续个人数据候选。
 - [x] 更新 `_system/tasks/todo.md`：移除 Wind/iFinD/Choice 多人应用询价任务，改为“工作系统收口 → UI/UX 设计 → 客户端规格确认”。
 - [x] 更新 `_system/context/decisions.md`：新增个人 APK、单一所有者、Capacitor、云端引擎和不开放注册的已确认决定；旧数据源决策保留日期和历史语境，不覆盖历史。
-- [x] 新增 2026-08-01 项目日志，记录产品路线变化、正式文档更新、审计结果和尚未开始工程初始化的事实。
+- [x] 新增 2026-08-01 项目日志，记录产品路线变化、正式文档更新、审计结果和当时工程初始化仍未开始的事实（后续已完成）。
 - [x] 保持 `_system/tasks/current-work.md` 继续只指向唯一待办来源，不建立第二套任务清单。
 
 验收：`AGENTS.md`、`docs/current-status.md`、`_system/context/current-projects.md` 与 `_system/tasks/todo.md` 对“当前阶段和下一步”的表述一致。
@@ -29,7 +29,7 @@
 ### 3. 更新辅助阅读导航
 
 - [x] 更新 `docs/obsidian/项目导航.md`：从多人 Web 应用改为个人 Android APK + 云端报告引擎。
-- [x] 更新 `docs/obsidian/决策与风险.md`：四类离线报告、124/124 回归、APK 路线、UI 尚未设计。
+- [x] 更新 `docs/obsidian/决策与风险.md`：四类离线报告、124/124 回归、APK 路线和当时尚未设计 UI 的状态（后续已完成）。
 - [x] 更新 `docs/obsidian/开发日志.md`：补充 2026-07-31 行业跟踪与 2026-08-01 产品路线变化。
 - [x] 检查 `docs/obsidian/首页.md` 的当前阶段描述仍与正式状态一致。
 
@@ -122,14 +122,14 @@
 ## 五、当前剩余顺序
 
 ```text
-创建并启动单一 API 36 AVD
-  → 验证模拟器 ADB 链路
-  → 复核 Git、安全与报告引擎基线
-  → 放行 client-app 工程初始化
-  → 模拟器开发与调试 APK 验收
-  → 最终真机安装与关键冒烟
+已完成：API 36 AVD 与 ADB
+  → 已完成：Git、安全与报告引擎基线
+  → 已完成：client-app Task 1 至 Task 9
+  → 已完成：Debug APK 模拟器安装、离线与九页冒烟
+  → 当前门槛：最终真机安装与关键冒烟
+  → 后续独立阶段：真实数据、认证、云端、PDF 与调度
 ```
 
 ## 六、建议的当前执行范围
 
-当前只执行 API 36 模拟器门槛和 `client-app/` 离线工程初始化；不读取密钥、不接入真实数据或网络、不修改报告引擎业务代码。真机连接延后至首个调试 APK 的最终验收。
+当前 Debug APK 的 API 36 模拟器验收已通过；不读取密钥、不接入真实数据或业务网络、不修改报告引擎业务代码。真机连接仍延后至用户方便时完成最终验收。

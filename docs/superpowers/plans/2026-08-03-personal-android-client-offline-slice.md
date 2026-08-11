@@ -445,7 +445,7 @@ adb install -r .\app\build\outputs\apk\debug\app-debug.apk
 - Modify: `docs/ui-ux/client-ui-ux-handoff.md`
 - Modify: `docs/superpowers/specs/2026-08-01-personal-android-apk-client-design.md`
 
-- [ ] **Step 1: 客户端全量验证**
+- [x] **Step 1: 客户端全量验证**
 
 ```powershell
 Set-Location D:\Codex\投顾APP\client-app
@@ -456,7 +456,7 @@ Set-Location .\android
 .\gradlew.bat assembleDebug
 ```
 
-- [ ] **Step 2: 报告引擎回归**
+- [x] **Step 2: 报告引擎回归**
 
 ```powershell
 Set-Location D:\Codex\投顾APP\report-engine
@@ -466,7 +466,7 @@ npm.cmd run build
 
 预期：现有报告引擎回归保持通过，无业务代码改动。
 
-- [ ] **Step 3: 文档一致性检查**
+- [x] **Step 3: 文档一致性检查**
 
 用 `rg` 检查正式文档中不存在“客户端尚未创建”“Android 参数待确认”等过期状态；保留真实未完成项：正式签名、真实数据、认证、云端、PDF 和调度。
 
